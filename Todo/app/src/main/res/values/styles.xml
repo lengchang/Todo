@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="my_theme" parent="android:Theme.Holo.Light">
+        <item name="android:actionMenuTextColor">#C9CAD1</item>
+        <item name="android:actionBarStyle">@style/my_actionbar_style</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="my_actionbar_style" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#4050DC</item>
+    </style>
+
 </resources>
