@@ -25,9 +25,9 @@ public class UserContentProvider extends ContentProvider {
     public static final String key_teamId = "teamId";
     public static final String key_userId = "userId";
 
-    private final String tableName = "user";
+    public static final String tableName = "user";
 
-    private final String sql_createTable = "create table " + tableName + "(" +
+    public static final String sql_createTable = "create table " + tableName + "(" +
             key_id + " integer primary key autoincrement," +
             key_username + " varchar not null," +
             key_password + " varchar not null," +
@@ -43,7 +43,6 @@ public class UserContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         dbHelper = new DBHelper(getContext(), DBHelper.dbName, null, DBHelper.dbVersion);
-        dbHelper.initDb(sql_createTable, tableName);
         return true;
     }
 

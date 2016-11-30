@@ -15,41 +15,40 @@ import android.support.annotation.Nullable;
 
 public class SelfTaskContentProvider extends ContentProvider {
 
-    private final String key_id = "id";
-    private final String key_title = "title";
-    private final String key_content = "content";
-    private final String key_starttime = "starttime";
-    private final String key_endtime = "endtime";
-    private final String key_clocktime = "clocktime";
-    private final String key_projectId = "projectId";
-    private final String key_goalId = "goalId";
-    private final String key_sightId = "sightId";
-    private final String key_userId = "userId";
-    private final String key_state = "state";
-    private final String key_isdelete = "isdelete";
+    public static final String key_id = "id";
+    public static final String key_title = "title";
+    public static final String key_content = "content";
+    public static final String key_starttime = "starttime";
+    public static final String key_endtime = "endtime";
+    public static final String key_clocktime = "clocktime";
+    public static final String key_projectId = "projectId";
+    public static final String key_goalId = "goalId";
+    public static final String key_sightId = "sightId";
+    public static final String key_userId = "userId";
+    public static final String key_state = "state";
+    public static final String key_isdelete = "isdelete";
 
-    private final String tableName = "self_task";
+    public static final String tableName = "selftask";
 
-    private final String sql_createTable = "create table " + tableName + "(" +
+    public static final String sql_createTable = "create table " + tableName + "(" +
             key_id + " integer primary key autoincrement," +
             key_title + " varchar not null," +
             key_content + " varchar not null," +
             key_starttime + " varchar not null," +
             key_endtime + " varchar not null," +
             key_clocktime + " varchar not null," +
-            key_projectId + " varchar," +
-            key_goalId + " varchar," +
-            key_sightId + " varchar," +
+            key_projectId + " varchar not null," +
+            key_goalId + " varchar not null," +
+            key_sightId + " varchar not null," +
             key_userId + " varchar not null," +
             key_state + " varchar not null," +
-            key_isdelete + " int not null);";
+            key_isdelete + " varchar not null);";
 
     private DBHelper dbHelper = null;
 
     @Override
     public boolean onCreate() {
         dbHelper = new DBHelper(getContext(), DBHelper.dbName, null, DBHelper.dbVersion);
-        dbHelper.initDb(sql_createTable, tableName);
         return true;
     }
 
@@ -86,7 +85,7 @@ public class SelfTaskContentProvider extends ContentProvider {
         long id = db.insert(tableName, nullColumnHack, values);
 
         if (id > -1) {
-            Uri insertedId = ContentUris.withAppendedId(DBHelper.ContentUri_selftask, id);
+            Uri insertedId = ContentUris.withAppendedId(uri, id);
             getContext().getContentResolver().notifyChange(insertedId, null);
             return insertedId;
         } else

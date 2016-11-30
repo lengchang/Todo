@@ -15,26 +15,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String dbName = "Todo.db";
     public static final int dbVersion = 1;
-    private String tableCreate;
-    private String tableName;
 
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
-    public void initDb(String tableCreate, String tableName){
-        this.tableCreate = tableCreate;
-        this.tableName = tableName;
-    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(tableCreate);
+        db.execSQL(SelfTaskContentProvider.sql_createTable);
+        db.execSQL(UserContentProvider.sql_createTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if it exists" + tableName);
+        db.execSQL("drop table if it exists" + SelfTaskContentProvider.tableName);
+        db.execSQL("drop table if it exists" + UserContentProvider.tableName);
         onCreate(db);
     }
 }

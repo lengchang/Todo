@@ -15,11 +15,11 @@ public class SelfTask {
     private String sightId;
     private String userId;
     private String state;
-    private int isdelete;
+    private String isdelete;
 
     public SelfTask(String title, String content, String starttime, String endtime,
                     String clocktime, String projectId, String goalId, String sightId,
-                    String userId, String state, String group, int isdelete) {
+                    String userId, String state, String isdelete) {
         this.title = title;
         this.content = content;
         this.starttime = starttime;
@@ -117,11 +117,11 @@ public class SelfTask {
         this.state = state;
     }
 
-    public int isdelete() {
+    public String isdelete() {
         return isdelete;
     }
 
-    public void setIsdelete(int isdelete) {
+    public void setIsdelete(String isdelete) {
         this.isdelete = isdelete;
     }
 }

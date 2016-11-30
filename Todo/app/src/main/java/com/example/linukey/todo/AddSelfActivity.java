@@ -17,7 +17,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.example.linukey.BLL.AddSelfBLL;
 import com.example.linukey.BLL.TodoHelper;
+import com.example.linukey.Model.SelfTask;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -159,7 +163,16 @@ public class AddSelfActivity extends Activity {
         String sightId = "3";
         String userId = "linukey";
         String state = TodoHelper.TaskState.get("noComplete");
-        int isdelete = 0;
+        String isdelete = "0";
+
+        SelfTask selfTask = new SelfTask(title, content, starttime, endtime, clocktime, projectId,
+                goalId, sightId, userId, state, isdelete);
+
+        if(new AddSelfBLL().saveTaskInfo(selfTask, this)){
+            Toast.makeText(this, "任务添加成功!", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this, "任务添加失败!", Toast.LENGTH_LONG).show();
+        }
     }
 
     private boolean checkInput() throws ParseException {
