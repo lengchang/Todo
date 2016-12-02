@@ -1,5 +1,7 @@
 package com.example.linukey.BLL;
 
+import android.app.Application;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,7 +11,7 @@ import java.util.Map;
  * Created by linukey on 11/29/16.
  */
 
-public class TodoHelper {
+public class TodoHelper extends Application {
 
     public static Map<String, String> TaskState = new HashMap<String, String>(){{
         put("complete", "已完成");
@@ -27,4 +29,20 @@ public class TodoHelper {
         put("normal", "normal");
         put("administrator", "administrator");
     }};
+
+    public static String UserName = "linukey";
+    public static String UserId = "1";
+
+    @Override
+    public void onCreate() {
+        // TODO Auto-generated method stub
+        super.onCreate();
+        instance = this;
+    }
+
+    private static TodoHelper instance;
+
+    public static TodoHelper getInstance() {
+        return instance;
+    }
 }

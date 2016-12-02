@@ -1,10 +1,23 @@
 package com.example.linukey.Model;
 
+import com.example.linukey.DAL.SelfTaskContentProvider;
+
+import java.io.Serializable;
+
 /**
  * Created by linukey on 11/29/16.
  */
 
-public class SelfTask {
+public class SelfTask implements Serializable {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
     private String title;
     private String content;
     private String starttime;
@@ -16,10 +29,12 @@ public class SelfTask {
     private String userId;
     private String state;
     private String isdelete;
+    private String istmp;
 
-    public SelfTask(String title, String content, String starttime, String endtime,
+    public SelfTask(int id, String title, String content, String starttime, String endtime,
                     String clocktime, String projectId, String goalId, String sightId,
-                    String userId, String state, String isdelete) {
+                    String userId, String state, String isdelete, String isTmp) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.starttime = starttime;
@@ -31,10 +46,36 @@ public class SelfTask {
         this.userId = userId;
         this.state = state;
         this.isdelete = isdelete;
+        this.istmp = isTmp;
+    }
+
+    public SelfTask(String title, String content, String starttime, String endtime,
+                    String clocktime, String projectId, String goalId, String sightId,
+                    String userId, String state, String isdelete, String isTmp) {
+        this.title = title;
+        this.content = content;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.clocktime = clocktime;
+        this.projectId = projectId;
+        this.goalId = goalId;
+        this.sightId = sightId;
+        this.userId = userId;
+        this.state = state;
+        this.isdelete = isdelete;
+        this.istmp = isTmp;
     }
 
     public SelfTask(){
 
+    }
+
+    public String getIsTmp() {
+        return istmp;
+    }
+
+    public void setIsTmp(String isTmp) {
+        this.istmp = isTmp;
     }
 
     public String getTitle() {

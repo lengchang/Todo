@@ -1,6 +1,8 @@
 package com.example.linukey.todo;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,8 +13,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.linukey.BLL.TodoHelper;
+import com.example.linukey.DAL.LocalDateSource;
+import com.example.linukey.Model.SelfTask;
+
+import java.text.ParseException;
+import java.util.List;
+import java.util.zip.Inflater;
 
 public class MainActivity extends Activity {
 
@@ -20,29 +32,23 @@ public class MainActivity extends Activity {
 
     final int addSelfTask_ResultCode = 1;
 
+    HomePageFragment homePageFragment;
+    SelfTaskFragment selfTaskFragment;
+    TeamTaskFragment teamTaskFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setView(R.id.menuPage, R.layout.home_page);
-        //initActionBar();
+        initFragment();
+        getFragmentManager().beginTransaction().add(R.id.menuFragment, homePageFragment).commit();
     }
 
-    public void initActionBar(){
-        android.app.ActionBar actionBar = getActionBar();
-
-//        actionBar.setDisplayUseLogoEnabled(false);
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        //android.app.ActionBar.Tab tab = actionBar.newTab();
-        //tab.setIcon(R.mipmap.ic_launcher).setText("haha");
-
-        //actionBar.addTab(tab);
-    }
-
-    public void onClick(View view){
-        Toast.makeText(this, "asdf", Toast.LENGTH_LONG).show();
+    private void initFragment(){
+        homePageFragment = new HomePageFragment();
+        selfTaskFragment = new SelfTaskFragment();
+        teamTaskFragment = new TeamTaskFragment();
     }
 
     @Override
@@ -58,11 +64,11 @@ public class MainActivity extends Activity {
     }
 
     private void CreateMenu(Menu menu){
-        MenuItem taskAdd = menu.add(0,0,0, "taskAdd");
+        MenuItem taskAdd = menu.add(0,0,0, "添加任务");
         taskAdd.setIcon(R.mipmap.add);
         taskAdd.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-        MenuItem setting = menu.add(0,1,1, "setting");
+        MenuItem setting = menu.add(0,1,1, "系统设置");
         setting.setIcon(R.mipmap.setting);
         setting.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
@@ -94,29 +100,22 @@ public class MainActivity extends Activity {
     public void onClick_Home(View view){
         homeSelect = true;
 
-        setView(R.id.menuPage, R.layout.home_page);
+        getFragmentManager().beginTransaction().replace(R.id.menuFragment, homePageFragment).commit();
         changeIcon();
     }
 
     public void onClick_Self(View view){
         selfSelect = true;
 
-        setView(R.id.menuPage, R.layout.self_page);
+        getFragmentManager().beginTransaction().replace(R.id.menuFragment, selfTaskFragment).commit();
         changeIcon();
     }
 
     public void onClick_Team(View view){
         teamSelect = true;
 
-        setView(R.id.menuPage, R.layout.team_page);
+        getFragmentManager().beginTransaction().replace(R.id.menuFragment, teamTaskFragment).commit();
         changeIcon();
-    }
-
-    private void setView(int parentId, int childId){
-        LinearLayout parent = (LinearLayout)findViewById(parentId);
-        parent.removeAllViews();
-        View child = LayoutInflater.from(this).inflate(childId, null);
-        parent.addView(child);
     }
 
     private void changeIcon(){

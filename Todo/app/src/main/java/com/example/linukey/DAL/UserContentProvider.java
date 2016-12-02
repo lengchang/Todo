@@ -25,17 +25,22 @@ public class UserContentProvider extends ContentProvider {
     public static final String key_teamId = "teamId";
     public static final String key_userId = "userId";
 
+    public static final String[] keys = new String[]{
+            key_id, key_username, key_password, key_email, key_phonenumber, key_usergroup,
+            key_teamId, key_userId
+    };
+
     public static final String tableName = "user";
 
     public static final String sql_createTable = "create table " + tableName + "(" +
-            key_id + " integer primary key autoincrement," +
-            key_username + " varchar not null," +
-            key_password + " varchar not null," +
-            key_email + " varchar not null," +
-            key_phonenumber + " varchar not null," +
-            key_usergroup + " varchar not null," +
-            key_teamId + " varchar," +
-            key_userId + " varchar not null);";
+            keys[0] + " integer primary key autoincrement," +
+            keys[1] + " varchar not null," +
+            keys[2] + " varchar not null," +
+            keys[3] + " varchar not null," +
+            keys[4] + " varchar not null," +
+            keys[5] + " varchar not null," +
+            keys[6] + " varchar," +
+            keys[7] + " varchar not null);";
 
 
     DBHelper dbHelper = null;

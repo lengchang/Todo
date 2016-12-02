@@ -12,6 +12,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="2dp"
         android:drawablePadding="10dp"
+        android:id="@+id/btnToday"
         android:drawableStart="@mipmap/today"
         android:background="@drawable/menuselector"
         android:paddingLeft="15dp"

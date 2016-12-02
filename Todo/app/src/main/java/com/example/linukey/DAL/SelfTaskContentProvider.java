@@ -27,22 +27,28 @@ public class SelfTaskContentProvider extends ContentProvider {
     public static final String key_userId = "userId";
     public static final String key_state = "state";
     public static final String key_isdelete = "isdelete";
+    public static final String key_istmp = "istmp";
+
+    public static final String[] keys = new String[]{key_id, key_title, key_content,
+    key_starttime, key_endtime, key_clocktime, key_projectId, key_goalId, key_sightId,
+    key_userId, key_state, key_isdelete, key_istmp};
 
     public static final String tableName = "selftask";
 
     public static final String sql_createTable = "create table " + tableName + "(" +
-            key_id + " integer primary key autoincrement," +
-            key_title + " varchar not null," +
-            key_content + " varchar not null," +
-            key_starttime + " varchar not null," +
-            key_endtime + " varchar not null," +
-            key_clocktime + " varchar not null," +
-            key_projectId + " varchar not null," +
-            key_goalId + " varchar not null," +
-            key_sightId + " varchar not null," +
-            key_userId + " varchar not null," +
-            key_state + " varchar not null," +
-            key_isdelete + " varchar not null);";
+            keys[0] + " integer primary key autoincrement," +
+            keys[1] + " varchar not null," +
+            keys[2] + " varchar not null," +
+            keys[3] + " varchar not null," +
+            keys[4] + " varchar not null," +
+            keys[5] + " varchar not null," +
+            keys[6] + " varchar not null," +
+            keys[7] + " varchar not null," +
+            keys[8] + " varchar not null," +
+            keys[9] + " varchar not null," +
+            keys[10] + " varchar not null," +
+            keys[11] + " varchar not null," +
+            keys[12] + " varchar not null);";
 
     private DBHelper dbHelper = null;
 

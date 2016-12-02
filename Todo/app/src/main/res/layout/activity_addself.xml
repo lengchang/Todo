@@ -28,36 +28,27 @@
         android:background="#FFFFFF"
         android:id="@+id/content"/>
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/content"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:background="#FFFFFF"-->
-        <!--android:id="@+id/taskGroupArea">-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:textSize="16sp"-->
-            <!--android:text="任务类型"/>-->
-        <!--<Spinner-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:id="@+id/taskGroup"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginRight="25dp"-->
-            <!--android:layout_alignParentRight="true">-->
-        <!--</Spinner>-->
-    <!--</RelativeLayout>-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:id="@+id/taskGroupArea">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备忘箱"
+            android:id="@+id/istmp"
+            android:onClick="onClick_selectTmp"/>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/content"
+        android:layout_below="@id/taskGroupArea"
         android:id="@+id/time"
         android:layout_marginTop="20dp"
         android:orientation="vertical">
@@ -140,6 +131,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/time"
+        android:id="@+id/classes"
         android:layout_marginTop="20sp"
         android:orientation="vertical">
         <RelativeLayout
@@ -154,16 +146,14 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:text="项目"/>
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:textSize="16sp"
-                android:textColor="#34728C"
-                android:layout_marginRight="30dp"
+            <Spinner
+                android:layout_width="150dp"
+                android:layout_height="30dp"
                 android:id="@+id/project"
-                android:text="one"/>
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:layout_alignParentRight="true">
+            </Spinner>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -178,16 +168,14 @@
                 android:layout_centerVertical="true"
                 android:textSize="16sp"
                 android:text="目标"/>
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:textSize="16sp"
-                android:layout_marginRight="30dp"
-                android:textColor="#34728C"
-                android:layout_centerVertical="true"
+            <Spinner
+                android:layout_width="150dp"
+                android:layout_height="30dp"
                 android:id="@+id/goal"
-                android:text="tw0"/>
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:layout_alignParentRight="true">
+            </Spinner>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -202,16 +190,24 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="情景"/>
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:textSize="16sp"
-                android:textColor="#34728C"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="30dp"
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:textSize="16sp"-->
+                <!--android:textColor="#34728C"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginRight="30dp"-->
+                <!--android:id="@+id/sight"-->
+                <!--android:text="three"/>-->
+            <Spinner
+                android:layout_width="150dp"
+                android:layout_height="30dp"
                 android:id="@+id/sight"
-                android:text="three"/>
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp">
+            </Spinner>
         </RelativeLayout>
     </LinearLayout>
 

@@ -4,15 +4,16 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
+import android.icu.text.SelectFormat;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -20,11 +21,11 @@ import android.widget.Toast;
 
 import com.example.linukey.BLL.AddSelfBLL;
 import com.example.linukey.BLL.TodoHelper;
+import com.example.linukey.DAL.LocalDateSource;
 import com.example.linukey.Model.SelfTask;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -34,24 +35,62 @@ import java.util.Date;
 public class AddSelfActivity extends Activity {
     final Context context = this;
     AddSelfModel addSelfModel;
+    boolean isEdit = false;
+    int preId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_self);
+        setContentView(R.layout.activity_addself);
         initAddSelfModel();
         initControl();
+
+        Intent edit = getIntent();
+        Bundle bundle = edit.getBundleExtra("bundle");
+        if(bundle != null) {
+            SelfTask selfTask = (SelfTask) bundle.getSerializable("date");
+            initEdit(selfTask);
+            isEdit = true;
+            preId = selfTask.getId();
+        }
     }
 
     class AddSelfModel{
         TextView starttime;
         TextView endtime;
+        TextView clocktime;
+        CheckBox istmp;
+        EditText title;
+        EditText content;
+        LinearLayout time;
+        LinearLayout classes;
+        Spinner projectId;
+        Spinner goalId;
+        Spinner sightId;
+    }
+
+    public void initEdit(SelfTask selfTask){
+        addSelfModel.title.setText(selfTask.getTitle());
+        addSelfModel.content.setText(selfTask.getContent());
+        addSelfModel.starttime.setText(selfTask.getStarttime());
+        addSelfModel.endtime.setText(selfTask.getStarttime());
+        addSelfModel.clocktime.setText(selfTask.getClocktime());
+        addSelfModel.istmp.setChecked(Boolean.parseBoolean(selfTask.getIsTmp()));
     }
 
     public void initAddSelfModel(){
         addSelfModel = new AddSelfModel();
         addSelfModel.starttime = (TextView)findViewById(R.id.starttime);
         addSelfModel.endtime = (TextView)findViewById(R.id.endtime);
+        addSelfModel.istmp = (CheckBox)findViewById(R.id.istmp);
+        addSelfModel.title = (EditText)findViewById(R.id.title);
+        addSelfModel.content = (EditText)findViewById(R.id.content);
+        addSelfModel.clocktime = (TextView)findViewById(R.id.clocktime);
+        addSelfModel.time = (LinearLayout)findViewById(R.id.time);
+        addSelfModel.classes = (LinearLayout)findViewById(R.id.classes);
+        addSelfModel.projectId = (Spinner)findViewById(R.id.project);
+        addSelfModel.goalId = (Spinner)findViewById(R.id.goal);
+        addSelfModel.sightId = (Spinner)findViewById(R.id.sight);
     }
 
     public void initControl() {
@@ -144,7 +183,8 @@ public class AddSelfActivity extends Activity {
             case 1:
                 if (checkInput()) {
                     setResult(RESULT_OK);
-                    saveTask();
+                    if(saveTask() && isEdit)
+                        setResult(RESULT_OK);
                     finish();
                 }
                 return true;
@@ -152,26 +192,52 @@ public class AddSelfActivity extends Activity {
         return false;
     }
 
-    private void saveTask() {
-        String title = ((EditText) findViewById(R.id.title)).getText().toString().trim();
-        String content = ((EditText) findViewById(R.id.content)).getText().toString().trim();
-        String starttime = ((TextView) findViewById(R.id.starttime)).getText().toString();
-        String endtime = ((TextView) findViewById(R.id.endtime)).getText().toString();
-        String clocktime = ((TextView) findViewById(R.id.clocktime)).getText().toString();
+    private boolean saveTask() {
+        String title = addSelfModel.title.getText().toString().trim();
+        String content = addSelfModel.content.getText().toString().trim();
+        String starttime = addSelfModel.starttime.getText().toString();
+        String endtime = addSelfModel.endtime.getText().toString();
+        String clocktime = addSelfModel.clocktime.getText().toString();
         String projectId = "1";
         String goalId = "2";
         String sightId = "3";
-        String userId = "linukey";
+        String userId = TodoHelper.UserId;
         String state = TodoHelper.TaskState.get("noComplete");
         String isdelete = "0";
+        String istmp = "0";
+        if (addSelfModel.istmp.isChecked())
+            istmp = "1";
 
         SelfTask selfTask = new SelfTask(title, content, starttime, endtime, clocktime, projectId,
-                goalId, sightId, userId, state, isdelete);
+                goalId, sightId, userId, state, isdelete, istmp);
 
-        if(new AddSelfBLL().saveTaskInfo(selfTask, this)){
-            Toast.makeText(this, "任务添加成功!", Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(this, "任务添加失败!", Toast.LENGTH_LONG).show();
+
+        if(isEdit){
+            if(new AddSelfBLL().updateTaskInfo(selfTask, preId, this)){
+                Toast.makeText(this, "任务修改成功!", Toast.LENGTH_SHORT).show();
+                return true;
+            }else{
+                Toast.makeText(this, "任务修改失败!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }else {
+            if (new AddSelfBLL().saveTaskInfo(selfTask, this)) {
+                Toast.makeText(this, "任务添加成功!", Toast.LENGTH_SHORT).show();
+                return true;
+            } else {
+                Toast.makeText(this, "任务添加失败!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+    }
+
+    public void onClick_selectTmp(View view){
+        if(addSelfModel.istmp.isChecked()) {
+            addSelfModel.time.setVisibility(View.INVISIBLE);
+            addSelfModel.classes.setVisibility(View.INVISIBLE);
+        }else {
+            addSelfModel.time.setVisibility(View.VISIBLE);
+            addSelfModel.classes.setVisibility(View.VISIBLE);
         }
     }
 

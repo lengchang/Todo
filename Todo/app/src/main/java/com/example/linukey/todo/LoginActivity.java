@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.example.linukey.BLL.LoginBLL;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +28,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
         initUserInputModel();
     }
 
