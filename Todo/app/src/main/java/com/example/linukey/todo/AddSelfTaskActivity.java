@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.SelectFormat;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.linukey.BLL.AddSelfBLL;
+import com.example.linukey.BLL.AddSelfTaskBLL;
 import com.example.linukey.BLL.TodoHelper;
 import com.example.linukey.DAL.LocalDateSource;
 import com.example.linukey.Model.SelfTask;
@@ -32,7 +31,7 @@ import java.util.Date;
  * Created by linukey on 11/25/16.
  */
 
-public class AddSelfActivity extends Activity {
+public class AddSelfTaskActivity extends Activity {
     final Context context = this;
     AddSelfModel addSelfModel;
     boolean isEdit = false;
@@ -41,7 +40,7 @@ public class AddSelfActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addself);
+        setContentView(R.layout.activity_addselftask);
         initAddSelfModel();
         initControl();
 
@@ -50,8 +49,8 @@ public class AddSelfActivity extends Activity {
         if(bundle != null) {
             SelfTask selfTask = (SelfTask) bundle.getSerializable("date");
             initEdit(selfTask);
-            isEdit = true;
             preId = selfTask.getId();
+            isEdit = true;
         }
     }
 
@@ -75,7 +74,10 @@ public class AddSelfActivity extends Activity {
         addSelfModel.starttime.setText(selfTask.getStarttime());
         addSelfModel.endtime.setText(selfTask.getStarttime());
         addSelfModel.clocktime.setText(selfTask.getClocktime());
-        addSelfModel.istmp.setChecked(Boolean.parseBoolean(selfTask.getIsTmp()));
+        if(Integer.parseInt(selfTask.getIsTmp()) == 1){
+            addSelfModel.istmp.setChecked(true);
+            onClick_selectTmp(null);
+        }
     }
 
     public void initAddSelfModel(){
@@ -182,10 +184,13 @@ public class AddSelfActivity extends Activity {
                 return true;
             case 1:
                 if (checkInput()) {
-                    setResult(RESULT_OK);
-                    if(saveTask() && isEdit)
+                    if(saveTask()) {
+                        LocalDateSource.updateSelfTasks(this, TodoHelper.UserId);
                         setResult(RESULT_OK);
-                    finish();
+                        finish();
+                    }else {
+                        Toast.makeText(this, "系统错误!", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 return true;
         }
@@ -208,26 +213,13 @@ public class AddSelfActivity extends Activity {
         if (addSelfModel.istmp.isChecked())
             istmp = "1";
 
-        SelfTask selfTask = new SelfTask(title, content, starttime, endtime, clocktime, projectId,
+        SelfTask selfTask = new SelfTask(preId, title, content, starttime, endtime, clocktime, projectId,
                 goalId, sightId, userId, state, isdelete, istmp);
 
-
         if(isEdit){
-            if(new AddSelfBLL().updateTaskInfo(selfTask, preId, this)){
-                Toast.makeText(this, "任务修改成功!", Toast.LENGTH_SHORT).show();
-                return true;
-            }else{
-                Toast.makeText(this, "任务修改失败!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+            return new AddSelfTaskBLL().updateTaskInfo(selfTask, this);
         }else {
-            if (new AddSelfBLL().saveTaskInfo(selfTask, this)) {
-                Toast.makeText(this, "任务添加成功!", Toast.LENGTH_SHORT).show();
-                return true;
-            } else {
-                Toast.makeText(this, "任务添加失败!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+            return new AddSelfTaskBLL().saveTaskInfo(selfTask, this);
         }
     }
 

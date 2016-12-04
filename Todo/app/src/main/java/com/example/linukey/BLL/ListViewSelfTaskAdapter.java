@@ -1,4 +1,4 @@
-package com.example.linukey.todo;
+package com.example.linukey.BLL;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.linukey.Model.SelfTask;
-import com.example.linukey.Model.SelfTaskView;
+import com.example.linukey.todo.R;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by linukey on 11/17/16.
  */
 
-public class ListViewSelfAdapter extends BaseAdapter {
+public class ListViewSelfTaskAdapter extends BaseAdapter {
     Context context;
     List<SelfTask> sourceDate;
 
@@ -27,7 +27,7 @@ public class ListViewSelfAdapter extends BaseAdapter {
         TextView time;
     }
 
-    public ListViewSelfAdapter(Context context, List<SelfTask> sourceDate){
+    public ListViewSelfTaskAdapter(Context context, List<SelfTask> sourceDate){
         this.context = context;
         this.sourceDate = sourceDate;
     }

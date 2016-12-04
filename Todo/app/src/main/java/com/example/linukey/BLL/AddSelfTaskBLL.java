@@ -4,18 +4,12 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.icu.text.SelectFormat;
 import android.net.Uri;
-import android.support.v7.widget.ActionBarContextView;
-import android.widget.Toast;
 
 import com.example.linukey.DAL.DBHelper;
-import com.example.linukey.DAL.LocalDateSource;
 import com.example.linukey.DAL.SelfTaskContentProvider;
 import com.example.linukey.Model.SelfTask;
-import com.example.linukey.Model.SelfTaskView;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +17,7 @@ import java.util.List;
  * Created by linukey on 12/1/16.
  */
 
-public class AddSelfBLL {
+public class AddSelfTaskBLL {
 
     public boolean saveTaskInfo(SelfTask selfTask, Context context){
         ContentValues newValues = new ContentValues();
@@ -50,7 +44,7 @@ public class AddSelfBLL {
         return false;
     }
 
-    public boolean updateTaskInfo(SelfTask selfTask, int preId, Context context){
+    public boolean updateTaskInfo(SelfTask selfTask, Context context){
         ContentValues newValues = new ContentValues();
         newValues.put(SelfTaskContentProvider.key_title, selfTask.getTitle());
         newValues.put(SelfTaskContentProvider.key_content, selfTask.getContent());
@@ -62,7 +56,7 @@ public class AddSelfBLL {
         newValues.put(SelfTaskContentProvider.key_sightId, selfTask.getSightId());
         newValues.put(SelfTaskContentProvider.key_istmp, selfTask.getIsTmp());
 
-        String where = SelfTaskContentProvider.key_id + " = " + preId;
+        String where = SelfTaskContentProvider.key_id + " = " + selfTask.getId();
         String[] selectionArgs = null;
 
         ContentResolver cr = context.getContentResolver();
@@ -103,7 +97,7 @@ public class AddSelfBLL {
 
         List<SelfTask> result;
 
-        if(resultCursor != null){
+        if(resultCursor != null && resultCursor.getCount() > 0){
             result = new ArrayList<>();
             while(resultCursor.moveToNext()){
                 SelfTask selfTask = new SelfTask(

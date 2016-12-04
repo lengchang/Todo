@@ -12,6 +12,9 @@ import android.net.Uri;
 public class DBHelper extends SQLiteOpenHelper {
     public static final Uri ContentUri_selftask = Uri.parse("content://com.linukey.Todo.self_task");
     public static final Uri ContentUri_user = Uri.parse("content://com.linukey.Todo.user");
+    public static final Uri ContentUri_project = Uri.parse("content://com.linukey.Todo.project");
+    public static final Uri ContentUri_goal = Uri.parse("content://com.linukey.Todo.goal");
+    public static final Uri ContentUri_sight = Uri.parse("content://com.linukey.Todo.sight");
 
     public static final String dbName = "Todo.db";
     public static final int dbVersion = 1;
@@ -24,12 +27,18 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SelfTaskContentProvider.sql_createTable);
         db.execSQL(UserContentProvider.sql_createTable);
+        db.execSQL(ProjectContentProvider.sql_createTable);
+        db.execSQL(GoalContentProvider.sql_createTable);
+        db.execSQL(SightContentProvider.sql_createTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if it exists" + SelfTaskContentProvider.tableName);
         db.execSQL("drop table if it exists" + UserContentProvider.tableName);
+        db.execSQL("drop table if it exists" + ProjectContentProvider.tableName);
+        db.execSQL("drop table if it exists" + GoalContentProvider.tableName);
+        db.execSQL("drop table if it exists" + SightContentProvider.tableName);
         onCreate(db);
     }
 }

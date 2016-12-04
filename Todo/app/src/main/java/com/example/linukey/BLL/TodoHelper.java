@@ -30,6 +30,11 @@ public class TodoHelper extends Application {
         put("administrator", "administrator");
     }};
 
+    public static Map<String, String> PGS_State = new HashMap<String, String>(){{
+        put("complete", "已完成");
+        put("noComplete", "未完成");
+    }};
+
     public static String UserName = "linukey";
     public static String UserId = "1";
 

@@ -1,30 +1,15 @@
 package com.example.linukey.todo;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
-
-import com.example.linukey.BLL.TodoHelper;
-import com.example.linukey.DAL.LocalDateSource;
-import com.example.linukey.Model.SelfTask;
-
-import java.text.ParseException;
-import java.util.List;
-import java.util.zip.Inflater;
 
 public class MainActivity extends Activity {
 
@@ -33,7 +18,7 @@ public class MainActivity extends Activity {
     final int addSelfTask_ResultCode = 1;
 
     HomePageFragment homePageFragment;
-    SelfTaskFragment selfTaskFragment;
+    SelfTaskMenuFragment selfTaskMenuFragment;
     TeamTaskFragment teamTaskFragment;
 
     @Override
@@ -47,7 +32,7 @@ public class MainActivity extends Activity {
 
     private void initFragment(){
         homePageFragment = new HomePageFragment();
-        selfTaskFragment = new SelfTaskFragment();
+        selfTaskMenuFragment = new SelfTaskMenuFragment();
         teamTaskFragment = new TeamTaskFragment();
     }
 
@@ -86,7 +71,7 @@ public class MainActivity extends Activity {
     }
 
     private void addSelfTask(){
-        Intent addSelfTask = new Intent("com.linukey.Todo.AddSelfActivity");
+        Intent addSelfTask = new Intent("com.linukey.Todo.AddSelfTaskActivity");
         startActivityForResult(addSelfTask, addSelfTask_ResultCode);
     }
 
@@ -107,7 +92,7 @@ public class MainActivity extends Activity {
     public void onClick_Self(View view){
         selfSelect = true;
 
-        getFragmentManager().beginTransaction().replace(R.id.menuFragment, selfTaskFragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.menuFragment, selfTaskMenuFragment).commit();
         changeIcon();
     }
 

@@ -26,6 +26,7 @@
         android:textAlignment="viewStart"
         android:drawablePadding="10dp"
         android:layout_marginBottom="2dp"
+        android:id="@+id/btnTomorrow"
         android:paddingLeft="15dp"
         android:text="明日待办"/>
     <Button
@@ -38,6 +39,7 @@
         android:drawablePadding="10dp"
         android:layout_marginBottom="2dp"
         android:paddingLeft="15dp"
+        android:id="@+id/btnNext"
         android:text="下一步行动"/>
     <Button
         android:layout_width="match_parent"
@@ -47,6 +49,7 @@
         android:drawableStart="@mipmap/box"
         android:textAlignment="viewStart"
         android:drawablePadding="10dp"
+        android:id="@+id/btnBox"
         android:paddingLeft="15dp"
         android:text="备忘箱"/>
 
@@ -61,6 +64,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="2dp"
         android:paddingLeft="15dp"
+        android:id="@+id/btnProject"
         android:text="项目"/>
     <Button
         android:layout_width="match_parent"
@@ -72,6 +76,7 @@
         android:drawablePadding="10dp"
         android:layout_marginBottom="2dp"
         android:paddingLeft="15dp"
+        android:id="@+id/btnGoal"
         android:text="目标"/>
     <Button
         android:layout_width="match_parent"
@@ -82,5 +87,6 @@
         android:textAlignment="viewStart"
         android:drawablePadding="15dp"
         android:paddingLeft="15dp"
+        android:id="@+id/btnSight"
         android:text="情景"/>
 </LinearLayout>
