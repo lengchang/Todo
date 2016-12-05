@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.linukey.BLL.AddSelfPGSBLL;
@@ -29,8 +30,8 @@ public class AddSelfpgsActivity extends Activity {
     private int preId;
 
     class ViewHolder{
-        EditText title;
-        EditText content;
+        TextView title;
+        TextView content;
     }
 
     ViewHolder viewHolder;
@@ -38,8 +39,8 @@ public class AddSelfpgsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addselfpgs);
-        initDate();
         initViewHolder();
+        initDate();
     }
 
     private void initDate(){
@@ -47,21 +48,46 @@ public class AddSelfpgsActivity extends Activity {
         menuName = edit.getStringExtra("menuname");
         Bundle bundle = edit.getBundleExtra("bundle");
         if(bundle != null) {
-            SelfTask selfTask = (SelfTask) bundle.getSerializable("date");
-            initEdit(selfTask);
-            preId = selfTask.getId();
+            switch (menuName){
+                case "project":
+                    Project project = (Project)bundle.getSerializable("date");
+                    preId = project.getId();
+                    initEdit(project);
+                    break;
+                case "goal":
+                    Goal goal = (Goal)bundle.getSerializable("date");
+                    preId = goal.getId();
+                    initEdit(goal);
+                    break;
+                case "sight":
+                    Sight sight = (Sight)bundle.getSerializable("date");
+                    preId = sight.getId();
+                    initEdit(sight);
+                    break;
+            }
             isEdit = true;
         }
     }
 
-    private void initEdit(SelfTask selfTask){
+    private void initEdit(Project project){
+        viewHolder.title.setText(project.getTitle());
+        viewHolder.content.setText(project.getContent());
+    }
 
+    private void initEdit(Goal goal){
+        viewHolder.title.setText(goal.getTitle());
+        viewHolder.content.setText(goal.getContent());
+    }
+
+    private void initEdit(Sight sight){
+        viewHolder.title.setText(sight.getTitle());
+        viewHolder.content.setText(sight.getTitle());
     }
 
     private void initViewHolder(){
         viewHolder = new ViewHolder();
-        viewHolder.title = (EditText)findViewById(R.id.title);
-        viewHolder.content = (EditText)findViewById(R.id.content);
+        viewHolder.title = (TextView)findViewById(R.id.title);
+        viewHolder.content = (TextView)findViewById(R.id.content);
     }
 
     @Override
@@ -140,6 +166,7 @@ public class AddSelfpgsActivity extends Activity {
         project.setProjectId(UUID.randomUUID().toString());
         project.setState(TodoHelper.PGS_State.get("noComplete"));
         project.setUserId(TodoHelper.UserId);
+        project.setId(preId);
 
         if(isEdit)
             return new AddSelfPGSBLL().updateProject(project, this);
@@ -153,6 +180,7 @@ public class AddSelfpgsActivity extends Activity {
         goal.setGoalId(UUID.randomUUID().toString());
         goal.setState(TodoHelper.PGS_State.get("noComplete"));
         goal.setUserId(TodoHelper.UserId);
+        goal.setId(preId);
 
         if(isEdit)
             return new AddSelfPGSBLL().updateGoal(goal, this);
@@ -165,6 +193,7 @@ public class AddSelfpgsActivity extends Activity {
         sight.setContent(viewHolder.content.getText().toString());
         sight.setSightId(UUID.randomUUID().toString());
         sight.setUserId(TodoHelper.UserId);
+        sight.setId(preId);
 
         if(isEdit)
             return new AddSelfPGSBLL().updateSight(sight, this);

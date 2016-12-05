@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,11 +22,16 @@ import android.widget.Toast;
 import com.example.linukey.BLL.AddSelfTaskBLL;
 import com.example.linukey.BLL.TodoHelper;
 import com.example.linukey.DAL.LocalDateSource;
+import com.example.linukey.Model.Goal;
+import com.example.linukey.Model.Project;
 import com.example.linukey.Model.SelfTask;
+import com.example.linukey.Model.Sight;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by linukey on 11/25/16.
@@ -33,15 +39,18 @@ import java.util.Date;
 
 public class AddSelfTaskActivity extends Activity {
     final Context context = this;
-    AddSelfModel addSelfModel;
+    ViewHolder viewHolder;
     boolean isEdit = false;
+    List<Project> projectList = LocalDateSource.projects;
+    List<Goal> goalList = LocalDateSource.goals;
+    List<Sight> sightList = LocalDateSource.sights;
     int preId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addselftask);
-        initAddSelfModel();
+        initViewHolder();
         initControl();
 
         Intent edit = getIntent();
@@ -54,7 +63,7 @@ public class AddSelfTaskActivity extends Activity {
         }
     }
 
-    class AddSelfModel{
+    class ViewHolder{
         TextView starttime;
         TextView endtime;
         TextView clocktime;
@@ -63,36 +72,57 @@ public class AddSelfTaskActivity extends Activity {
         EditText content;
         LinearLayout time;
         LinearLayout classes;
-        Spinner projectId;
-        Spinner goalId;
-        Spinner sightId;
+        Spinner projects;
+        Spinner goals;
+        Spinner sights;
     }
 
     public void initEdit(SelfTask selfTask){
-        addSelfModel.title.setText(selfTask.getTitle());
-        addSelfModel.content.setText(selfTask.getContent());
-        addSelfModel.starttime.setText(selfTask.getStarttime());
-        addSelfModel.endtime.setText(selfTask.getStarttime());
-        addSelfModel.clocktime.setText(selfTask.getClocktime());
+        viewHolder.title.setText(selfTask.getTitle());
+        viewHolder.content.setText(selfTask.getContent());
+        viewHolder.starttime.setText(selfTask.getStarttime());
+        viewHolder.endtime.setText(selfTask.getStarttime());
+        viewHolder.clocktime.setText(selfTask.getClocktime());
         if(Integer.parseInt(selfTask.getIsTmp()) == 1){
-            addSelfModel.istmp.setChecked(true);
+            viewHolder.istmp.setChecked(true);
             onClick_selectTmp(null);
+        }
+        if(selfTask.getProjectId() != null){
+            for(int i = 0; i < projectList.size(); i++){
+                if(projectList.get(i).getProjectId().equals(selfTask.getProjectId())){
+                    viewHolder.projects.setSelection(i);
+                }
+            }
+        }
+        if(selfTask.getGoalId() != null){
+            for(int i = 0; i < goalList.size(); i++){
+                if(goalList.get(i).getGoalId().equals(selfTask.getGoalId())){
+                    viewHolder.goals.setSelection(i);
+                }
+            }
+        }
+        if(selfTask.getSightId() != null){
+            for(int i = 0; i < sightList.size(); i++){
+                if(sightList.get(i).getSightId().equals(selfTask.getSightId())){
+                    viewHolder.sights.setSelection(i);
+                }
+            }
         }
     }
 
-    public void initAddSelfModel(){
-        addSelfModel = new AddSelfModel();
-        addSelfModel.starttime = (TextView)findViewById(R.id.starttime);
-        addSelfModel.endtime = (TextView)findViewById(R.id.endtime);
-        addSelfModel.istmp = (CheckBox)findViewById(R.id.istmp);
-        addSelfModel.title = (EditText)findViewById(R.id.title);
-        addSelfModel.content = (EditText)findViewById(R.id.content);
-        addSelfModel.clocktime = (TextView)findViewById(R.id.clocktime);
-        addSelfModel.time = (LinearLayout)findViewById(R.id.time);
-        addSelfModel.classes = (LinearLayout)findViewById(R.id.classes);
-        addSelfModel.projectId = (Spinner)findViewById(R.id.project);
-        addSelfModel.goalId = (Spinner)findViewById(R.id.goal);
-        addSelfModel.sightId = (Spinner)findViewById(R.id.sight);
+    public void initViewHolder(){
+        viewHolder = new ViewHolder();
+        viewHolder.starttime = (TextView)findViewById(R.id.starttime);
+        viewHolder.endtime = (TextView)findViewById(R.id.endtime);
+        viewHolder.istmp = (CheckBox)findViewById(R.id.istmp);
+        viewHolder.title = (EditText)findViewById(R.id.title);
+        viewHolder.content = (EditText)findViewById(R.id.content);
+        viewHolder.clocktime = (TextView)findViewById(R.id.clocktime);
+        viewHolder.time = (LinearLayout)findViewById(R.id.time);
+        viewHolder.classes = (LinearLayout)findViewById(R.id.classes);
+        viewHolder.projects = (Spinner)findViewById(R.id.projects);
+        viewHolder.goals = (Spinner)findViewById(R.id.goals);
+        viewHolder.sights = (Spinner)findViewById(R.id.sights);
     }
 
     public void initControl() {
@@ -105,6 +135,49 @@ public class AddSelfTaskActivity extends Activity {
 
         TextView clocktime = (TextView) findViewById(R.id.clocktime);
         clocktime.setText("0:0");
+
+        if(projectList != null)
+            initProjectSpiner(projectList);
+        if(goalList != null)
+            initGoalSpiner(goalList);
+        if(sightList != null)
+            initSightSpiner(sightList);
+    }
+
+    public void initProjectSpiner(List<Project> projects){
+        List<String> projectNames = new ArrayList<>();
+        for(Project project : projects){
+            projectNames.add(project.getTitle());
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                projectNames);
+        viewHolder.projects.setAdapter(arrayAdapter);
+    }
+
+    public void initGoalSpiner(List<Goal> goals){
+        List<String> goalNames = new ArrayList<>();
+        for(Goal goal : goals){
+            goalNames.add(goal.getTitle());
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                goalNames);
+        viewHolder.goals.setAdapter(arrayAdapter);
+    }
+
+    public void initSightSpiner(List<Sight> sights){
+        List<String> sightNames = new ArrayList<>();
+        for(Sight sight : sights){
+            sightNames.add(sight.getTitle());
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                sightNames);
+        viewHolder.sights.setAdapter(arrayAdapter);
     }
 
     public void onClick_dateSelect(View view) {
@@ -198,19 +271,25 @@ public class AddSelfTaskActivity extends Activity {
     }
 
     private boolean saveTask() {
-        String title = addSelfModel.title.getText().toString().trim();
-        String content = addSelfModel.content.getText().toString().trim();
-        String starttime = addSelfModel.starttime.getText().toString();
-        String endtime = addSelfModel.endtime.getText().toString();
-        String clocktime = addSelfModel.clocktime.getText().toString();
-        String projectId = "1";
-        String goalId = "2";
-        String sightId = "3";
+        String title = viewHolder.title.getText().toString().trim();
+        String content = viewHolder.content.getText().toString().trim();
+        String starttime = viewHolder.starttime.getText().toString();
+        String endtime = viewHolder.endtime.getText().toString();
+        String clocktime = viewHolder.clocktime.getText().toString();
+        String projectId = null;
+        if(viewHolder.projects.getSelectedItem() != null)
+            projectId = projectList.get(((int)viewHolder.projects.getSelectedItemId())).getProjectId();
+        String goalId = null;
+        if(viewHolder.goals.getSelectedItem() != null)
+            goalId = goalList.get(((int)viewHolder.goals.getSelectedItemId())).getGoalId();
+        String sightId = null;
+        if(viewHolder.sights.getSelectedItem() != null)
+            sightId = sightList.get(((int)viewHolder.sights.getSelectedItem())).getSightId();
         String userId = TodoHelper.UserId;
         String state = TodoHelper.TaskState.get("noComplete");
         String isdelete = "0";
         String istmp = "0";
-        if (addSelfModel.istmp.isChecked())
+        if (viewHolder.istmp.isChecked())
             istmp = "1";
 
         SelfTask selfTask = new SelfTask(preId, title, content, starttime, endtime, clocktime, projectId,
@@ -224,12 +303,12 @@ public class AddSelfTaskActivity extends Activity {
     }
 
     public void onClick_selectTmp(View view){
-        if(addSelfModel.istmp.isChecked()) {
-            addSelfModel.time.setVisibility(View.INVISIBLE);
-            addSelfModel.classes.setVisibility(View.INVISIBLE);
+        if(viewHolder.istmp.isChecked()) {
+            viewHolder.time.setVisibility(View.INVISIBLE);
+            viewHolder.classes.setVisibility(View.INVISIBLE);
         }else {
-            addSelfModel.time.setVisibility(View.VISIBLE);
-            addSelfModel.classes.setVisibility(View.VISIBLE);
+            viewHolder.time.setVisibility(View.VISIBLE);
+            viewHolder.classes.setVisibility(View.VISIBLE);
         }
     }
 
@@ -241,9 +320,9 @@ public class AddSelfTaskActivity extends Activity {
             Toast.makeText(context, "请输入内容!", Toast.LENGTH_LONG).show();
             return false;
         } else if(new SimpleDateFormat("yyyy-MM-dd")
-                .parse(addSelfModel.starttime.getText().toString()).getTime() >
+                .parse(viewHolder.starttime.getText().toString()).getTime() >
                 new SimpleDateFormat("yyyy-MM-dd")
-                        .parse(addSelfModel.endtime.getText().toString()).getTime()) {
+                        .parse(viewHolder.endtime.getText().toString()).getTime()) {
             Toast.makeText(context, "请输入有效时间范围!", Toast.LENGTH_LONG).show();
             return false;
         }else{

@@ -149,7 +149,7 @@
             <Spinner
                 android:layout_width="150dp"
                 android:layout_height="30dp"
-                android:id="@+id/project"
+                android:id="@+id/projects"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
                 android:layout_alignParentRight="true">
@@ -171,7 +171,7 @@
             <Spinner
                 android:layout_width="150dp"
                 android:layout_height="30dp"
-                android:id="@+id/goal"
+                android:id="@+id/goals"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
                 android:layout_alignParentRight="true">
@@ -190,20 +190,10 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="情景"/>
-            <!--<TextView-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:textSize="16sp"-->
-                <!--android:textColor="#34728C"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginRight="30dp"-->
-                <!--android:id="@+id/sight"-->
-                <!--android:text="three"/>-->
             <Spinner
                 android:layout_width="150dp"
                 android:layout_height="30dp"
-                android:id="@+id/sight"
+                android:id="@+id/sights"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp">

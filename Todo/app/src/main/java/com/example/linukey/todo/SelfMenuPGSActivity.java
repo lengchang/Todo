@@ -19,6 +19,7 @@ import com.example.linukey.BLL.TodoHelper;
 import com.example.linukey.DAL.LocalDateSource;
 import com.example.linukey.Model.Goal;
 import com.example.linukey.Model.Project;
+import com.example.linukey.Model.SelfTask;
 import com.example.linukey.Model.Sight;
 
 import java.util.ArrayList;
@@ -71,7 +72,15 @@ public class SelfMenuPGSActivity extends Activity {
             listViewPGS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(context, "sadfs", Toast.LENGTH_SHORT).show();
+                    Project project = datesourceProject.get(position);
+
+                    Intent intent = new Intent("com.linukey.Todo.AddSelfpgsActivity");
+                    intent.putExtra("menuname", menuName);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("date", project);
+                    intent.putExtra("bundle", bundle);
+
+                    startActivityForResult(intent, addSelfPGS_ResultCode);
                 }
             });
         }else if(datesourceSight != null){
@@ -80,7 +89,15 @@ public class SelfMenuPGSActivity extends Activity {
             listViewPGS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(context, "sadfs", Toast.LENGTH_SHORT).show();
+                    Sight sight = datesourceSight.get(position);
+
+                    Intent intent = new Intent("com.linukey.Todo.AddSelfpgsActivity");
+                    intent.putExtra("menuname", menuName);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("date", sight);
+                    intent.putExtra("bundle", bundle);
+
+                    startActivityForResult(intent, addSelfPGS_ResultCode);
                 }
             });
         }else if(datesourceGoal != null){
@@ -89,7 +106,15 @@ public class SelfMenuPGSActivity extends Activity {
             listViewPGS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(context, "sadfs", Toast.LENGTH_SHORT).show();
+                    Goal goal = datesourceGoal.get(position);
+
+                    Intent intent = new Intent("com.linukey.Todo.AddSelfpgsActivity");
+                    intent.putExtra("menuname", menuName);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("date", goal);
+                    intent.putExtra("bundle", bundle);
+
+                    startActivityForResult(intent, addSelfPGS_ResultCode);
                 }
             });
         }
@@ -98,7 +123,6 @@ public class SelfMenuPGSActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == addSelfPGS_ResultCode) {
-            Toast.makeText(this, "sdfdssdfdsf", Toast.LENGTH_SHORT).show();
             notifyPGSDateSourceChanged(menuName);
         }
     }

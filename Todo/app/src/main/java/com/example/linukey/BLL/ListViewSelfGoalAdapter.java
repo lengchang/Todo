@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.linukey.Model.Goal;
 import com.example.linukey.Model.Project;
@@ -23,8 +24,8 @@ public class ListViewSelfGoalAdapter extends BaseAdapter {
     ViewHolder viewHolder;
 
     class ViewHolder{
-        EditText title;
-        EditText content;
+        TextView title;
+        TextView content;
     }
 
     public ListViewSelfGoalAdapter(Context context, List<Goal> datasource){
@@ -60,8 +61,8 @@ public class ListViewSelfGoalAdapter extends BaseAdapter {
 
         if(viewHolder == null){
             viewHolder = new ViewHolder();
-            viewHolder.title = (EditText)resultview.findViewById(R.id.title);
-            viewHolder.content = (EditText)resultview.findViewById(R.id.content);
+            viewHolder.title = (TextView)resultview.findViewById(R.id.title);
+            viewHolder.content = (TextView)resultview.findViewById(R.id.content);
         }
 
         viewHolder.title.setText(datasource.get(position).getTitle());

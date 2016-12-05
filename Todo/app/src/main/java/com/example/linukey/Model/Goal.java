@@ -1,24 +1,20 @@
 package com.example.linukey.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by linukey on 12/3/16.
  */
 
-public class Goal {
+public class Goal implements Serializable {
     private int id;
     private String title;
     private String content;
     private String state;
+    private String userId;
+    private String goalId;
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public Goal(int id, String title, String content, String state, String userId, String goalId) {
+    public Goal(int id, String title, String content, String state, String goalId, String userId) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -27,7 +23,7 @@ public class Goal {
         this.goalId = goalId;
     }
 
-    public Goal(String title, String content, String state, String userId, String goalId) {
+    public Goal(String title, String content, String state, String goalId, String userId) {
         this.title = title;
         this.content = content;
         this.state = state;
@@ -37,7 +33,13 @@ public class Goal {
 
     public Goal(){}
 
-    private String userId;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public int getId() {
         return id;
@@ -78,6 +80,4 @@ public class Goal {
     public void setGoalId(String goalId) {
         this.goalId = goalId;
     }
-
-    private String goalId;
 }

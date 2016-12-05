@@ -1,10 +1,12 @@
 package com.example.linukey.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by linukey on 12/3/16.
  */
 
-public class Sight {
+public class Sight implements Serializable {
     private int id;
     private String title;
     private String content;

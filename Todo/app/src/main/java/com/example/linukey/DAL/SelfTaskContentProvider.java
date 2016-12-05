@@ -42,9 +42,9 @@ public class SelfTaskContentProvider extends ContentProvider {
             keys[3] + " varchar not null," +
             keys[4] + " varchar not null," +
             keys[5] + " varchar not null," +
-            keys[6] + " varchar not null," +
-            keys[7] + " varchar not null," +
-            keys[8] + " varchar not null," +
+            keys[6] + " varchar," +
+            keys[7] + " varchar," +
+            keys[8] + " varchar," +
             keys[9] + " varchar not null," +
             keys[10] + " varchar not null," +
             keys[11] + " varchar not null," +
