@@ -11,56 +11,42 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp"
         android:orientation="vertical"
-        android:background="#EAEAEA"
+        android:background="#DEDADA"
         android:id="@+id/menuFragment">
-
     </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         android:background="#FCFCFC"
         android:layout_alignParentBottom="true">
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/mainActivityBtn_style"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="#FCFCFC"
             android:id="@+id/btnHome"
             android:onClick="onClick_Home"
             android:drawableTop="@mipmap/home_beh"
-            android:textColor="#969696"
-            android:textSize="14sp"
             android:text="首页"/>
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/mainActivityBtn_style"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            style="?android:attr/borderlessButtonStyle"
-            android:background="#FCFCFC"
             android:id="@+id/btnSelf"
             android:onClick="onClick_Self"
             android:drawableTop="@mipmap/self_pre"
             android:textColor="#969696"
-            android:textSize="14sp"
             android:text="个人任务"/>
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/mainActivityBtn_style"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="40dp"
-            android:background="#FCFCFC"
-            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/btnTeam"
             android:onClick="onClick_Team"
             android:drawableTop="@mipmap/team_pre"
             android:textColor="#969696"
-            android:textSize="14sp"
             android:text="团队任务"/>
     </RelativeLayout>
 </RelativeLayout>

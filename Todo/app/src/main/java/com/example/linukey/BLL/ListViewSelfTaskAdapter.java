@@ -20,11 +20,18 @@ import java.util.List;
 public class ListViewSelfTaskAdapter extends BaseAdapter {
     Context context;
     List<SelfTask> sourceDate;
+    String menuname;
 
     class ViewHolder{
         ImageView image;
         TextView title;
         TextView time;
+    }
+
+    public ListViewSelfTaskAdapter(Context context, List<SelfTask> sourceDate, String menuname){
+        this.context = context;
+        this.sourceDate = sourceDate;
+        this.menuname = menuname;
     }
 
     public ListViewSelfTaskAdapter(Context context, List<SelfTask> sourceDate){
@@ -69,8 +76,10 @@ public class ListViewSelfTaskAdapter extends BaseAdapter {
 
         viewHolder.image.setImageResource(R.mipmap.deleted);
         viewHolder.title.setText(sourceDate.get(position).getTitle());
-        viewHolder.time.setText(sourceDate.get(position).getStarttime() + "  " +
-        sourceDate.get(position).getEndtime());
+        if(menuname == null || !menuname.equals("box")) {
+            viewHolder.time.setText(sourceDate.get(position).getStarttime() + "  " +
+                    sourceDate.get(position).getEndtime());
+        }
 
         resultView.setTag(viewHolder);
 

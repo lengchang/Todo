@@ -36,6 +36,7 @@ public class TodoHelper extends Application {
     }};
 
     public static String UserName = "linukey";
+    public static String PassWord = ".linukey.1";
     public static String UserId = "1";
 
     @Override

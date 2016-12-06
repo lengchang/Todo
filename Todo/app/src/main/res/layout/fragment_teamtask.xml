@@ -4,59 +4,47 @@
     android:layout_height="match_parent">
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/selfAndteamMenuBtn_style"
         android:drawableStart="@mipmap/today"
-        android:layout_marginBottom="2dp"
-        android:paddingLeft="15dp"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@drawable/menuselector"
-        android:textAlignment="viewStart"
-        android:drawablePadding="10dp"
+        android:layout_marginBottom="1dp"
         android:layout_marginTop="20dp"
+        android:id="@+id/btnToday"
+        android:onClick="onClick_btnToday"
         android:text="今日待办"/>
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/selfAndteamMenuBtn_style"
         android:drawableStart="@mipmap/tomorrow"
-        android:layout_marginBottom="2dp"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@drawable/menuselector"
-        android:textAlignment="viewStart"
-        android:drawablePadding="10dp"
-        android:paddingLeft="15dp"
+        android:layout_marginBottom="1dp"
+        android:id="@+id/btnTomorrow"
+        android:onClick="onClick_btnTomorrow"
         android:text="明日待办"/>
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="?android:attr/borderlessButtonStyle"
+        style="@style/selfAndteamMenuBtn_style"
         android:drawableStart="@mipmap/next"
-        android:paddingLeft="15dp"
-        android:textAlignment="viewStart"
-        android:drawablePadding="10dp"
-        android:background="@drawable/menuselector"
+        android:id="@+id/btnNext"
+        android:onClick="onClick_btnNext"
         android:text="下一步行动"/>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/selfAndteamMenuBtn_style"
         android:drawableStart="@mipmap/project"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_marginBottom="2dp"
-        android:paddingLeft="15dp"
-        android:textAlignment="viewStart"
-        android:drawablePadding="10dp"
-        android:background="@drawable/menuselector"
+        android:layout_marginBottom="1dp"
         android:layout_marginTop="20dp"
+        android:id="@+id/btnProject"
+        android:onClick="onClick_btnProject"
         android:text="项目"/>
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/selfAndteamMenuBtn_style"
         android:drawableStart="@mipmap/teamname"
-        android:paddingLeft="15dp"
-        style="?android:attr/borderlessButtonStyle"
-        android:textAlignment="viewStart"
-        android:drawablePadding="10dp"
-        android:background="@drawable/menuselector"
-        android:text="团队名称"/>
+        android:id="@+id/btnTeamname"
+        android:onClick="onClick_btnTeamname"
+        android:text="小组名称"/>
+
+    <Button
+        style="@style/selfAndteamMenuBtn_style"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnMyTeam"
+        android:drawableLeft="@mipmap/teamname"
+        android:onClick="onClick_btnMyTeam"
+        android:text="我的小组"/>
 </LinearLayout>

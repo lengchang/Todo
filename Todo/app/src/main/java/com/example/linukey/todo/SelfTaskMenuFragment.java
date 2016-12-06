@@ -24,7 +24,7 @@ public class SelfTaskMenuFragment extends Fragment {
         btnToday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.SelfMenuTaskActivity");
+                Intent intent = new Intent("com.linukey.Todo.SelfTaskActivity");
                 intent.putExtra("menuname", "today");
                 startActivity(intent);
             }
@@ -34,7 +34,7 @@ public class SelfTaskMenuFragment extends Fragment {
         btnTomorrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.SelfMenuTaskActivity");
+                Intent intent = new Intent("com.linukey.Todo.SelfTaskActivity");
                 intent.putExtra("menuname", "tomorrow");
                 startActivity(intent);
             }
@@ -44,7 +44,7 @@ public class SelfTaskMenuFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.SelfMenuTaskActivity");
+                Intent intent = new Intent("com.linukey.Todo.SelfTaskActivity");
                 intent.putExtra("menuname", "next");
                 startActivity(intent);
             }
@@ -54,7 +54,7 @@ public class SelfTaskMenuFragment extends Fragment {
         btnBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.SelfMenuTaskActivity");
+                Intent intent = new Intent("com.linukey.Todo.SelfTaskActivity");
                 intent.putExtra("menuname", "box");
                 startActivity(intent);
             }
@@ -64,7 +64,7 @@ public class SelfTaskMenuFragment extends Fragment {
         btnProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.SelfMenuPGSActivity");
+                Intent intent = new Intent("com.linukey.Todo.SelfPGSActivity");
                 intent.putExtra("menuname", "project");
                 startActivity(intent);
             }
@@ -74,7 +74,7 @@ public class SelfTaskMenuFragment extends Fragment {
         btnGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.SelfMenuPGSActivity");
+                Intent intent = new Intent("com.linukey.Todo.SelfPGSActivity");
                 intent.putExtra("menuname", "goal");
                 startActivity(intent);
             }
@@ -84,7 +84,7 @@ public class SelfTaskMenuFragment extends Fragment {
         btnSight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.SelfMenuPGSActivity");
+                Intent intent = new Intent("com.linukey.Todo.SelfPGSActivity");
                 intent.putExtra("menuname", "sight");
                 startActivity(intent);
             }

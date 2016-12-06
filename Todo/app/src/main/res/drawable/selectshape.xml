@@ -9,5 +9,4 @@
     <item
         android:drawable="@drawable/buttonshape"
         android:state_window_focused="false"/>
-
 </selector>

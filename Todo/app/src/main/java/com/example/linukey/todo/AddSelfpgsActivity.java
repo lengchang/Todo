@@ -5,16 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.linukey.BLL.AddSelfPGSBLL;
+import com.example.linukey.BLL.SelfPGSBLL;
 import com.example.linukey.BLL.TodoHelper;
 import com.example.linukey.DAL.LocalDateSource;
 import com.example.linukey.Model.Goal;
 import com.example.linukey.Model.Project;
-import com.example.linukey.Model.SelfTask;
 import com.example.linukey.Model.Sight;
 
 import java.text.ParseException;
@@ -169,8 +167,8 @@ public class AddSelfpgsActivity extends Activity {
         project.setId(preId);
 
         if(isEdit)
-            return new AddSelfPGSBLL().updateProject(project, this);
-        return new AddSelfPGSBLL().saveProject(project, this);
+            return new SelfPGSBLL().updateProject(project, this);
+        return new SelfPGSBLL().saveProject(project, this);
     }
 
     private boolean saveGoal(){
@@ -183,8 +181,8 @@ public class AddSelfpgsActivity extends Activity {
         goal.setId(preId);
 
         if(isEdit)
-            return new AddSelfPGSBLL().updateGoal(goal, this);
-        return new AddSelfPGSBLL().saveGoal(goal, this);
+            return new SelfPGSBLL().updateGoal(goal, this);
+        return new SelfPGSBLL().saveGoal(goal, this);
     }
 
     private boolean saveSight(){
@@ -196,8 +194,8 @@ public class AddSelfpgsActivity extends Activity {
         sight.setId(preId);
 
         if(isEdit)
-            return new AddSelfPGSBLL().updateSight(sight, this);
-        return new AddSelfPGSBLL().saveSight(sight, this);
+            return new SelfPGSBLL().updateSight(sight, this);
+        return new SelfPGSBLL().saveSight(sight, this);
     }
 
     private boolean savePGS(String menuName){

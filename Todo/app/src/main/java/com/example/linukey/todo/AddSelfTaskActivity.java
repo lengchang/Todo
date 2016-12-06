@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.linukey.BLL.AddSelfTaskBLL;
+import com.example.linukey.BLL.SelfTaskBLL;
 import com.example.linukey.BLL.TodoHelper;
 import com.example.linukey.DAL.LocalDateSource;
 import com.example.linukey.Model.Goal;
@@ -81,7 +81,7 @@ public class AddSelfTaskActivity extends Activity {
         viewHolder.title.setText(selfTask.getTitle());
         viewHolder.content.setText(selfTask.getContent());
         viewHolder.starttime.setText(selfTask.getStarttime());
-        viewHolder.endtime.setText(selfTask.getStarttime());
+        viewHolder.endtime.setText(selfTask.getEndtime());
         viewHolder.clocktime.setText(selfTask.getClocktime());
         if(Integer.parseInt(selfTask.getIsTmp()) == 1){
             viewHolder.istmp.setChecked(true);
@@ -90,21 +90,21 @@ public class AddSelfTaskActivity extends Activity {
         if(selfTask.getProjectId() != null){
             for(int i = 0; i < projectList.size(); i++){
                 if(projectList.get(i).getProjectId().equals(selfTask.getProjectId())){
-                    viewHolder.projects.setSelection(i);
+                    viewHolder.projects.setSelection(i+1);
                 }
             }
         }
         if(selfTask.getGoalId() != null){
             for(int i = 0; i < goalList.size(); i++){
                 if(goalList.get(i).getGoalId().equals(selfTask.getGoalId())){
-                    viewHolder.goals.setSelection(i);
+                    viewHolder.goals.setSelection(i+1);
                 }
             }
         }
         if(selfTask.getSightId() != null){
             for(int i = 0; i < sightList.size(); i++){
                 if(sightList.get(i).getSightId().equals(selfTask.getSightId())){
-                    viewHolder.sights.setSelection(i);
+                    viewHolder.sights.setSelection(i+1);
                 }
             }
         }
@@ -146,6 +146,7 @@ public class AddSelfTaskActivity extends Activity {
 
     public void initProjectSpiner(List<Project> projects){
         List<String> projectNames = new ArrayList<>();
+        projectNames.add("");
         for(Project project : projects){
             projectNames.add(project.getTitle());
         }
@@ -158,6 +159,7 @@ public class AddSelfTaskActivity extends Activity {
 
     public void initGoalSpiner(List<Goal> goals){
         List<String> goalNames = new ArrayList<>();
+        goalNames.add("");
         for(Goal goal : goals){
             goalNames.add(goal.getTitle());
         }
@@ -170,6 +172,7 @@ public class AddSelfTaskActivity extends Activity {
 
     public void initSightSpiner(List<Sight> sights){
         List<String> sightNames = new ArrayList<>();
+        sightNames.add("");
         for(Sight sight : sights){
             sightNames.add(sight.getTitle());
         }
@@ -277,14 +280,17 @@ public class AddSelfTaskActivity extends Activity {
         String endtime = viewHolder.endtime.getText().toString();
         String clocktime = viewHolder.clocktime.getText().toString();
         String projectId = null;
-        if(viewHolder.projects.getSelectedItem() != null)
-            projectId = projectList.get(((int)viewHolder.projects.getSelectedItemId())).getProjectId();
+        if(viewHolder.projects.getSelectedItem() != null
+                && !viewHolder.projects.getSelectedItem().toString().equals(""))
+            projectId = projectList.get(((int)viewHolder.projects.getSelectedItemId())-1).getProjectId();
         String goalId = null;
-        if(viewHolder.goals.getSelectedItem() != null)
-            goalId = goalList.get(((int)viewHolder.goals.getSelectedItemId())).getGoalId();
+        if(viewHolder.goals.getSelectedItem() != null
+                && !viewHolder.goals.getSelectedItem().toString().equals(""))
+            goalId = goalList.get(((int)viewHolder.goals.getSelectedItemId())-1).getGoalId();
         String sightId = null;
-        if(viewHolder.sights.getSelectedItem() != null)
-            sightId = sightList.get(((int)viewHolder.sights.getSelectedItem())).getSightId();
+        if(viewHolder.sights.getSelectedItem() != null
+                && !viewHolder.sights.getSelectedItem().toString().equals(""))
+            sightId = sightList.get(((int)viewHolder.sights.getSelectedItem())-1).getSightId();
         String userId = TodoHelper.UserId;
         String state = TodoHelper.TaskState.get("noComplete");
         String isdelete = "0";
@@ -296,9 +302,9 @@ public class AddSelfTaskActivity extends Activity {
                 goalId, sightId, userId, state, isdelete, istmp);
 
         if(isEdit){
-            return new AddSelfTaskBLL().updateTaskInfo(selfTask, this);
+            return new SelfTaskBLL().updateTaskInfo(selfTask, this);
         }else {
-            return new AddSelfTaskBLL().saveTaskInfo(selfTask, this);
+            return new SelfTaskBLL().saveTaskInfo(selfTask, this);
         }
     }
 

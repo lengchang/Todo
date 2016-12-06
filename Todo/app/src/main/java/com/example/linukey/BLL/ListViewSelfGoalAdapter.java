@@ -5,11 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.linukey.Model.Goal;
-import com.example.linukey.Model.Project;
 import com.example.linukey.todo.R;
 
 import java.util.List;
