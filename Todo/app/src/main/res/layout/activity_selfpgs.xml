@@ -5,7 +5,7 @@
     tools:context=".SelfPGSActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.example.linukey.BLL.SwipeMenuListView
+    <com.example.linukey.BLL.SwipeMenu.SwipeMenuListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listview_selfpgs"

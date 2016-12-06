@@ -1,10 +1,9 @@
-package com.example.linukey.BLL;
+package com.example.linukey.BLL.SwipeMenu;
 
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;

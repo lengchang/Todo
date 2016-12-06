@@ -26,6 +26,7 @@ import com.example.linukey.Model.Goal;
 import com.example.linukey.Model.Project;
 import com.example.linukey.Model.SelfTask;
 import com.example.linukey.Model.Sight;
+import com.example.linukey.Model.TaskClassify;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,7 +56,7 @@ public class AddSelfTaskActivity extends Activity {
 
         Intent edit = getIntent();
         Bundle bundle = edit.getBundleExtra("bundle");
-        if(bundle != null) {
+        if (bundle != null) {
             SelfTask selfTask = (SelfTask) bundle.getSerializable("date");
             initEdit(selfTask);
             preId = selfTask.getId();
@@ -63,7 +64,7 @@ public class AddSelfTaskActivity extends Activity {
         }
     }
 
-    class ViewHolder{
+    class ViewHolder {
         TextView starttime;
         TextView endtime;
         TextView clocktime;
@@ -77,52 +78,52 @@ public class AddSelfTaskActivity extends Activity {
         Spinner sights;
     }
 
-    public void initEdit(SelfTask selfTask){
+    public void initEdit(SelfTask selfTask) {
         viewHolder.title.setText(selfTask.getTitle());
         viewHolder.content.setText(selfTask.getContent());
         viewHolder.starttime.setText(selfTask.getStarttime());
         viewHolder.endtime.setText(selfTask.getEndtime());
         viewHolder.clocktime.setText(selfTask.getClocktime());
-        if(Integer.parseInt(selfTask.getIsTmp()) == 1){
+        if (Integer.parseInt(selfTask.getIsTmp()) == 1) {
             viewHolder.istmp.setChecked(true);
             onClick_selectTmp(null);
         }
-        if(selfTask.getProjectId() != null){
-            for(int i = 0; i < projectList.size(); i++){
-                if(projectList.get(i).getProjectId().equals(selfTask.getProjectId())){
-                    viewHolder.projects.setSelection(i+1);
+        if (selfTask.getProjectId() != null) {
+            for (int i = 0; i < projectList.size(); i++) {
+                if (projectList.get(i).getSelfId().equals(selfTask.getProjectId())) {
+                    viewHolder.projects.setSelection(i + 1);
                 }
             }
         }
-        if(selfTask.getGoalId() != null){
-            for(int i = 0; i < goalList.size(); i++){
-                if(goalList.get(i).getGoalId().equals(selfTask.getGoalId())){
-                    viewHolder.goals.setSelection(i+1);
+        if (selfTask.getGoalId() != null) {
+            for (int i = 0; i < goalList.size(); i++) {
+                if (goalList.get(i).getSelfId().equals(selfTask.getGoalId())) {
+                    viewHolder.goals.setSelection(i + 1);
                 }
             }
         }
-        if(selfTask.getSightId() != null){
-            for(int i = 0; i < sightList.size(); i++){
-                if(sightList.get(i).getSightId().equals(selfTask.getSightId())){
-                    viewHolder.sights.setSelection(i+1);
+        if (selfTask.getSightId() != null) {
+            for (int i = 0; i < sightList.size(); i++) {
+                if (sightList.get(i).getSelfId().equals(selfTask.getSightId())) {
+                    viewHolder.sights.setSelection(i + 1);
                 }
             }
         }
     }
 
-    public void initViewHolder(){
+    public void initViewHolder() {
         viewHolder = new ViewHolder();
-        viewHolder.starttime = (TextView)findViewById(R.id.starttime);
-        viewHolder.endtime = (TextView)findViewById(R.id.endtime);
-        viewHolder.istmp = (CheckBox)findViewById(R.id.istmp);
-        viewHolder.title = (EditText)findViewById(R.id.title);
-        viewHolder.content = (EditText)findViewById(R.id.content);
-        viewHolder.clocktime = (TextView)findViewById(R.id.clocktime);
-        viewHolder.time = (LinearLayout)findViewById(R.id.time);
-        viewHolder.classes = (LinearLayout)findViewById(R.id.classes);
-        viewHolder.projects = (Spinner)findViewById(R.id.projects);
-        viewHolder.goals = (Spinner)findViewById(R.id.goals);
-        viewHolder.sights = (Spinner)findViewById(R.id.sights);
+        viewHolder.starttime = (TextView) findViewById(R.id.starttime);
+        viewHolder.endtime = (TextView) findViewById(R.id.endtime);
+        viewHolder.istmp = (CheckBox) findViewById(R.id.istmp);
+        viewHolder.title = (EditText) findViewById(R.id.title);
+        viewHolder.content = (EditText) findViewById(R.id.content);
+        viewHolder.clocktime = (TextView) findViewById(R.id.clocktime);
+        viewHolder.time = (LinearLayout) findViewById(R.id.time);
+        viewHolder.classes = (LinearLayout) findViewById(R.id.classes);
+        viewHolder.projects = (Spinner) findViewById(R.id.projects);
+        viewHolder.goals = (Spinner) findViewById(R.id.goals);
+        viewHolder.sights = (Spinner) findViewById(R.id.sights);
     }
 
     public void initControl() {
@@ -136,11 +137,11 @@ public class AddSelfTaskActivity extends Activity {
         TextView clocktime = (TextView) findViewById(R.id.clocktime);
         clocktime.setText("0:0");
 
-        if(projectList != null)
+        if (projectList != null)
             initProjectSpiner(projectList);
-        if(goalList != null)
+        if (goalList != null)
             initGoalSpiner(goalList);
-        if(sightList != null)
+        if (sightList != null)
             initSightSpiner(sightList);
     }
 
@@ -260,12 +261,10 @@ public class AddSelfTaskActivity extends Activity {
                 return true;
             case 1:
                 if (checkInput()) {
-                    if(saveTask()) {
+                    if (saveTask()) {
                         LocalDateSource.updateSelfTasks(this, TodoHelper.UserId);
                         setResult(RESULT_OK);
                         finish();
-                    }else {
-                        Toast.makeText(this, "系统错误!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 return true;
@@ -280,17 +279,17 @@ public class AddSelfTaskActivity extends Activity {
         String endtime = viewHolder.endtime.getText().toString();
         String clocktime = viewHolder.clocktime.getText().toString();
         String projectId = null;
-        if(viewHolder.projects.getSelectedItem() != null
+        if (viewHolder.projects.getSelectedItem() != null
                 && !viewHolder.projects.getSelectedItem().toString().equals(""))
-            projectId = projectList.get(((int)viewHolder.projects.getSelectedItemId())-1).getProjectId();
+            projectId = projectList.get(((int) viewHolder.projects.getSelectedItemId()) - 1).getSelfId();
         String goalId = null;
-        if(viewHolder.goals.getSelectedItem() != null
+        if (viewHolder.goals.getSelectedItem() != null
                 && !viewHolder.goals.getSelectedItem().toString().equals(""))
-            goalId = goalList.get(((int)viewHolder.goals.getSelectedItemId())-1).getGoalId();
+            goalId = goalList.get(((int) viewHolder.goals.getSelectedItemId()) - 1).getSelfId();
         String sightId = null;
-        if(viewHolder.sights.getSelectedItem() != null
+        if (viewHolder.sights.getSelectedItem() != null
                 && !viewHolder.sights.getSelectedItem().toString().equals(""))
-            sightId = sightList.get(((int)viewHolder.sights.getSelectedItem())-1).getSightId();
+            sightId = sightList.get(((int) viewHolder.sights.getSelectedItem()) - 1).getSelfId();
         String userId = TodoHelper.UserId;
         String state = TodoHelper.TaskState.get("noComplete");
         String isdelete = "0";
@@ -301,18 +300,18 @@ public class AddSelfTaskActivity extends Activity {
         SelfTask selfTask = new SelfTask(preId, title, content, starttime, endtime, clocktime, projectId,
                 goalId, sightId, userId, state, isdelete, istmp);
 
-        if(isEdit){
+        if (isEdit) {
             return new SelfTaskBLL().updateTaskInfo(selfTask, this);
-        }else {
+        } else {
             return new SelfTaskBLL().saveTaskInfo(selfTask, this);
         }
     }
 
-    public void onClick_selectTmp(View view){
-        if(viewHolder.istmp.isChecked()) {
+    public void onClick_selectTmp(View view) {
+        if (viewHolder.istmp.isChecked()) {
             viewHolder.time.setVisibility(View.INVISIBLE);
             viewHolder.classes.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             viewHolder.time.setVisibility(View.VISIBLE);
             viewHolder.classes.setVisibility(View.VISIBLE);
         }
@@ -325,13 +324,13 @@ public class AddSelfTaskActivity extends Activity {
         } else if (((EditText) findViewById(R.id.content)).getText().toString().isEmpty()) {
             Toast.makeText(context, "请输入内容!", Toast.LENGTH_LONG).show();
             return false;
-        } else if(new SimpleDateFormat("yyyy-MM-dd")
+        } else if (new SimpleDateFormat("yyyy-MM-dd")
                 .parse(viewHolder.starttime.getText().toString()).getTime() >
                 new SimpleDateFormat("yyyy-MM-dd")
                         .parse(viewHolder.endtime.getText().toString()).getTime()) {
             Toast.makeText(context, "请输入有效时间范围!", Toast.LENGTH_LONG).show();
             return false;
-        }else{
+        } else {
             return true;
         }
     }

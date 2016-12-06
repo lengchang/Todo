@@ -1,4 +1,4 @@
-package com.example.linukey.BLL;
+package com.example.linukey.BLL.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.linukey.Model.Goal;
+import com.example.linukey.Model.Project;
+import com.example.linukey.Model.TaskClassify;
 import com.example.linukey.todo.R;
 
 import java.util.List;
@@ -16,9 +17,9 @@ import java.util.List;
  * Created by linukey on 12/4/16.
  */
 
-public class ListViewSelfGoalAdapter extends BaseAdapter {
+public class ListViewSelfPGSAdapter extends BaseAdapter {
     Context context;
-    List<Goal> datasource;
+    List<TaskClassify> datasource;
     ViewHolder viewHolder;
 
     class ViewHolder{
@@ -26,7 +27,7 @@ public class ListViewSelfGoalAdapter extends BaseAdapter {
         TextView content;
     }
 
-    public ListViewSelfGoalAdapter(Context context, List<Goal> datasource){
+    public ListViewSelfPGSAdapter(Context context, List<TaskClassify> datasource){
         this.context = context;
         this.datasource = datasource;
     }

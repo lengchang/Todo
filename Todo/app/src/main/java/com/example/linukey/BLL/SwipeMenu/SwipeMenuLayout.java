@@ -1,4 +1,4 @@
-package com.example.linukey.BLL;
+package com.example.linukey.BLL.SwipeMenu;
 
 import android.content.Context;
 import android.support.v4.view.GestureDetectorCompat;
@@ -10,8 +10,6 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.Interpolator;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;

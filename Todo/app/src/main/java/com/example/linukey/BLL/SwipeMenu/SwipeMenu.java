@@ -1,4 +1,4 @@
-package com.example.linukey.BLL;
+package com.example.linukey.BLL.SwipeMenu;
 
 import java.util.ArrayList;
 import java.util.List;

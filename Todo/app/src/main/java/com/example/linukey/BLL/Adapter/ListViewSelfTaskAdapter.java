@@ -1,4 +1,4 @@
-package com.example.linukey.BLL;
+package com.example.linukey.BLL.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

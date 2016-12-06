@@ -3,7 +3,6 @@ package com.example.linukey.todo;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,14 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
-import com.example.linukey.BLL.ListViewSelfTaskAdapter;
+import com.example.linukey.BLL.Adapter.ListViewSelfTaskAdapter;
 import com.example.linukey.BLL.SelfTaskBLL;
-import com.example.linukey.BLL.SwipeMenu;
-import com.example.linukey.BLL.SwipeMenuCreator;
-import com.example.linukey.BLL.SwipeMenuItem;
-import com.example.linukey.BLL.SwipeMenuListView;
+import com.example.linukey.BLL.SwipeMenu.SwipeMenu;
+import com.example.linukey.BLL.SwipeMenu.SwipeMenuCreator;
+import com.example.linukey.BLL.SwipeMenu.SwipeMenuItem;
+import com.example.linukey.BLL.SwipeMenu.SwipeMenuListView;
 import com.example.linukey.BLL.TodoHelper;
 import com.example.linukey.DAL.LocalDateSource;
 import com.example.linukey.Model.Goal;
@@ -84,19 +82,19 @@ public class SelfTaskActivity extends Activity{
                 String sight = null;
                 if(selfTask.getProjectId() != null){
                     for(Project p : projectList){
-                        if(p.getProjectId().equals(selfTask.getProjectId()))
+                        if(p.getSelfId().equals(selfTask.getProjectId()))
                             project = p.getTitle();
                     }
                 }
                 if(selfTask.getGoalId() != null){
                     for(Goal g : goalList){
-                        if(g.getGoalId().equals(selfTask.getGoalId()))
+                        if(g.getSelfId().equals(selfTask.getGoalId()))
                             goal = g.getTitle();
                     }
                 }
                 if(selfTask.getSightId() != null){
                     for(Sight s : sightList){
-                        if(s.getSightId().equals(selfTask.getSightId()))
+                        if(s.getSelfId().equals(selfTask.getSightId()))
                             sight = s.getTitle();
                     }
                 }

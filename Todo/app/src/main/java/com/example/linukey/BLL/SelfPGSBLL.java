@@ -28,7 +28,7 @@ public class SelfPGSBLL {
         contentValues.put(ProjectContentProvider.key_title, project.getTitle());
         contentValues.put(ProjectContentProvider.key_content, project.getContent());
         contentValues.put(ProjectContentProvider.key_state, project.getState());
-        contentValues.put(ProjectContentProvider.key_projectId, project.getProjectId());
+        contentValues.put(ProjectContentProvider.key_projectId, project.getSelfId());
         contentValues.put(ProjectContentProvider.key_userId, project.getUserId());
 
         ContentResolver cr = context.getContentResolver();
@@ -45,7 +45,7 @@ public class SelfPGSBLL {
         contentValues.put(ProjectContentProvider.key_title, project.getTitle());
         contentValues.put(ProjectContentProvider.key_content, project.getContent());
         contentValues.put(ProjectContentProvider.key_state, project.getState());
-        contentValues.put(ProjectContentProvider.key_projectId, project.getProjectId());
+        contentValues.put(ProjectContentProvider.key_projectId, project.getSelfId());
         contentValues.put(ProjectContentProvider.key_userId, project.getUserId());
 
         String where = ProjectContentProvider.key_id + " = " + project.getId();
@@ -64,7 +64,7 @@ public class SelfPGSBLL {
         ContentValues contentValues = new ContentValues();
         contentValues.put(GoalContentProvider.key_title, goal.getTitle());
         contentValues.put(GoalContentProvider.key_content, goal.getContent());
-        contentValues.put(GoalContentProvider.key_goalId, goal.getGoalId());
+        contentValues.put(GoalContentProvider.key_goalId, goal.getSelfId());
         contentValues.put(GoalContentProvider.key_state, goal.getState());
         contentValues.put(GoalContentProvider.key_userId, goal.getUserId());
 
@@ -81,7 +81,7 @@ public class SelfPGSBLL {
         ContentValues contentValues = new ContentValues();
         contentValues.put(GoalContentProvider.key_title, goal.getTitle());
         contentValues.put(GoalContentProvider.key_content, goal.getContent());
-        contentValues.put(GoalContentProvider.key_goalId, goal.getGoalId());
+        contentValues.put(GoalContentProvider.key_goalId, goal.getSelfId());
         contentValues.put(GoalContentProvider.key_state, goal.getState());
         contentValues.put(GoalContentProvider.key_userId, goal.getUserId());
 
@@ -99,7 +99,7 @@ public class SelfPGSBLL {
         ContentValues contentValues = new ContentValues();
         contentValues.put(SightContentProvider.key_title, sight.getTitle());
         contentValues.put(SightContentProvider.key_content, sight.getContent());
-        contentValues.put(SightContentProvider.key_sightId, sight.getSightId());
+        contentValues.put(SightContentProvider.key_sightId, sight.getSelfId());
         contentValues.put(SightContentProvider.key_userId, sight.getUserId());
 
         ContentResolver cr = context.getContentResolver();
@@ -115,7 +115,7 @@ public class SelfPGSBLL {
         ContentValues contentValues = new ContentValues();
         contentValues.put(SightContentProvider.key_title, sight.getTitle());
         contentValues.put(SightContentProvider.key_content, sight.getContent());
-        contentValues.put(SightContentProvider.key_sightId, sight.getSightId());
+        contentValues.put(SightContentProvider.key_sightId, sight.getSelfId());
         contentValues.put(SightContentProvider.key_userId, sight.getUserId());
 
         String where = SightContentProvider.key_id + " = " + sight.getId();

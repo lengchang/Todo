@@ -1,4 +1,4 @@
-package com.example.linukey.BLL;
+package com.example.linukey.BLL.SwipeMenu;
 
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;

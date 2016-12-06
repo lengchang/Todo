@@ -14,6 +14,7 @@ import com.example.linukey.DAL.LocalDateSource;
 import com.example.linukey.Model.Goal;
 import com.example.linukey.Model.Project;
 import com.example.linukey.Model.Sight;
+import com.example.linukey.Model.TaskClassify;
 
 import java.text.ParseException;
 import java.util.UUID;
@@ -46,40 +47,16 @@ public class AddSelfpgsActivity extends Activity {
         menuName = edit.getStringExtra("menuname");
         Bundle bundle = edit.getBundleExtra("bundle");
         if(bundle != null) {
-            switch (menuName){
-                case "project":
-                    Project project = (Project)bundle.getSerializable("date");
-                    preId = project.getId();
-                    initEdit(project);
-                    break;
-                case "goal":
-                    Goal goal = (Goal)bundle.getSerializable("date");
-                    preId = goal.getId();
-                    initEdit(goal);
-                    break;
-                case "sight":
-                    Sight sight = (Sight)bundle.getSerializable("date");
-                    preId = sight.getId();
-                    initEdit(sight);
-                    break;
-            }
+            TaskClassify taskClassify = (TaskClassify)bundle.getSerializable("date");
+            preId = taskClassify.getId();
+            initEdit(taskClassify);
             isEdit = true;
         }
     }
 
-    private void initEdit(Project project){
-        viewHolder.title.setText(project.getTitle());
-        viewHolder.content.setText(project.getContent());
-    }
-
-    private void initEdit(Goal goal){
-        viewHolder.title.setText(goal.getTitle());
-        viewHolder.content.setText(goal.getContent());
-    }
-
-    private void initEdit(Sight sight){
-        viewHolder.title.setText(sight.getTitle());
-        viewHolder.content.setText(sight.getTitle());
+    private void initEdit(TaskClassify taskClassify){
+        viewHolder.title.setText(taskClassify.getTitle());
+        viewHolder.content.setText(taskClassify.getContent());
     }
 
     private void initViewHolder(){
@@ -161,7 +138,7 @@ public class AddSelfpgsActivity extends Activity {
         Project project = new Project();
         project.setTitle(viewHolder.title.getText().toString());
         project.setContent(viewHolder.content.getText().toString());
-        project.setProjectId(UUID.randomUUID().toString());
+        project.setSelfId(UUID.randomUUID().toString());
         project.setState(TodoHelper.PGS_State.get("noComplete"));
         project.setUserId(TodoHelper.UserId);
         project.setId(preId);
@@ -175,7 +152,7 @@ public class AddSelfpgsActivity extends Activity {
         Goal goal = new Goal();
         goal.setTitle(viewHolder.title.getText().toString());
         goal.setContent(viewHolder.content.getText().toString());
-        goal.setGoalId(UUID.randomUUID().toString());
+        goal.setSelfId(UUID.randomUUID().toString());
         goal.setState(TodoHelper.PGS_State.get("noComplete"));
         goal.setUserId(TodoHelper.UserId);
         goal.setId(preId);
@@ -189,7 +166,7 @@ public class AddSelfpgsActivity extends Activity {
         Sight sight = new Sight();
         sight.setTitle(viewHolder.title.getText().toString());
         sight.setContent(viewHolder.content.getText().toString());
-        sight.setSightId(UUID.randomUUID().toString());
+        sight.setSelfId(UUID.randomUUID().toString());
         sight.setUserId(TodoHelper.UserId);
         sight.setId(preId);
 

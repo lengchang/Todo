@@ -1,4 +1,4 @@
-package com.example.linukey.todo;
+package com.example.linukey.BLL.Adapter;
 
 import android.content.ContentValues;
 import android.content.Context;
