@@ -5,7 +5,7 @@
     tools:context=".SelfTaskActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ListView
+    <com.example.linukey.BLL.SwipeMenuListView
         android:id="@+id/listview_selftask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -4,16 +4,23 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.linukey.BLL.ListViewSelfGoalAdapter;
 import com.example.linukey.BLL.ListViewSelfProjectAdapter;
 import com.example.linukey.BLL.ListViewSelfSightAdapter;
+import com.example.linukey.BLL.SwipeMenu;
+import com.example.linukey.BLL.SwipeMenuCreator;
+import com.example.linukey.BLL.SwipeMenuItem;
+import com.example.linukey.BLL.SwipeMenuListView;
 import com.example.linukey.BLL.TodoHelper;
 import com.example.linukey.DAL.LocalDateSource;
 import com.example.linukey.Model.Goal;
@@ -29,7 +36,7 @@ import java.util.List;
 
 public class SelfPGSActivity extends Activity {
 
-    ListView listViewPGS = null;
+    SwipeMenuListView listViewPGS = null;
     String menuName = null;
     List<Project> datesourceProject = null;
     List<Goal> datesourceGoal = null;
@@ -49,16 +56,37 @@ public class SelfPGSActivity extends Activity {
     public void initDate(){
         Intent intent = getIntent();
         menuName = intent.getStringExtra("menuname");
-        listViewPGS = (ListView)findViewById(R.id.listview_selfpgs);
+        listViewPGS = (SwipeMenuListView)findViewById(R.id.listview_selfpgs);
         switch (menuName){
             case "project":
                 datesourceProject = getProjectDate();
+                listViewPGS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Project project = datesourceProject.get(position);
+                        SelfPGSDialogFragment selfPGSDialogFragment = new SelfPGSDialogFragment();
+                        selfPGSDialogFragment.initDate(project.getTitle(), project.getContent());
+                        selfPGSDialogFragment.show(getFragmentManager(), "selfpgsdialog");
+                    }
+                });
                 break;
             case "goal":
                 datesourceGoal = getGoalsDate();
+                listViewPGS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                });
                 break;
             case "sight":
                 datesourceSight = getSightDate();
+                listViewPGS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                });
                 break;
             default:
                 break;
@@ -67,55 +95,85 @@ public class SelfPGSActivity extends Activity {
         if(datesourceProject != null){
             ListViewSelfProjectAdapter lva = new ListViewSelfProjectAdapter(this, datesourceProject);
             listViewPGS.setAdapter(lva);
-            listViewPGS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Project project = datesourceProject.get(position);
-
-                    Intent intent = new Intent("com.linukey.Todo.AddSelfpgsActivity");
-                    intent.putExtra("menuname", menuName);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("date", project);
-                    intent.putExtra("bundle", bundle);
-
-                    startActivityForResult(intent, addSelfPGS_ResultCode);
-                }
-            });
         }else if(datesourceSight != null){
             ListViewSelfSightAdapter lva = new ListViewSelfSightAdapter(this, datesourceSight);
             listViewPGS.setAdapter(lva);
-            listViewPGS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Sight sight = datesourceSight.get(position);
-
-                    Intent intent = new Intent("com.linukey.Todo.AddSelfpgsActivity");
-                    intent.putExtra("menuname", menuName);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("date", sight);
-                    intent.putExtra("bundle", bundle);
-
-                    startActivityForResult(intent, addSelfPGS_ResultCode);
-                }
-            });
         }else if(datesourceGoal != null){
             ListViewSelfGoalAdapter lva = new ListViewSelfGoalAdapter(this, datesourceGoal);
             listViewPGS.setAdapter(lva);
-            listViewPGS.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Goal goal = datesourceGoal.get(position);
-
-                    Intent intent = new Intent("com.linukey.Todo.AddSelfpgsActivity");
-                    intent.putExtra("menuname", menuName);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("date", goal);
-                    intent.putExtra("bundle", bundle);
-
-                    startActivityForResult(intent, addSelfPGS_ResultCode);
-                }
-            });
         }
+
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+                SwipeMenuItem EditItem = new SwipeMenuItem(
+                        getApplicationContext());
+                EditItem.setBackground(new ColorDrawable(Color.parseColor("#C7C6CC")));
+                EditItem.setWidth(200);
+                EditItem.setTitle("编辑");
+                EditItem.setTitleSize(18);
+                EditItem.setTitleColor(Color.WHITE);
+                menu.addMenuItem(EditItem);
+
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
+                deleteItem.setBackground(new ColorDrawable(Color.parseColor("#FF2730")));
+                deleteItem.setWidth(200);
+                deleteItem.setTitle("删除");
+                deleteItem.setTitleSize(18);
+                deleteItem.setTitleColor(Color.WHITE);
+                menu.addMenuItem(deleteItem);
+
+                if(!menuName.equals("sight")) {
+                    SwipeMenuItem completeItem = new SwipeMenuItem(getApplicationContext());
+                    completeItem.setBackground(new ColorDrawable(Color.parseColor("#FF9700")));
+                    completeItem.setWidth(200);
+                    completeItem.setTitle("完成");
+                    completeItem.setTitleSize(18);
+                    completeItem.setTitleColor(Color.WHITE);
+                    menu.addMenuItem(completeItem);
+                }
+            }
+        };
+        listViewPGS.setMenuCreator(creator);
+        listViewPGS.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public void onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index){
+                    case 0:
+                        if(menuName.equals("project")){
+                            Project project = datesourceProject.get(position);
+                            Intent intent = new Intent("com.linukey.Todo.AddSelfpgsActivity");
+                            intent.putExtra("menuname", menuName);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("date", project);
+                            intent.putExtra("bundle", bundle);
+                            startActivityForResult(intent, addSelfPGS_ResultCode);
+                        }else if(menuName.equals("goal")){
+                            Goal goal = datesourceGoal.get(position);
+                            Intent intent = new Intent("com.linukey.Todo.AddSelfpgsActivity");
+                            intent.putExtra("menuname", menuName);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("date", goal);
+                            intent.putExtra("bundle", bundle);
+                            startActivityForResult(intent, addSelfPGS_ResultCode);
+                        }else if(menuName.equals("sight")){
+                            Sight sight = datesourceSight.get(position);
+                            Intent intent = new Intent("com.linukey.Todo.AddSelfpgsActivity");
+                            intent.putExtra("menuname", menuName);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("date", sight);
+                            intent.putExtra("bundle", bundle);
+                            startActivityForResult(intent, addSelfPGS_ResultCode);
+                        }
+                        break;
+                    case 1:
+
+                        break;
+                    case 3:
+                        break;
+                }
+            }
+        });
     }
 
     @Override

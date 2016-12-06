@@ -44,6 +44,31 @@ public class SelfTaskBLL {
         return false;
     }
 
+    public boolean deleteOne(int id, Context context){
+        ContentResolver cr = context.getContentResolver();
+        String where = SelfTaskContentProvider.key_id + " = " + id;
+        String[] selectionArgs = null;
+        int rid = cr.delete(DBHelper.ContentUri_selftask, where, selectionArgs);
+        if(rid > -1)
+            return true;
+        return false;
+    }
+
+    public boolean completed(int id, Context context){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SelfTaskContentProvider.key_state, TodoHelper.TaskState.get("complete"));
+
+        String where = SelfTaskContentProvider.key_id + " = " + id;
+        String[] selectionArgs = null;
+
+        ContentResolver cr = context.getContentResolver();
+        int rid = cr.update(DBHelper.ContentUri_selftask, contentValues, where, selectionArgs);
+        if(rid > -1)
+            return true;
+        else
+            return false;
+    }
+
     public boolean updateTaskInfo(SelfTask selfTask, Context context){
         ContentValues newValues = new ContentValues();
         newValues.put(SelfTaskContentProvider.key_title, selfTask.getTitle());
@@ -95,7 +120,7 @@ public class SelfTaskBLL {
         Cursor resultCursor = cr.query(DBHelper.ContentUri_selftask,
                 result_columns, where, whereArgs, order);
 
-        List<SelfTask> result;
+        List<SelfTask> result = null;
 
         if(resultCursor != null && resultCursor.getCount() > 0){
             result = new ArrayList<>();
@@ -120,6 +145,6 @@ public class SelfTaskBLL {
             resultCursor.close();
             return result;
         }
-        return null;
+        return result;
     }
 }

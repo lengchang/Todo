@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.linukey.Model.SelfTask;
@@ -79,10 +80,13 @@ public class ListViewSelfTaskAdapter extends BaseAdapter {
         if(menuname == null || !menuname.equals("box")) {
             viewHolder.time.setText(sourceDate.get(position).getStarttime() + "  " +
                     sourceDate.get(position).getEndtime());
+        }else if(menuname.equals("box")){
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)viewHolder.title.getLayoutParams();
+            lp.setMargins(0,30,0,0);
+            viewHolder.title.setLayoutParams(lp);
         }
 
         resultView.setTag(viewHolder);
-
         return resultView;
     }
 }
