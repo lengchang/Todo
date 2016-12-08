@@ -1,0 +1,190 @@
+package com.example.linukey.addedit_selfpgs;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.linukey.todo.R;
+import com.example.linukey.util.TodoHelper;
+import com.example.linukey.data.source.local.LocalDateSource;
+import com.example.linukey.data.model.Goal;
+import com.example.linukey.data.model.Project;
+import com.example.linukey.data.model.Sight;
+import com.example.linukey.data.model.TaskClassify;
+
+import java.text.ParseException;
+import java.util.UUID;
+
+/**
+ * Created by linukey on 12/3/16.
+ */
+
+public class AddEditSelfpgsActivity extends Activity {
+    private boolean isEdit = false;
+    private String menuName = null;
+    private int preId;
+
+    class ViewHolder{
+        TextView title;
+        TextView content;
+    }
+
+    ViewHolder viewHolder;
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_addselfpgs);
+        initViewHolder();
+        initDate();
+    }
+
+    private void initDate(){
+        Intent edit = getIntent();
+        menuName = edit.getStringExtra("menuname");
+        Bundle bundle = edit.getBundleExtra("bundle");
+        if(bundle != null) {
+            TaskClassify taskClassify = (TaskClassify)bundle.getSerializable("date");
+            preId = taskClassify.getId();
+            initEdit(taskClassify);
+            isEdit = true;
+        }
+    }
+
+    private void initEdit(TaskClassify taskClassify){
+        viewHolder.title.setText(taskClassify.getTitle());
+        viewHolder.content.setText(taskClassify.getContent());
+    }
+
+    private void initViewHolder(){
+        viewHolder = new ViewHolder();
+        viewHolder.title = (TextView)findViewById(R.id.title);
+        viewHolder.content = (TextView)findViewById(R.id.content);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        CreateMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        try {
+            return MenuChoice(item);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void CreateMenu(Menu menu) {
+        MenuItem taskAdd = menu.add(0, 0, 0, "cancel");
+        taskAdd.setTitle("取消");
+        taskAdd.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+        MenuItem setting = menu.add(0, 1, 1, "ok");
+        setting.setTitle("保存");
+        setting.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+    }
+
+    private boolean MenuChoice(MenuItem item) throws ParseException {
+        switch (item.getItemId()) {
+            case 0:
+                setResult(RESULT_CANCELED);
+                finish();
+                return true;
+            case 1:
+                if (checkInput()) {
+                    if(savePGS(menuName)) {
+                        switch (menuName){
+                            case "project":
+                                LocalDateSource.updateProjects(this);
+                                break;
+                            case "goal":
+                                LocalDateSource.updateGoals(this);
+                                break;
+                            case "sight":
+                                LocalDateSource.updateSights(this);
+                                break;
+                        }
+                        setResult(RESULT_OK);
+                        finish();
+                    }else {
+                        Toast.makeText(this, "系统错误!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                return true;
+        }
+        return false;
+    }
+
+    private boolean checkInput(){
+        if(viewHolder.title.getText().toString().isEmpty()){
+            Toast.makeText(this, "请输入标题!", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(viewHolder.content.getText().toString().isEmpty()){
+            Toast.makeText(this, "请输入内容!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean saveProject(){
+        Project project = new Project();
+        project.setTitle(viewHolder.title.getText().toString());
+        project.setContent(viewHolder.content.getText().toString());
+        project.setSelfId(UUID.randomUUID().toString());
+        project.setState(TodoHelper.PGS_State.get("noComplete"));
+        project.setUserId(TodoHelper.UserId);
+        project.setId(preId);
+
+        if(isEdit)
+            return Project.updateProject(project, this);
+        return Project.saveProject(project, this);
+    }
+
+    private boolean saveGoal(){
+        Goal goal = new Goal();
+        goal.setTitle(viewHolder.title.getText().toString());
+        goal.setContent(viewHolder.content.getText().toString());
+        goal.setSelfId(UUID.randomUUID().toString());
+        goal.setState(TodoHelper.PGS_State.get("noComplete"));
+        goal.setUserId(TodoHelper.UserId);
+        goal.setId(preId);
+
+        if(isEdit)
+            return Goal.updateGoal(goal, this);
+        return new Goal().saveGoal(goal, this);
+    }
+
+    private boolean saveSight(){
+        Sight sight = new Sight();
+        sight.setTitle(viewHolder.title.getText().toString());
+        sight.setContent(viewHolder.content.getText().toString());
+        sight.setSelfId(UUID.randomUUID().toString());
+        sight.setUserId(TodoHelper.UserId);
+        sight.setId(preId);
+
+        if(isEdit)
+            return Sight.updateSight(sight, this);
+        return Sight.saveSight(sight, this);
+    }
+
+    private boolean savePGS(String menuName){
+        switch (menuName){
+            case "project":
+                return saveProject();
+            case "goal":
+                return saveGoal();
+            case "sight":
+                return saveSight();
+            default:
+                return false;
+        }
+    }
+}

@@ -25,7 +25,7 @@
         android:icon="@mipmap/todo_icon"
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:name="com.example.linukey.BLL.TodoHelper"
+        android:name="com.example.linukey.util.TodoHelper"
         android:supportsRtl="true"
         android:theme="@style/my_theme">
         <activity android:name=".MainActivity">
@@ -34,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
+        <activity android:name="com.example.linukey.login.LoginActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar"
             android:label="登录">
             <intent-filter>
@@ -42,7 +42,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"
+        <activity android:name="com.example.linukey.register.RegisterActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar"
             android:label="注册">
             <intent-filter>
@@ -50,46 +50,46 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddSelfpgsActivity"
+        <activity android:name="com.example.linukey.addedit_selfpgs.AddEditSelfpgsActivity"
             android:theme="@style/my_theme">
             <intent-filter>
-                <action android:name="com.linukey.Todo.AddSelfpgsActivity" />
+                <action android:name="com.linukey.Todo.AddEditSelfpgsActivity" />
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".AddSelfTaskActivity"
+        <activity android:name="com.example.linukey.addedit_selftask.AddEditSelfTaskActivity"
             android:theme="@style/my_theme">
             <intent-filter>
-                <action android:name="com.linukey.Todo.AddSelfTaskActivity" />
+                <action android:name="com.linukey.Todo.AddEditSelfTaskActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".SelfPGSActivity">
+        <activity android:name="com.example.linukey.selfpgs.SelfPGSActivity">
             <intent-filter>
                 <action android:name="com.linukey.Todo.SelfPGSActivity"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SelfTaskActivity">
+        <activity android:name="com.example.linukey.selftask.SelfTaskActivity">
             <intent-filter>
                 <action android:name="com.linukey.Todo.SelfTaskActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".LaunchActivity"
+        <activity android:name="com.example.linukey.launch.LaunchActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".TeamPTActivity">
+        <activity android:name="com.example.linukey.teampt.TeamPTActivity">
             <intent-filter>
                 <action android:name="com.linukey.Todo.TeamPTActivity"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TeamTaskActivity">
+        <activity android:name="com.example.linukey.teamtask.TeamTaskActivity">
             <intent-filter>
                 <action android:name="com.linukey.Todo.TeamTaskActivity"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -114,26 +114,26 @@
         </receiver>
 
         <provider
-            android:name="com.example.linukey.DAL.SelfTaskContentProvider"
+            android:name="com.example.linukey.data.source.local.SelfTaskContentProvider"
             android:authorities="com.linukey.Todo.self_task"/>
         <provider
-            android:name="com.example.linukey.DAL.UserContentProvider"
+            android:name="com.example.linukey.data.source.local.UserContentProvider"
             android:authorities="com.linukey.Todo.user"/>
         <provider
             android:authorities="com.linukey.Todo.project"
-            android:name="com.example.linukey.DAL.ProjectContentProvider"/>
+            android:name="com.example.linukey.data.source.local.ProjectContentProvider"/>
         <provider
             android:authorities="com.linukey.Todo.goal"
-            android:name="com.example.linukey.DAL.GoalContentProvider"/>
+            android:name="com.example.linukey.data.source.local.GoalContentProvider"/>
         <provider
             android:authorities="com.linukey.Todo.sight"
-            android:name="com.example.linukey.DAL.SightContentProvider"/>
+            android:name="com.example.linukey.data.source.local.SightContentProvider"/>
         <provider
             android:authorities="com.linukey.Todo.team"
-            android:name="com.example.linukey.DAL.TeamContentProvider"/>
+            android:name="com.example.linukey.data.source.local.TeamContentProvider"/>
         <provider
             android:authorities="com.linukey.Todo.teamtask"
-            android:name="com.example.linukey.DAL.TeamTaskContentProvider"/>
+            android:name="com.example.linukey.data.source.local.TeamTaskContentProvider"/>
     </application>
 
 </manifest>
