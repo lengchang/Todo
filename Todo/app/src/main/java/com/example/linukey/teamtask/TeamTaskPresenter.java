@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.linukey.addedit_selftask.AddEditSelfTaskActivity;
 import com.example.linukey.addedit_teamtask.AddEditTeamTaskActivity;
@@ -57,7 +58,7 @@ public class TeamTaskPresenter implements TeamTaskContract.TeamTaskActivityPrese
     }
 
     @Override
-    public void notifyTeamTaskDataChanged(String menuName) {
+    public void notifyTeamTaskDataChanged(String menuName, Context context) {
         LocalDateSource.updateTeamTasks(TodoHelper.getInstance());
         datasourceTeamTasks = LocalDateSource.teamTasks;
 
@@ -95,14 +96,14 @@ public class TeamTaskPresenter implements TeamTaskContract.TeamTaskActivityPrese
     @Override
     public List<TeamTask> getTomorrowDate() throws ParseException {
         List<TeamTask> result = null;
-        if(datasourceTeamTasks != null && datasourceTeamTasks.size() > 0){
+        if (datasourceTeamTasks != null && datasourceTeamTasks.size() > 0) {
             result = new ArrayList<>();
             SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
             Date tomorrow = getNextDay(getDateToday());
-            for(TeamTask teamTask : datasourceTeamTasks){
-                if(!isOvertimeOrComplete(teamTask) &&
+            for (TeamTask teamTask : datasourceTeamTasks) {
+                if (!isOvertimeOrCompleteOrDelete(teamTask) &&
                         tomorrow.getTime() >= sdt.parse(teamTask.getStarttime()).getTime()
-                        && tomorrow.getTime() <= sdt.parse(teamTask.getEndtime()).getTime()){
+                        && tomorrow.getTime() <= sdt.parse(teamTask.getEndtime()).getTime()) {
                     result.add(teamTask);
                 }
             }
@@ -113,7 +114,7 @@ public class TeamTaskPresenter implements TeamTaskContract.TeamTaskActivityPrese
     @Override
     public List<TeamTask> getTodayDate() throws ParseException {
         List<TeamTask> result = null;
-        if(datasourceTeamTasks != null && datasourceTeamTasks.size() >0){
+        if (datasourceTeamTasks != null && datasourceTeamTasks.size() > 0) {
             result = new ArrayList<>();
             Date today = null;
             try {
@@ -122,28 +123,27 @@ public class TeamTaskPresenter implements TeamTaskContract.TeamTaskActivityPrese
                 e.printStackTrace();
             }
             SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
-            for(TeamTask teamTask : datasourceTeamTasks){
-                if(!isOvertimeOrComplete(teamTask) &&
+            for (TeamTask teamTask : datasourceTeamTasks) {
+                if (!isOvertimeOrCompleteOrDelete(teamTask) &&
                         today.getTime() >= sdt.parse(teamTask.getStarttime()).getTime()
-                        && today.getTime() <= sdt.parse(teamTask.getEndtime()).getTime()){
+                        && today.getTime() <= sdt.parse(teamTask.getEndtime()).getTime()) {
                     result.add(teamTask);
                 }
             }
         }
         return result;
     }
-
 
     @Override
     public List<TeamTask> getNextDate() throws ParseException {
         List<TeamTask> result = null;
-        if(datasourceTeamTasks != null && datasourceTeamTasks.size() >0){
+        if (datasourceTeamTasks != null && datasourceTeamTasks.size() > 0) {
             result = new ArrayList<>();
             SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
             Date tomorrow = getNextDay(getDateToday());
-            for(TeamTask teamTask : datasourceTeamTasks){
-                if(!isOvertimeOrComplete(teamTask) &&
-                        tomorrow.getTime() < sdt.parse(teamTask.getStarttime()).getTime()){
+            for (TeamTask teamTask : datasourceTeamTasks) {
+                if (!isOvertimeOrCompleteOrDelete(teamTask) &&
+                        tomorrow.getTime() < sdt.parse(teamTask.getStarttime()).getTime()) {
                     result.add(teamTask);
                 }
             }
@@ -152,27 +152,29 @@ public class TeamTaskPresenter implements TeamTaskContract.TeamTaskActivityPrese
     }
 
     @Override
-    public boolean isOvertimeOrComplete(TeamTask teamTask) {
+    public boolean isOvertimeOrCompleteOrDelete(TeamTask teamTask) {
         if (!teamTask.getState().equals(TodoHelper.TaskState.get("noComplete")))
+            return true;
+        if (teamTask.getIsdelete().equals("1"))
             return true;
         return false;
     }
 
     @Override
-    public Date getDateToday() throws ParseException{
+    public Date getDateToday() throws ParseException {
         Date date = new Date();
         SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
-        Date today = sdt.parse(date.getYear()+1900+"-"
-                + (date.getMonth()+1) + "-" + date.getDate());
+        Date today = sdt.parse(date.getYear() + 1900 + "-"
+                + (date.getMonth() + 1) + "-" + date.getDate());
         return today;
     }
 
     @Override
-    public Date getNextDay(Date date){
+    public Date getNextDay(Date date) {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
-        calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动
-        date=calendar.getTime();   //这个时间就是日期往后推一天的结果
+        calendar.add(calendar.DATE, 1);//把日期往后增加一天.整数往后推,负数往前移动
+        date = calendar.getTime();   //这个时间就是日期往后推一天的结果
         return date;
     }
 
@@ -237,7 +239,7 @@ public class TeamTaskPresenter implements TeamTaskContract.TeamTaskActivityPrese
             public void onClick(DialogInterface dialog, int which) {
                 TeamTask.deleteOne(datasourceCurrent.get(position).getId(), context);
                 LocalDateSource.updateTeamTasks(context);
-                notifyTeamTaskDataChanged(menuName);
+                notifyTeamTaskDataChanged(menuName, context);
             }
         });
         adDel.create();
@@ -245,7 +247,24 @@ public class TeamTaskPresenter implements TeamTaskContract.TeamTaskActivityPrese
     }
 
     @Override
-    public void completedTask(int position, String menuName, Context context) {
+    public void completedTask(final int position, final String menuName, final Context context) {
+        AlertDialog.Builder adDel = new AlertDialog.Builder(context);
+        adDel.setMessage("是否要删除?");
+        adDel.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        adDel.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                TeamTask.completed(datasourceCurrent.get(position).getId(), context);
+                LocalDateSource.updateTeamTasks(context);
+                notifyTeamTaskDataChanged(menuName, context);
+            }
+        });
+        adDel.create();
+        adDel.show();
     }
 }

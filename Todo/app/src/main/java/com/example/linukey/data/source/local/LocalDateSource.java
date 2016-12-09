@@ -25,8 +25,8 @@ public class LocalDateSource{
         selfTasks = SelfTask.getTasks(context);
     }
 
-    public static void updateProjects(Context context){
-        projects = Project.getProjects(context);
+    public static void updateProjects(String projectType, Context context){
+        projects = Project.getProjects(projectType, context);
     }
 
     public static void updateGoals(Context context){
@@ -37,7 +37,5 @@ public class LocalDateSource{
         sights = Sight.getSights(context);
     }
 
-    public static void updateTeamTasks(Context context){
-        teamTasks = TeamTask.getTeamTasks(context);
-    }
+    public static void updateTeamTasks(Context context){teamTasks = TeamTask.getTeamTasks(context);}
 }

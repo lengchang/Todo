@@ -8,11 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.example.linukey.data.model.SelfTask;
 import com.example.linukey.data.model.TaskClassify;
 import com.example.linukey.data.model.Team;
 import com.example.linukey.data.model.TeamTask;
+import com.example.linukey.selfpgs.SelfPGSActivity;
 import com.example.linukey.todo.Adapter.ListViewTeamTaskAdapter;
 import com.example.linukey.todo.R;
 import com.example.linukey.todo.SwipeMenu.SwipeMenu;
@@ -64,17 +66,19 @@ public class TeamTaskActivity extends Activity implements TeamTaskContract.TeamT
                         break;
                     case 1:
                         presenter.deleteTask(position, menuName, TeamTaskActivity.this);
-                        presenter.notifyTeamTaskDataChanged(menuName);
+                        presenter.notifyTeamTaskDataChanged(menuName, TeamTaskActivity.this);
                         break;
                     case 2:
                         presenter.completedTask(position, menuName, TeamTaskActivity.this);
-                        presenter.notifyTeamTaskDataChanged(menuName);
+                        presenter.notifyTeamTaskDataChanged(menuName, TeamTaskActivity.this);
                         break;
                     default:
                         break;
                 }
             }
         });
+
+        presenter.notifyTeamTaskDataChanged(menuName, this);
     }
 
     public void initActionBar() {
@@ -86,10 +90,9 @@ public class TeamTaskActivity extends Activity implements TeamTaskContract.TeamT
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == ResultCode_addTeamTask) {
-            presenter.notifyTeamTaskDataChanged(menuName);
+            presenter.notifyTeamTaskDataChanged(menuName, this);
         }
     }
-
 
     @Override
     public void showAddTeamTask(Intent intent) {

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.linukey.selfpgs.SelfPGSActivity;
 import com.example.linukey.teampt.TeamPTActivity;
 import com.example.linukey.teamtask.TeamTaskActivity;
 
@@ -53,8 +54,8 @@ public class TeamTaskMenuFragment extends Fragment {
         btnProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TeamPTActivity.class);
-                intent.putExtra("menuname", "project");
+                Intent intent = new Intent(getActivity(), SelfPGSActivity.class);
+                intent.putExtra("menuname", "teamProject");
                 startActivity(intent);
             }
         });

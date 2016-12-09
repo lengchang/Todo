@@ -23,6 +23,11 @@ public class TodoHelper extends Application {
         put("next", "下一步行动");
     }};
 
+    public static Map<String, String> ProjectType = new HashMap<String, String>(){{
+        put("self", "self");
+        put("team", "team");
+    }};
+
     public static Map<String, String> UserGroup = new HashMap<String, String>(){{
         put("normal", "normal");
         put("administrator", "administrator");

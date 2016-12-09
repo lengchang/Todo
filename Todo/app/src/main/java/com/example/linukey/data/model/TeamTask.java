@@ -32,9 +32,23 @@ public class TeamTask implements Serializable {
     private String teamId;
 
     public TeamTask(int id, String title, String content, String starttime, String endtime,
-                    String clocktime, String projectId, String state,
-                    String isdelete, String teamId) {
+                    String clocktime, String projectId, String teamId,
+                    String state, String isdelete) {
         this.id = id;
+        this.title = title;
+        this.content = content;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.clocktime = clocktime;
+        this.projectId = projectId;
+        this.state = state;
+        this.isdelete = isdelete;
+        this.teamId = teamId;
+    }
+
+    public TeamTask(String title, String content, String starttime, String endtime,
+                    String clocktime, String projectId, String teamId,
+                    String state, String isdelete) {
         this.title = title;
         this.content = content;
         this.starttime = starttime;
@@ -147,6 +161,29 @@ public class TeamTask implements Serializable {
         return false;
     }
 
+    public static boolean updateTeamTask(TeamTask teamTask, Context context){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TeamTaskContentProvider.key_title, teamTask.getTitle());
+        contentValues.put(TeamTaskContentProvider.key_content, teamTask.getContent());
+        contentValues.put(TeamTaskContentProvider.key_starttime, teamTask.getStarttime());
+        contentValues.put(TeamTaskContentProvider.key_endtime, teamTask.getEndtime());
+        contentValues.put(TeamTaskContentProvider.key_projectId, teamTask.getProjectId());
+        contentValues.put(TeamTaskContentProvider.key_state, teamTask.getState());
+        contentValues.put(TeamTaskContentProvider.key_teamId, teamTask.getTeamId());
+        contentValues.put(TeamTaskContentProvider.key_isdelete, teamTask.getIsdelete());
+        contentValues.put(TeamTaskContentProvider.key_clocktime, teamTask.getClocktime());
+
+        String where = TeamTaskContentProvider.key_id + " = " + teamTask.getId();
+        String[] selectionArgs = null;
+
+        ContentResolver cr = context.getContentResolver();
+        int rid = cr.update(DBHelper.ContentUri_teamtask, contentValues, where, selectionArgs);
+
+        if(rid > -1)
+            return true;
+        return false;
+    }
+
     public static List<TeamTask> getTeamTasks(Context context){
         ContentResolver cr = context.getContentResolver();
 
@@ -160,10 +197,7 @@ public class TeamTask implements Serializable {
                 TeamTaskContentProvider.keys[6],
                 TeamTaskContentProvider.keys[7],
                 TeamTaskContentProvider.keys[8],
-                TeamTaskContentProvider.keys[9],
-                TeamTaskContentProvider.keys[10],
-                TeamTaskContentProvider.keys[11],
-                TeamTaskContentProvider.keys[12]
+                TeamTaskContentProvider.keys[9]
         };
 
         String where = null;

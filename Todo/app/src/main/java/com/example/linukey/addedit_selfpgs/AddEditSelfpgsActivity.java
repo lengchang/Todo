@@ -109,7 +109,7 @@ public class AddEditSelfpgsActivity extends Activity implements AddEditSelfpgsCo
         String selfId = UUID.randomUUID().toString();
         String state = TodoHelper.PGS_State.get("noComplete");
         String userId = TodoHelper.UserId;
-        return presenter.saveProject(isEdit, this, title, content, selfId, state, userId, preId);
+        return presenter.saveProject(isEdit, menuName, this, title, content, selfId, state, userId, preId);
     }
 
     @Override

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.linukey.addedit_selftask.AddEditSelfTaskActivity"
+    tools:context="com.example.linukey.addedit_teamtask.AddEditTeamTaskActivity"
     android:background="#F4F5FE">
     <EditText
         android:layout_width="match_parent"
@@ -129,7 +129,7 @@
             <Spinner
                 android:layout_width="150dp"
                 android:layout_height="30dp"
-                android:id="@+id/sights"
+                android:id="@+id/teamnames"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp">

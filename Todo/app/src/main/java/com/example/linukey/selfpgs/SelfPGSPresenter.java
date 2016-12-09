@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.linukey.addedit_selfpgs.AddEditSelfpgsActivity;
 import com.example.linukey.todo.SwipeMenu.SwipeMenu;
@@ -45,7 +44,7 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
     public void notifyPGSDateSourceChanged(String menuName, Context context) {
         switch (menuName) {
             case "project":
-                LocalDateSource.updateProjects(TodoHelper.getInstance());
+                LocalDateSource.updateProjects(TodoHelper.ProjectType.get("self"), TodoHelper.getInstance());
                 dataSourceProjects = LocalDateSource.projects;
                 dataSourcePGS = getProjectDate();
                 break;
@@ -59,6 +58,10 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
                 dataSourceSight = LocalDateSource.sights;
                 dataSourcePGS = getSightDate();
                 break;
+            case "teamProject":
+                LocalDateSource.updateProjects(TodoHelper.ProjectType.get("team"), TodoHelper.getInstance());
+                dataSourceProjects = LocalDateSource.projects;
+                dataSourcePGS = getProjectDate();
             default:
                 break;
         }

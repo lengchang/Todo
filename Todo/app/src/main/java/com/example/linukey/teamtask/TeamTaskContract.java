@@ -37,7 +37,7 @@ public interface TeamTaskContract {
 
         List<TeamTask> getTodayDate() throws ParseException;
 
-        boolean isOvertimeOrComplete(TeamTask teamTask);
+        boolean isOvertimeOrCompleteOrDelete(TeamTask teamTask);
 
         List<TeamTask> getNextDate() throws ParseException;
 
@@ -51,7 +51,7 @@ public interface TeamTaskContract {
 
         void deleteTask(int position, String menuName, Context context);
 
-        void notifyTeamTaskDataChanged(String menuName);
+        void notifyTeamTaskDataChanged(String menuName, Context context);
 
         void completedTask(int position, String menuName, Context context);
     }

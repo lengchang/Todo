@@ -20,22 +20,35 @@ import java.util.List;
 
 public class Project extends TaskClassify {
     private String state;
+    private String type;
 
-    public Project(int id, String title, String content, String state, String projectId, String userId) {
+    public Project(int id, String title, String content, String state, String projectId,
+                   String userId, String type) {
         this.state = state;
         setId(id);
         setTitle(title);
         setContent(content);
         setUserId(userId);
         setSelfId(projectId);
+        this.type = type;
     }
 
-    public Project(String title, String content, String state, String projectId, String userId) {
+    public Project(String title, String content, String state, String projectId,
+                   String userId, String type) {
         this.state = state;
+        this.type = type;
         setTitle(title);
         setContent(content);
         setUserId(userId);
         setSelfId(projectId);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Project(){}
@@ -55,6 +68,7 @@ public class Project extends TaskClassify {
         contentValues.put(ProjectContentProvider.key_state, project.getState());
         contentValues.put(ProjectContentProvider.key_projectId, project.getSelfId());
         contentValues.put(ProjectContentProvider.key_userId, project.getUserId());
+        contentValues.put(ProjectContentProvider.key_type, project.getType());
 
         ContentResolver cr = context.getContentResolver();
         Uri myRowUri = cr.insert(DBHelper.ContentUri_project, contentValues);
@@ -110,7 +124,7 @@ public class Project extends TaskClassify {
             return false;
     }
 
-    public static List<Project> getProjects(Context context){
+    public static List<Project> getProjects(String projectType, Context context){
         ContentResolver cr = context.getContentResolver();
 
         String[] result_columns = new String[]{
@@ -119,16 +133,17 @@ public class Project extends TaskClassify {
                 ProjectContentProvider.keys[2],
                 ProjectContentProvider.keys[3],
                 ProjectContentProvider.keys[4],
-                ProjectContentProvider.keys[5]
+                ProjectContentProvider.keys[5],
+                ProjectContentProvider.keys[6]
         };
 
-        String where = null;
+        String where = ProjectContentProvider.key_type + " = '" + projectType + "'";
 
-        String whereArgs[] = null;
+        String selectionArgs[] = null;
         String order = null;
 
         Cursor resultCursor = cr.query(DBHelper.ContentUri_project,
-                result_columns, where, whereArgs, order);
+                result_columns, where, selectionArgs, order);
 
         List<Project> result = null;
         if(resultCursor != null && resultCursor.getCount() > 0){
@@ -140,7 +155,8 @@ public class Project extends TaskClassify {
                         resultCursor.getString(2),
                         resultCursor.getString(3),
                         resultCursor.getString(4),
-                        resultCursor.getString(5)
+                        resultCursor.getString(5),
+                        resultCursor.getString(6)
                 );
                 result.add(project);
             }

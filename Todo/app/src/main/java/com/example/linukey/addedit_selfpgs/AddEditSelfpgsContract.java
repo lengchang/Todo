@@ -33,7 +33,7 @@ public interface AddEditSelfpgsContract {
         boolean saveGoal(boolean isEdit, Context context, String title, String content, String selfId
                 , String state, String userId, int preId);
 
-        boolean saveProject(boolean isEdit, Context context, String title, String content, String selfId,
+        boolean saveProject(boolean isEdit, String menuName, Context context, String title, String content, String selfId,
                             String state, String userId, int preId);
 
         boolean MenuChoice(MenuItem item, Activity activity, String menuName) throws ParseException;

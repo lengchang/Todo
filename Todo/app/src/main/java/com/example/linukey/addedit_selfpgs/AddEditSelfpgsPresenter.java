@@ -9,7 +9,9 @@ import android.widget.Toast;
 import com.example.linukey.data.model.Goal;
 import com.example.linukey.data.model.Project;
 import com.example.linukey.data.model.Sight;
+import com.example.linukey.data.model.TeamTask;
 import com.example.linukey.data.source.local.LocalDateSource;
+import com.example.linukey.util.TodoHelper;
 
 import java.text.ParseException;
 
@@ -59,7 +61,7 @@ public class AddEditSelfpgsPresenter implements AddEditSelfpgsContract.AddEditSe
     }
 
     @Override
-    public boolean saveProject(boolean isEdit, Context context, String title, String content, String selfId,
+    public boolean saveProject(boolean isEdit, String menuName, Context context, String title, String content, String selfId,
                                String state, String userId, int preId){
         Project project = new Project();
         project.setTitle(title);
@@ -68,6 +70,10 @@ public class AddEditSelfpgsPresenter implements AddEditSelfpgsContract.AddEditSe
         project.setState(state);
         project.setUserId(userId);
         project.setId(preId);
+        if(menuName.equals("teamProject"))
+            project.setType(TodoHelper.ProjectType.get("team"));
+        else if(menuName.equals("project"))
+            project.setType(TodoHelper.ProjectType.get("self"));
 
         if (isEdit)
             return Project.updateProject(project, context);
@@ -86,7 +92,7 @@ public class AddEditSelfpgsPresenter implements AddEditSelfpgsContract.AddEditSe
                     if (view.savePGS(menuName)) {
                         switch (menuName) {
                             case "project":
-                                LocalDateSource.updateProjects(activity);
+                                LocalDateSource.updateProjects(TodoHelper.ProjectType.get("self"), activity);
                                 break;
                             case "goal":
                                 LocalDateSource.updateGoals(activity);

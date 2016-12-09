@@ -22,6 +22,7 @@ public class ProjectContentProvider extends ContentProvider {
     public final static String key_state = "state";
     public final static String key_projectId = "projectId";
     public final static String key_userId = "userId";
+    public final static String key_type = "type";
 
     public final static String[] keys = new String[]{
             key_id,
@@ -29,7 +30,8 @@ public class ProjectContentProvider extends ContentProvider {
             key_content,
             key_state,
             key_projectId,
-            key_userId
+            key_userId,
+            key_type
     };
 
     public final static String tableName = "project";
@@ -40,7 +42,8 @@ public class ProjectContentProvider extends ContentProvider {
             keys[2] + " varchar not null," +
             keys[3] + " varchar not null," +
             keys[4] + " varchar not null," +
-            keys[5] + " varchar not null);";
+            keys[5] + " varchar not null," +
+            keys[6] + " varchar not null);";
 
     @Override
     public boolean onCreate() {
