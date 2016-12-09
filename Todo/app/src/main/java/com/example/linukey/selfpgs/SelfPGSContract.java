@@ -22,7 +22,7 @@ public interface SelfPGSContract {
     }
 
     interface SelfPGSActivityPresenter{
-        void notifyPGSDateSourceChanged(String menuName);
+        void notifyPGSDateSourceChanged(String menuName, Context context);
 
         List<TaskClassify> getGoalsDate();
 
@@ -30,16 +30,16 @@ public interface SelfPGSContract {
 
         List<TaskClassify> getProjectDate();
 
-        void addSelfPGS(String menuName);
+        void addSelfPGS(String menuName, Context context);
 
         void CreateMenu(Menu menu);
 
         SwipeMenuCreator getSwipeMenuCreator(String menuName);
 
-        void editPGS(String menuName, int position);
+        void editPGS(String menuName, int position, Context context);
 
-        void deletePGS(String menuName, int position);
+        void deletePGS(final String menuName, final int position, Context context);
 
-        void completedPGS(String menuName, int position);
+        void completedPGS(final String menuName, final int position, final Context context);
     }
 }

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.linukey.addedit_selftask.AddEditSelfTaskActivity;
 import com.example.linukey.todo.Adapter.ListViewSelfTaskAdapter;
 import com.example.linukey.todo.SwipeMenu.SwipeMenu;
 import com.example.linukey.todo.SwipeMenu.SwipeMenuListView;
@@ -34,7 +35,6 @@ public class SelfTaskActivity extends Activity implements SelfTaskContract.Activ
         setContentView(R.layout.activity_selftask);
 
         init();
-        initActionBar();
     }
 
     public void initActionBar(){
@@ -66,6 +66,7 @@ public class SelfTaskActivity extends Activity implements SelfTaskContract.Activ
     }
 
     public void init() {
+        initActionBar();
         Intent intent = getIntent();
         menuName = intent.getStringExtra("menuname");
 
@@ -83,7 +84,7 @@ public class SelfTaskActivity extends Activity implements SelfTaskContract.Activ
             public void onMenuItemClick(final int position, final SwipeMenu menu, int index) {
                 switch (index){
                     case 0:
-                        selfTaskPresenter.editTask(position);
+                        selfTaskPresenter.editTask(position, SelfTaskActivity.this);
                         break;
                     case 1:
                         selfTaskPresenter.deleteTask(position, menuName, SelfTaskActivity.this);
@@ -110,7 +111,9 @@ public class SelfTaskActivity extends Activity implements SelfTaskContract.Activ
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        selfTaskPresenter.notifyTaskDateSourceChanged(menuName);
+        if(resultCode == RESULT_OK && requestCode == addSelfTask_ResultCode) {
+            selfTaskPresenter.notifyTaskDateSourceChanged(menuName);
+        }
     }
 
     @Override
@@ -127,7 +130,7 @@ public class SelfTaskActivity extends Activity implements SelfTaskContract.Activ
                 finish();
                 return true;
             case 0:
-                selfTaskPresenter.addSelfTask();
+                selfTaskPresenter.addSelfTask(this);
                 break;
         }
         return true;
@@ -135,7 +138,6 @@ public class SelfTaskActivity extends Activity implements SelfTaskContract.Activ
 
     @Override
     public void showAddTask(Intent intent){
-        Intent addSelfTask = new Intent("com.linukey.Todo.AddEditSelfTaskActivity");
         startActivityForResult(intent, addSelfTask_ResultCode);
     }
 }

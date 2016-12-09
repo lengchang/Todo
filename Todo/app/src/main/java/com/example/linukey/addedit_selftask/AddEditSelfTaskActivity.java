@@ -37,31 +37,12 @@ import java.util.List;
  * Created by linukey on 11/25/16.
  */
 
-public class AddEditSelfTaskActivity extends Activity {
+public class AddEditSelfTaskActivity extends Activity implements AddEditSelfTaskContract.AddEditSelfTaskView {
     final Context context = this;
     ViewHolder viewHolder;
     boolean isEdit = false;
-    List<Project> projectList = LocalDateSource.projects;
-    List<Goal> goalList = LocalDateSource.goals;
-    List<Sight> sightList = LocalDateSource.sights;
+    AddEditSelfTaskContract.AddEditSelfTaskPresenter presenter = null;
     int preId;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addselftask);
-        initViewHolder();
-        initControl();
-
-        Intent edit = getIntent();
-        Bundle bundle = edit.getBundleExtra("bundle");
-        if (bundle != null) {
-            SelfTask selfTask = (SelfTask) bundle.getSerializable("date");
-            initEdit(selfTask);
-            preId = selfTask.getId();
-            isEdit = true;
-        }
-    }
 
     class ViewHolder {
         TextView starttime;
@@ -77,6 +58,29 @@ public class AddEditSelfTaskActivity extends Activity {
         Spinner sights;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_addselftask);
+
+        init();
+    }
+
+    private void init(){
+        presenter = new AddEditSelfTaskPresenter(this);
+        initViewHolder();
+        initControl();
+        Intent edit = getIntent();
+        Bundle bundle = edit.getBundleExtra("bundle");
+        if (bundle != null) {
+            SelfTask selfTask = (SelfTask) bundle.getSerializable("date");
+            initEdit(selfTask);
+            preId = selfTask.getId();
+            isEdit = true;
+        }
+    }
+
+    @Override
     public void initEdit(SelfTask selfTask) {
         viewHolder.title.setText(selfTask.getTitle());
         viewHolder.content.setText(selfTask.getContent());
@@ -88,28 +92,17 @@ public class AddEditSelfTaskActivity extends Activity {
             onClick_selectTmp(null);
         }
         if (selfTask.getProjectId() != null) {
-            for (int i = 0; i < projectList.size(); i++) {
-                if (projectList.get(i).getSelfId().equals(selfTask.getProjectId())) {
-                    viewHolder.projects.setSelection(i + 1);
-                }
-            }
+            viewHolder.projects.setSelection(presenter.getSpinerProjectSelection(selfTask));
         }
         if (selfTask.getGoalId() != null) {
-            for (int i = 0; i < goalList.size(); i++) {
-                if (goalList.get(i).getSelfId().equals(selfTask.getGoalId())) {
-                    viewHolder.goals.setSelection(i + 1);
-                }
-            }
+            viewHolder.goals.setSelection(presenter.getSpinerGoalSelection(selfTask));
         }
         if (selfTask.getSightId() != null) {
-            for (int i = 0; i < sightList.size(); i++) {
-                if (sightList.get(i).getSelfId().equals(selfTask.getSightId())) {
-                    viewHolder.sights.setSelection(i + 1);
-                }
-            }
+            viewHolder.sights.setSelection(presenter.getSpinerSightSelection(selfTask));
         }
     }
 
+    @Override
     public void initViewHolder() {
         viewHolder = new ViewHolder();
         viewHolder.starttime = (TextView) findViewById(R.id.starttime);
@@ -125,58 +118,41 @@ public class AddEditSelfTaskActivity extends Activity {
         viewHolder.sights = (Spinner) findViewById(R.id.sights);
     }
 
+    @Override
     public void initControl() {
         Date date = new Date();
+        String today = date.getYear() + 1900 + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
         TextView starttime = (TextView) findViewById(R.id.starttime);
-        starttime.setText(date.getYear() + 1900 + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+        starttime.setText(today);
 
         TextView endtime = (TextView) findViewById(R.id.endtime);
-        endtime.setText(date.getYear() + 1900 + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+        endtime.setText(today);
 
         TextView clocktime = (TextView) findViewById(R.id.clocktime);
         clocktime.setText("0:0");
 
-        if (projectList != null)
-            initProjectSpiner(projectList);
-        if (goalList != null)
-            initGoalSpiner(goalList);
-        if (sightList != null)
-            initSightSpiner(sightList);
+        presenter.initGoalSpiner();
+        presenter.initSightSpiner();
+        presenter.initSpinerProjects();
     }
 
-    public void initProjectSpiner(List<Project> projects){
-        List<String> projectNames = new ArrayList<>();
-        projectNames.add("");
-        for(Project project : projects){
-            projectNames.add(project.getTitle());
-        }
-
+    @Override
+    public void setSpinerProjectsAdapter(List<String> projectNames){
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item,
-                projectNames);
+                android.R.layout.simple_spinner_dropdown_item, projectNames);
         viewHolder.projects.setAdapter(arrayAdapter);
     }
 
-    public void initGoalSpiner(List<Goal> goals){
-        List<String> goalNames = new ArrayList<>();
-        goalNames.add("");
-        for(Goal goal : goals){
-            goalNames.add(goal.getTitle());
-        }
-
+    @Override
+    public void setSpinerGoalsAdapter(List<String> goalNames){
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item,
-                goalNames);
+                android.R.layout.simple_spinner_dropdown_item, goalNames);
         viewHolder.goals.setAdapter(arrayAdapter);
     }
 
-    public void initSightSpiner(List<Sight> sights){
-        List<String> sightNames = new ArrayList<>();
-        sightNames.add("");
-        for(Sight sight : sights){
-            sightNames.add(sight.getTitle());
-        }
-
+    @Override
+    public void setSpinerSightsAdapter(List<String> sightNames){
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 sightNames);
@@ -184,94 +160,32 @@ public class AddEditSelfTaskActivity extends Activity {
     }
 
     public void onClick_dateSelect(View view) {
-        final TextView textView = (TextView) view;
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        try {
-            date = simpleDateFormat.parse(textView.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = year + "-" + ++month + "-" + dayOfMonth;
-                        textView.setText(date);
-                    }
-                }, date.getYear() + 1900, date.getMonth(), date.getDate());
-        datePickerDialog.show();
+        presenter.getDateSeleteDialog(view, this).show();
     }
 
     public void onClick_timeSelect(View view) {
-        final TextView textView = (TextView) view;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        Date date = null;
-        try {
-            date = simpleDateFormat.parse(textView.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String time = hourOfDay + ":" + minute;
-                        textView.setText(time);
-                    }
-                }, date.getHours(), date.getMinutes(), true);
-        timePickerDialog.show();
+        presenter.getTimeSelectDialog(view, this).show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        CreateMenu(menu);
+        presenter.CreateMenu(menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         try {
-            return MenuChoice(item);
+            return presenter.MenuChoice(item, this);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    private void CreateMenu(Menu menu) {
-        MenuItem taskAdd = menu.add(0, 0, 0, "cancel");
-        taskAdd.setTitle("取消");
-        taskAdd.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
-        MenuItem setting = menu.add(0, 1, 1, "ok");
-        setting.setTitle("保存");
-        setting.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-    }
-
-    private boolean MenuChoice(MenuItem item) throws ParseException {
-        switch (item.getItemId()) {
-            case 0:
-                setResult(RESULT_CANCELED);
-                finish();
-                return true;
-            case 1:
-                if (checkInput()) {
-                    if (saveTask()) {
-                        LocalDateSource.updateSelfTasks(this);
-                        setResult(RESULT_OK);
-                        finish();
-                    }
-                }
-                return true;
-        }
-        return false;
-    }
-
-    private boolean saveTask() {
+    @Override
+    public boolean saveTask() {
         String title = viewHolder.title.getText().toString().trim();
         String content = viewHolder.content.getText().toString().trim();
         String starttime = viewHolder.starttime.getText().toString();
@@ -280,15 +194,15 @@ public class AddEditSelfTaskActivity extends Activity {
         String projectId = null;
         if (viewHolder.projects.getSelectedItem() != null
                 && !viewHolder.projects.getSelectedItem().toString().equals(""))
-            projectId = projectList.get(((int) viewHolder.projects.getSelectedItemId()) - 1).getSelfId();
+            projectId = presenter.getProjectId(((int) viewHolder.projects.getSelectedItemId()) - 1);
         String goalId = null;
         if (viewHolder.goals.getSelectedItem() != null
                 && !viewHolder.goals.getSelectedItem().toString().equals(""))
-            goalId = goalList.get(((int) viewHolder.goals.getSelectedItemId()) - 1).getSelfId();
+            goalId = presenter.getGoalId(((int) viewHolder.goals.getSelectedItemId()) - 1);
         String sightId = null;
         if (viewHolder.sights.getSelectedItem() != null
                 && !viewHolder.sights.getSelectedItem().toString().equals(""))
-            sightId = sightList.get(((int) viewHolder.sights.getSelectedItem()) - 1).getSelfId();
+            sightId = presenter.getSightId(((int) viewHolder.sights.getSelectedItem()) - 1);
         String userId = TodoHelper.UserId;
         String state = TodoHelper.TaskState.get("noComplete");
         String isdelete = "0";
@@ -299,11 +213,7 @@ public class AddEditSelfTaskActivity extends Activity {
         SelfTask selfTask = new SelfTask(preId, title, content, starttime, endtime, clocktime, projectId,
                 goalId, sightId, userId, state, isdelete, istmp);
 
-        if (isEdit) {
-            return new SelfTask().updateTaskInfo(selfTask, this);
-        } else {
-            return new SelfTask().saveTaskInfo(selfTask, this);
-        }
+        return presenter.saveTask(selfTask, isEdit, this);
     }
 
     public void onClick_selectTmp(View view) {
@@ -316,7 +226,8 @@ public class AddEditSelfTaskActivity extends Activity {
         }
     }
 
-    private boolean checkInput() throws ParseException {
+    @Override
+    public boolean checkInput() throws ParseException {
         if (((EditText) findViewById(R.id.title)).getText().toString().isEmpty()) {
             Toast.makeText(context, "请输入标题!", Toast.LENGTH_LONG).show();
             return false;
@@ -332,15 +243,5 @@ public class AddEditSelfTaskActivity extends Activity {
         } else {
             return true;
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 }

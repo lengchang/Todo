@@ -1,5 +1,6 @@
 package com.example.linukey.todo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -8,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.linukey.addedit_selftask.AddEditSelfTaskActivity;
 
 /**
  * Created by linukey on 12/8/16.
@@ -32,16 +35,16 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     @Override
-    public void addSelfTask(){
-        Intent addSelfTask = new Intent("com.linukey.Todo.AddEditSelfTaskActivity");
+    public void addSelfTask(Context context){
+        Intent addSelfTask = new Intent(context, AddEditSelfTaskActivity.class);
         todoView.addSelfTask(addSelfTask);
     }
 
     @Override
-    public boolean MenuChoice(MenuItem item){
+    public boolean MenuChoice(MenuItem item, Context context){
         switch (item.getItemId()){
             case 0:
-                addSelfTask();
+                addSelfTask(context);
                 return true;
             case 1:
                 return true;

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.linukey.login.LoginActivity;
 import com.example.linukey.todo.MainActivity;
 import com.example.linukey.todo.R;
 
@@ -26,7 +27,7 @@ public class LaunchActivity extends Activity {
     public void initLaunchPic(){
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                Intent mainIntent = new Intent(LaunchActivity.this, MainActivity.class);
+                Intent mainIntent = new Intent(LaunchActivity.this, LoginActivity.class);
                 startActivity(mainIntent);
                 finish();
             }

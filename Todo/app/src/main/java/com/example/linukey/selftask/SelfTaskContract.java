@@ -41,17 +41,17 @@ public interface SelfTaskContract {
         List<SelfTask> getTomorrowDate() throws ParseException;
         List<SelfTask> getNextDate() throws ParseException;
         List<SelfTask> getBoxDate() throws ParseException;
-        boolean isBoxTaskOrOvertimeOrCompleteOrNotUser(SelfTask selfTask);
+        boolean isBoxTaskOrOvertimeOrCompleteOrDelete(SelfTask selfTask);
         Date getDateToday() throws ParseException;
         Date getNextDay(Date date);
-        void addSelfTask();
+        void addSelfTask(Context context);
         void CreateMenu(Menu menu);
         SelfTask getCurrentTask(int position);
         String getTaskProjectTitle(String projectId);
         String getTaskGoalTitle(String goalId);
         String getTaskSightTitle(String sightId);
         SwipeMenuCreator getSwipeMenuCreator();
-        void editTask(int position);
+        void editTask(int position, Context context);
         void deleteTask(final int position, final String menuName, final Context context);
         void completedTask(final int position, final String menuName, final Context context);
     }

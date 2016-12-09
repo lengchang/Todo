@@ -1,5 +1,6 @@
 package com.example.linukey.todo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +16,7 @@ public interface IMainContract {
     }
     interface Presenter{
         void CreateMenu(Menu menu);
-        boolean MenuChoice(MenuItem item);
-        void addSelfTask();
+        boolean MenuChoice(MenuItem item, Context context);
+        void addSelfTask(Context context);
     }
 }

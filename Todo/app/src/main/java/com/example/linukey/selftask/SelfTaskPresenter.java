@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.linukey.addedit_selftask.AddEditSelfTaskActivity;
+import com.example.linukey.data.model.TeamTask;
 import com.example.linukey.todo.SwipeMenu.SwipeMenu;
 import com.example.linukey.todo.SwipeMenu.SwipeMenuCreator;
 import com.example.linukey.todo.SwipeMenu.SwipeMenuItem;
@@ -35,7 +37,8 @@ import java.util.List;
 
 public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
     private final SelfTaskContract.ActivityView selfTaskView;
-    List<SelfTask> datesourceTask = null;
+    List<SelfTask> datesourceTasks = null;
+    List<SelfTask> datesourceCurrent = null;
     List<Project> projectList = LocalDateSource.projects;
     List<Goal> goalList = LocalDateSource.goals;
     List<Sight> sightList = LocalDateSource.sights;
@@ -47,34 +50,33 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
     @Override
     public void notifyTaskDateSourceChanged(String menuName) {
         LocalDateSource.updateSelfTasks(TodoHelper.getInstance());
-        datesourceTask = LocalDateSource.selfTasks;
+        datesourceTasks = LocalDateSource.selfTasks;
 
-        List<SelfTask> dataSource = null;
         switch (menuName) {
             case "today":
                 try {
-                    dataSource = getTodayDate();
+                    datesourceCurrent = getTodayDate();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 break;
             case "tomorrow":
                 try {
-                    dataSource = getTomorrowDate();
+                    datesourceCurrent = getTomorrowDate();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 break;
             case "next":
                 try {
-                    dataSource = getNextDate();
+                    datesourceCurrent = getNextDate();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 break;
             case "box":
                 try {
-                    dataSource = getBoxDate();
+                    datesourceCurrent = getBoxDate();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -82,8 +84,8 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
             default:
                 break;
         }
-        if(dataSource != null)
-            selfTaskView.showAfterDataSourceChanged(dataSource);
+        if(datesourceCurrent != null)
+            selfTaskView.showAfterDataSourceChanged(datesourceCurrent);
         else
             selfTaskView.showAfterDataSourceChanged(new ArrayList<SelfTask>());
     }
@@ -91,12 +93,12 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
     @Override
     public List<SelfTask> getTodayDate() throws ParseException {
         List<SelfTask> result = null;
-        if(datesourceTask != null && datesourceTask.size() >0){
+        if(datesourceTasks != null && datesourceTasks.size() >0){
             result = new ArrayList<>();
             Date today = getDateToday();
             SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
-            for(SelfTask selfTask : datesourceTask){
-                if(!isBoxTaskOrOvertimeOrCompleteOrNotUser(selfTask) &&
+            for(SelfTask selfTask : datesourceTasks){
+                if(!isBoxTaskOrOvertimeOrCompleteOrDelete(selfTask) &&
                         today.getTime() >= sdt.parse(selfTask.getStarttime()).getTime()
                         && today.getTime() <= sdt.parse(selfTask.getEndtime()).getTime()){
                     result.add(selfTask);
@@ -109,12 +111,12 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
     @Override
     public List<SelfTask> getTomorrowDate() throws ParseException{
         List<SelfTask> result = null;
-        if(datesourceTask != null && datesourceTask.size() > 0){
+        if(datesourceTasks != null && datesourceTasks.size() > 0){
             result = new ArrayList<>();
             SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
             Date tomorrow = getNextDay(getDateToday());
-            for(SelfTask selfTask : datesourceTask){
-                if(!isBoxTaskOrOvertimeOrCompleteOrNotUser(selfTask) &&
+            for(SelfTask selfTask : datesourceTasks){
+                if(!isBoxTaskOrOvertimeOrCompleteOrDelete(selfTask) &&
                         tomorrow.getTime() >= sdt.parse(selfTask.getStarttime()).getTime()
                         && tomorrow.getTime() <= sdt.parse(selfTask.getEndtime()).getTime()){
                     result.add(selfTask);
@@ -127,12 +129,12 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
     @Override
     public List<SelfTask> getNextDate() throws ParseException{
         List<SelfTask> result = null;
-        if(datesourceTask != null && datesourceTask.size() >0){
+        if(datesourceTasks != null && datesourceTasks.size() >0){
             result = new ArrayList<>();
             SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
             Date tomorrow = getNextDay(getDateToday());
-            for(SelfTask selfTask : datesourceTask){
-                if(!isBoxTaskOrOvertimeOrCompleteOrNotUser(selfTask) &&
+            for(SelfTask selfTask : datesourceTasks){
+                if(!isBoxTaskOrOvertimeOrCompleteOrDelete(selfTask) &&
                         tomorrow.getTime() < sdt.parse(selfTask.getStarttime()).getTime()){
                     result.add(selfTask);
                 }
@@ -144,9 +146,9 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
     @Override
     public List<SelfTask> getBoxDate() throws ParseException{
         List<SelfTask> result = null;
-        if(datesourceTask != null && datesourceTask.size() > 0){
+        if(datesourceTasks != null && datesourceTasks.size() > 0){
             result = new ArrayList<>();
-            for(SelfTask selfTask : datesourceTask){
+            for(SelfTask selfTask : datesourceTasks){
                 if(Integer.parseInt(selfTask.getIsTmp()) == 1){
                     result.add(selfTask);
                 }
@@ -156,12 +158,12 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
     }
 
     @Override
-    public boolean isBoxTaskOrOvertimeOrCompleteOrNotUser(SelfTask selfTask){
+    public boolean isBoxTaskOrOvertimeOrCompleteOrDelete(SelfTask selfTask){
         if(Integer.parseInt(selfTask.getIsTmp()) == 1)
             return true;
         if(!selfTask.getState().equals(TodoHelper.TaskState.get("noComplete")))
             return true;
-        if(!selfTask.getUserId().equals(TodoHelper.UserId))
+        if(selfTask.isdelete().equals("1"))
             return true;
 
         return false;
@@ -186,8 +188,8 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
     }
 
     @Override
-    public void addSelfTask(){
-        Intent addSelfTask = new Intent("com.linukey.Todo.AddEditSelfTaskActivity");
+    public void addSelfTask(Context context){
+        Intent addSelfTask = new Intent(context, AddEditSelfTaskActivity.class);
         selfTaskView.showAddTask(addSelfTask);
     }
 
@@ -200,7 +202,7 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
 
     @Override
     public SelfTask getCurrentTask(int position){
-        return datesourceTask.get(position);
+        return datesourceCurrent.get(position);
     }
 
     @Override
@@ -276,9 +278,9 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
     }
 
     @Override
-    public void editTask(int position){
-        SelfTask selfTask = datesourceTask.get(position);
-        Intent intent = new Intent("com.linukey.Todo.AddEditSelfTaskActivity");
+    public void editTask(int position, Context context){
+        SelfTask selfTask = datesourceCurrent.get(position);
+        Intent intent = new Intent(context, AddEditSelfTaskActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("date", selfTask);
         intent.putExtra("bundle", bundle);
@@ -298,7 +300,7 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
         adDel.setNegativeButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new SelfTask().deleteOne(datesourceTask.get(position).getId(), context);
+                new SelfTask().deleteOne(datesourceCurrent.get(position).getId(), context);
                 LocalDateSource.updateSelfTasks(context);
                 notifyTaskDateSourceChanged(menuName);
             }
@@ -320,8 +322,8 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
         adCom.setNegativeButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new SelfTask().completed(datesourceTask.get(position).getId(), context);
-                LocalDateSource.updateSelfTasks(context);
+                TeamTask.completed(datesourceCurrent.get(position).getId(), context);
+                LocalDateSource.updateTeamTasks(context);
             }
         });
         adCom.create();

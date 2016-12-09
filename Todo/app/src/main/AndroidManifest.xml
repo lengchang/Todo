@@ -34,48 +34,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name="com.example.linukey.login.LoginActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:label="登录">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:label="登录" />
+
         <activity android:name="com.example.linukey.register.RegisterActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:label="注册">
-            <intent-filter>
-                <action android:name="com.linukey.Todo.RegisterActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:label="注册"/>
+
         <activity android:name="com.example.linukey.addedit_selfpgs.AddEditSelfpgsActivity"
-            android:theme="@style/my_theme">
-            <intent-filter>
-                <action android:name="com.linukey.Todo.AddEditSelfpgsActivity" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:theme="@style/my_theme"/>
+
         <activity android:name="com.example.linukey.addedit_selftask.AddEditSelfTaskActivity"
-            android:theme="@style/my_theme">
-            <intent-filter>
-                <action android:name="com.linukey.Todo.AddEditSelfTaskActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.example.linukey.selfpgs.SelfPGSActivity">
-            <intent-filter>
-                <action android:name="com.linukey.Todo.SelfPGSActivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity android:name="com.example.linukey.selftask.SelfTaskActivity">
-            <intent-filter>
-                <action android:name="com.linukey.Todo.SelfTaskActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/my_theme"/>
+
+        <activity android:name="com.example.linukey.addedit_teamtask.AddEditTeamTaskActivity"
+            android:theme="@style/my_theme"/>
+
+        <activity android:name="com.example.linukey.selfpgs.SelfPGSActivity"/>
+
+        <activity android:name="com.example.linukey.selftask.SelfTaskActivity"/>
+
         <activity android:name="com.example.linukey.launch.LaunchActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar">
             <intent-filter>
@@ -83,18 +63,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.linukey.teampt.TeamPTActivity">
-            <intent-filter>
-                <action android:name="com.linukey.Todo.TeamPTActivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity android:name="com.example.linukey.teamtask.TeamTaskActivity">
-            <intent-filter>
-                <action android:name="com.linukey.Todo.TeamTaskActivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+
+        <activity android:name="com.example.linukey.teampt.TeamPTActivity"/>
+
+        <activity android:name="com.example.linukey.teamtask.TeamTaskActivity" />
 
         <!-- 设置环信应用的AppKey -->
         <meta-data android:name="EASEMOB_APPKEY"  android:value="1154161205178901#todo" />

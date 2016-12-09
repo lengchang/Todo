@@ -75,4 +75,8 @@ public class Team implements Serializable {
 
         return false;
     }
+
+    public static boolean deleteOne(int id, Context context){
+        return true;
+    }
 }

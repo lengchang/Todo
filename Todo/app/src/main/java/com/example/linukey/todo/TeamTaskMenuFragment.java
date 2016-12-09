@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.linukey.teampt.TeamPTActivity;
+import com.example.linukey.teamtask.TeamTaskActivity;
+
 /**
  * Created by linukey on 12/5/16.
  */
@@ -23,7 +26,7 @@ public class TeamTaskMenuFragment extends Fragment {
         btnToday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.TeamTaskActivity");
+                Intent intent = new Intent(getActivity(), TeamTaskActivity.class);
                 intent.putExtra("menuname", "today");
                 startActivity(intent);
             }
@@ -32,7 +35,7 @@ public class TeamTaskMenuFragment extends Fragment {
         btnTomorrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.TeamTaskActivity");
+                Intent intent = new Intent(getActivity(), TeamTaskActivity.class);
                 intent.putExtra("menuname", "tomorrow");
                 startActivity(intent);
             }
@@ -41,7 +44,7 @@ public class TeamTaskMenuFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.TeamTaskActivity");
+                Intent intent = new Intent(getActivity(), TeamTaskActivity.class);
                 intent.putExtra("menuname", "next");
                 startActivity(intent);
             }
@@ -50,7 +53,7 @@ public class TeamTaskMenuFragment extends Fragment {
         btnProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.TeamPTActivity");
+                Intent intent = new Intent(getActivity(), TeamPTActivity.class);
                 intent.putExtra("menuname", "project");
                 startActivity(intent);
             }
@@ -59,7 +62,7 @@ public class TeamTaskMenuFragment extends Fragment {
         btnTeamname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.TeamPTActivity");
+                Intent intent = new Intent(getActivity(), TeamPTActivity.class);
                 intent.putExtra("menuname", "teamname");
                 startActivity(intent);
             }
@@ -68,7 +71,7 @@ public class TeamTaskMenuFragment extends Fragment {
         btnMyTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.linukey.Todo.TeamPTActivity");
+                Intent intent = new Intent(getActivity(), TeamPTActivity.class);
                 intent.putExtra("menuname", "myteam");
                 startActivity(intent);
             }

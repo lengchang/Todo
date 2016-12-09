@@ -47,20 +47,18 @@ public class SelfPGSActivity extends Activity implements SelfPGSContract.SelfPGS
             public void onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        selfPGSActivityPresenter.editPGS(menuName, position);
+                        selfPGSActivityPresenter.editPGS(menuName, position, SelfPGSActivity.this);
                         break;
                     case 1:
-                        selfPGSActivityPresenter.deletePGS(menuName, position);
-                        selfPGSActivityPresenter.notifyPGSDateSourceChanged(menuName);
+                        selfPGSActivityPresenter.deletePGS(menuName, position, SelfPGSActivity.this);
                         break;
                     case 2:
-                        selfPGSActivityPresenter.completedPGS(menuName, position);
-                        selfPGSActivityPresenter.notifyPGSDateSourceChanged(menuName);
+                        selfPGSActivityPresenter.completedPGS(menuName, position, SelfPGSActivity.this);
                         break;
                 }
             }
         });
-        selfPGSActivityPresenter.notifyPGSDateSourceChanged(menuName);
+        selfPGSActivityPresenter.notifyPGSDateSourceChanged(menuName, this);
     }
 
     @Override
@@ -71,7 +69,7 @@ public class SelfPGSActivity extends Activity implements SelfPGSContract.SelfPGS
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == addSelfPGS_ResultCode) {
-            selfPGSActivityPresenter.notifyPGSDateSourceChanged(menuName);
+            selfPGSActivityPresenter.notifyPGSDateSourceChanged(menuName, SelfPGSActivity.this);
         }
     }
 
@@ -106,7 +104,7 @@ public class SelfPGSActivity extends Activity implements SelfPGSContract.SelfPGS
                 finish();
                 return true;
             case 0:
-                selfPGSActivityPresenter.addSelfPGS(menuName);
+                selfPGSActivityPresenter.addSelfPGS(menuName, this);
                 break;
         }
         return true;

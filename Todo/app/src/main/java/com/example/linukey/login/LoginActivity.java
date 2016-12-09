@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.linukey.data.model.User;
+import com.example.linukey.register.RegisterActivity;
+import com.example.linukey.todo.MainActivity;
 import com.example.linukey.todo.R;
 
 import java.util.Map;
@@ -40,7 +42,7 @@ public class LoginActivity extends Activity {
     }
 
     public void onClick_register(View view){
-        Intent register = new Intent("com.linukey.Todo.RegisterActivity");
+        Intent register = new Intent(this, RegisterActivity.class);
         startActivityForResult(register, register_ResultCode);
     }
 
@@ -54,7 +56,7 @@ public class LoginActivity extends Activity {
             if(users.containsKey(userInputModel.username.getText().toString())){
                 if(users.get(userInputModel.username.getText().toString())
                         .equals(userInputModel.password.getText().toString())){
-                    Intent intent = new Intent("com.linukey.Todo.MainActivity");
+                    Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(this, "密码错误!", Toast.LENGTH_LONG).show();

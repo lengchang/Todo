@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements IMainContract.View {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        return todoPresenter.MenuChoice(item);
+        return todoPresenter.MenuChoice(item, this);
     }
 
     public void onClick_Home(View view){

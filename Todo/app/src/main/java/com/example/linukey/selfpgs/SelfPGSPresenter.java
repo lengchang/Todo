@@ -1,6 +1,8 @@
 package com.example.linukey.selfpgs;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.linukey.addedit_selfpgs.AddEditSelfpgsActivity;
 import com.example.linukey.todo.SwipeMenu.SwipeMenu;
 import com.example.linukey.todo.SwipeMenu.SwipeMenuCreator;
 import com.example.linukey.todo.SwipeMenu.SwipeMenuItem;
@@ -39,7 +42,7 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
     }
 
     @Override
-    public void notifyPGSDateSourceChanged(String menuName) {
+    public void notifyPGSDateSourceChanged(String menuName, Context context) {
         switch (menuName) {
             case "project":
                 LocalDateSource.updateProjects(TodoHelper.getInstance());
@@ -72,8 +75,7 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
         if (dataSourceGoal != null && dataSourceGoal.size() > 0) {
             result = new ArrayList<>();
             for (Goal goal : dataSourceGoal) {
-                if (goal.getUserId().equals(TodoHelper.UserId)
-                        && goal.getState().equals(TodoHelper.PGS_State.get("noComplete"))) {
+                if (goal.getState().equals(TodoHelper.PGS_State.get("noComplete"))) {
                     result.add(goal);
                 }
             }
@@ -87,9 +89,7 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
         if (dataSourceSight != null && dataSourceSight.size() > 0) {
             result = new ArrayList<>();
             for (Sight sight : dataSourceSight) {
-                if (sight.getUserId().equals(TodoHelper.UserId)) {
-                    result.add(sight);
-                }
+                result.add(sight);
             }
         }
         return result;
@@ -101,8 +101,7 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
         if (dataSourceProjects != null && dataSourceProjects.size() > 0) {
             result = new ArrayList<>();
             for (Project project : dataSourceProjects) {
-                if (project.getUserId().equals(TodoHelper.UserId)
-                        && project.getState().equals(TodoHelper.PGS_State.get("noComplete"))) {
+                if (project.getState().equals(TodoHelper.PGS_State.get("noComplete"))) {
                     result.add(project);
                 }
             }
@@ -111,8 +110,8 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
     }
 
     @Override
-    public void addSelfPGS(String menuName){
-        Intent intent = new Intent("com.linukey.Todo.AddEditSelfpgsActivity");
+    public void addSelfPGS(String menuName, Context context){
+        Intent intent = new Intent(context, AddEditSelfpgsActivity.class);
         intent.putExtra("menuname", menuName);
         selfPGSActivityView.showAddSelfPGS(intent);
     }
@@ -161,9 +160,9 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
     }
 
     @Override
-    public void editPGS(String menuName, int position){
+    public void editPGS(String menuName, int position, Context context){
         TaskClassify taskClassify = dataSourcePGS.get(position);
-        Intent intent = new Intent("com.linukey.Todo.AddEditSelfpgsActivity");
+        Intent intent = new Intent(context, AddEditSelfpgsActivity.class);
         intent.putExtra("menuname", menuName);
         Bundle bundle = new Bundle();
         bundle.putSerializable("date", taskClassify);
@@ -172,33 +171,68 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
     }
 
     @Override
-    public void deletePGS(String menuName, int position){
-        switch (menuName){
-            case "project":
-                Project.deleteOne(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
-                break;
-            case "goal":
-                Goal.deleteOne(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
-                break;
-            case "sight":
-                Sight.deleteOne(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
-                break;
-            default:
-                break;
-        }
+    public void deletePGS(final String menuName, final int position, final Context context){
+        AlertDialog.Builder adDel = new AlertDialog.Builder(context);
+        adDel.setMessage("是否要删除?");
+        adDel.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adDel.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (menuName){
+                    case "project":
+                        Project.deleteOne(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
+                        notifyPGSDateSourceChanged(menuName, context);
+                        break;
+                    case "goal":
+                        Goal.deleteOne(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
+                        notifyPGSDateSourceChanged(menuName, context);
+                        break;
+                    case "sight":
+                        Sight.deleteOne(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
+                        notifyPGSDateSourceChanged(menuName, context);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        adDel.create();
+        adDel.show();
     }
 
     @Override
-    public void completedPGS(String menuName, int position){
-        switch (menuName){
-            case "project":
-                Project.completed(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
-                break;
-            case "goal":
-                Goal.completed(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
-                break;
-            default:
-                break;
-        }
+    public void completedPGS(final String menuName, final int position, final Context context){
+        AlertDialog.Builder adDel = new AlertDialog.Builder(context);
+        adDel.setMessage("是否要删除?");
+        adDel.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adDel.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (menuName){
+                    case "project":
+                        Project.completed(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
+                        notifyPGSDateSourceChanged(menuName, context);
+                        break;
+                    case "goal":
+                        Goal.completed(dataSourcePGS.get(position).getId(), TodoHelper.getInstance());
+                        notifyPGSDateSourceChanged(menuName, context);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        adDel.create();
+        adDel.show();
     }
 }
