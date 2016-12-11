@@ -300,8 +300,7 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
         adDel.setNegativeButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new SelfTask().deleteOne(datesourceCurrent.get(position).getId(), context);
-                LocalDateSource.updateSelfTasks(context);
+                SelfTask.deleteOne(datesourceCurrent.get(position).getId(), context);
                 notifyTaskDateSourceChanged(menuName);
             }
         });
@@ -322,8 +321,8 @@ public class SelfTaskPresenter implements SelfTaskContract.ActivityPresenter{
         adCom.setNegativeButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                TeamTask.completed(datesourceCurrent.get(position).getId(), context);
-                LocalDateSource.updateTeamTasks(context);
+                SelfTask.completed(datesourceCurrent.get(position).getId(), context);
+                notifyTaskDateSourceChanged(menuName);
             }
         });
         adCom.create();

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.linukey.selfpgs.SelfPGSActivity;
-import com.example.linukey.teampt.TeamPTActivity;
+import com.example.linukey.team.TeamActivity;
 import com.example.linukey.teamtask.TeamTaskActivity;
 
 /**
@@ -60,19 +60,13 @@ public class TeamTaskMenuFragment extends Fragment {
             }
         });
         Button btnTeamname = (Button)view.findViewById(R.id.btnTeamname);
-        btnTeamname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TeamPTActivity.class);
-                intent.putExtra("menuname", "teamname");
-                startActivity(intent);
-            }
-        });
+
+
         Button btnMyTeam = (Button)view.findViewById(R.id.btnMyTeam);
         btnMyTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TeamPTActivity.class);
+                Intent intent = new Intent(getActivity(), TeamActivity.class);
                 intent.putExtra("menuname", "myteam");
                 startActivity(intent);
             }

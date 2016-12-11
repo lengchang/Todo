@@ -52,6 +52,9 @@
         <activity android:name="com.example.linukey.addedit_teamtask.AddEditTeamTaskActivity"
             android:theme="@style/my_theme"/>
 
+        <activity android:name="com.example.linukey.addedit_team.AddEditTeamActivity"
+            android:theme="@style/my_theme"/>
+
         <activity android:name="com.example.linukey.selfpgs.SelfPGSActivity"/>
 
         <activity android:name="com.example.linukey.selftask.SelfTaskActivity"/>
@@ -64,7 +67,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.linukey.teampt.TeamPTActivity"/>
+        <activity android:name="com.example.linukey.team.TeamActivity"/>
 
         <activity android:name="com.example.linukey.teamtask.TeamTaskActivity" />
 

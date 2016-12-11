@@ -6,6 +6,7 @@ import com.example.linukey.data.model.Goal;
 import com.example.linukey.data.model.Project;
 import com.example.linukey.data.model.SelfTask;
 import com.example.linukey.data.model.Sight;
+import com.example.linukey.data.model.Team;
 import com.example.linukey.data.model.TeamTask;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class LocalDateSource{
     public static List<Goal> goals = null;
     public static List<Sight> sights = null;
     public static List<TeamTask> teamTasks = null;
+    public static List<Team> teams = null;
 
     public static void updateSelfTasks(Context context) {
         selfTasks = SelfTask.getTasks(context);
@@ -27,6 +29,10 @@ public class LocalDateSource{
 
     public static void updateProjects(String projectType, Context context){
         projects = Project.getProjects(projectType, context);
+    }
+
+    public static void updateTeams(Context context){
+        teams = Team.getTeams(context);
     }
 
     public static void updateGoals(Context context){

@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.linukey.teampt.TeamPTActivity"
+    tools:context="com.example.linukey.team.TeamActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.example.linukey.todo.SwipeMenu.SwipeMenuView
+    <com.example.linukey.todo.SwipeMenu.SwipeMenuListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listview_teampt" />
+        android:layout_height="match_parent"
+        android:id="@+id/listview_team" />
 </LinearLayout>

@@ -121,7 +121,7 @@ public class SelfPGSPresenter implements SelfPGSContract.SelfPGSActivityPresente
 
     @Override
     public void CreateMenu(Menu menu) {
-        MenuItem taskAdd = menu.add(0, 0, 0, "添加任务");
+        MenuItem taskAdd = menu.add(0, 0, 0, "添加");
         taskAdd.setIcon(R.mipmap.add);
         taskAdd.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
     }
