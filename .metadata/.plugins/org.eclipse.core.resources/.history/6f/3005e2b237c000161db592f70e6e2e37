@@ -1,0 +1,36 @@
+package com.linukey.todo.action;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.linukey.todo.entity.User;
+import com.linukey.todo.util.HibernateSessionFactory;
+import com.opensymphony.xwork2.ActionSupport;
+
+public class Login extends ActionSupport {
+	
+	@Override
+	public String execute(){
+		
+		Session sess = (Session)HibernateSessionFactory.getCurrentSession();
+		Transaction tx =sess.beginTransaction();
+		
+		User user = new User("binghe", ".linukey.1", "410282618@qq.com", "18866348205", "root", "0");
+		
+		Integer r=0;
+		try {
+			r = (Integer) sess.save(user);
+			tx.commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			if(tx!=null)tx.rollback();
+		}finally{
+			sess.clear();
+			sess.close();
+		}
+		
+		System.out.println(r);
+		  
+		return SUCCESS;
+	}
+}

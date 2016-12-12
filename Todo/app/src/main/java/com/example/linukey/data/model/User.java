@@ -23,7 +23,6 @@ public class User {
     private String email;
     private String phonenumber;
     private String usergroup;
-    private String teamId;
     private String userId;
 
     public String getUsername() {
@@ -64,14 +63,6 @@ public class User {
 
     public void setUsergroup(String usergroup) {
         this.usergroup = usergroup;
-    }
-
-    public String getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(String teamId) {
-        this.teamId = teamId;
     }
 
     public String getUserId() {

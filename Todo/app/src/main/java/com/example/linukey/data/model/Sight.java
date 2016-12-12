@@ -37,10 +37,6 @@ public class Sight extends TaskClassify {
 
     public Sight(){}
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public static boolean saveSight(Sight sight, Context context){
         ContentValues contentValues = new ContentValues();
         contentValues.put(SightContentProvider.key_title, sight.getTitle());

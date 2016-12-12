@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Todoweb/src/com/linukey/todo/entity/UserTeam.xml&apos; to &apos;UserTeam.hbm.xml&apos;" description="Rename resource &apos;UserTeam.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/com/linukey/todo/entity/UserTeam.xml" name="UserTeam.hbm.xml" stamp="1481528602720" updateReferences="true"/>
+</session>

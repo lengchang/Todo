@@ -43,6 +43,8 @@ public class Project extends TaskClassify {
         setSelfId(projectId);
     }
 
+    public Project(){}
+
     public String getType() {
         return type;
     }
@@ -50,8 +52,6 @@ public class Project extends TaskClassify {
     public void setType(String type) {
         this.type = type;
     }
-
-    public Project(){}
 
     public String getState() {
         return state;
