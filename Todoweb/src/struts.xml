@@ -9,7 +9,7 @@
 	<constant name="struts.devMode " value="true" />
 	
 	<package name="pg0" extends="struts-default">		
-		<action name="login" class="com.linukey.todo.action.Login">
+		<action name="login" class="com.linukey.todo.action.Login" method="loginAction">
 			<result name="success">/result.jsp</result>
 		</action>
 	</package>	
