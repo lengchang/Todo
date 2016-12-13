@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<div id="radio_button">
-			<div id="first_circle" class="on_circle"></div>
+			<div id="first_circle"></div>
 			<div id="second_circle"></div>
 			<div id="third_circle"></div>
 			<div id="forth_circle"></div>

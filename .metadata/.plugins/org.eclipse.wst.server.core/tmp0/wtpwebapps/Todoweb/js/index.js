@@ -48,6 +48,21 @@ $(document).ready(function () {
   })
 })
 function changeTo (num) {
-  var gotoLeft = num * 1333
-  $('#show_img').animate({ left: '-' + gotoLeft + 'px' }, 'fast')
+  switch(num){
+  case 0:
+	  $('#show_img').animate({ left: '0%' }, 'fast')
+	  break;
+  case 1:
+	  $('#show_img').animate({ left: '-100%' }, 'fast')
+	  break;
+  case 2:
+	  $('#show_img').animate({ left: '-200%' }, 'fast')
+	  break;
+  case 3:
+	  $('#show_img').animate({ left: '-300%' }, 'fast')
+	  break;
+  case 4:
+	  $('#show_img').animate({ left: '-400%' }, 'fast')
+	  break;
+  }
 }

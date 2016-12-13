@@ -1,0 +1,30 @@
+#top_nav{
+    height:45px;
+    float: left;
+}
+
+#top_button{
+	height:45px;
+	float:right;
+	margin-right: 5%;
+    margin-top:15px;
+}
+
+#top_button button{
+    height: 38px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+nav ul li{
+    margin-left: 20px;
+    margin-top:7px;
+    font-size: 18px;
+    display: inline-block;
+    list-style: none;
+    height:38px;
+}
+
+nav ul li:hover{
+    border-bottom: solid #4560FA 4px;
+}

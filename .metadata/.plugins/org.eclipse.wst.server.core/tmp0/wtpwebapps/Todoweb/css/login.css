@@ -1,70 +1,5 @@
-body{
-    background: #F6F6F6;
-}
-header{
-    width:100%;
-    height:65px;
-    border-top: solid lightgray 1px;
-    border-bottom: solid #599EF4  4px;
-    background: #FEFEFE;
-}
-[id^=top]{
-    height:45px;
-}
-#top_logo{
-    width: 240px;
-    margin-left: 165px;
-    float: left;
-    margin-top:10px;
-}
-#top_nav{
-    width: 500px;
-    float: left;
-}
-li{
-    display: inline-block;
-    list-style: none;
-}
-nav ul li{
-    margin-left: 20px;
-    margin-top:7px;
-    font-size: 18px;
-}
-a{
-    text-decoration-line: none;
-    color: #000000;
-}
-[id$=button]{
-    width: 300px;
-    margin-left: 60px;
-    margin-top:15px;
-    float: left;
-}
-[id^=button]{
-    height: 38px;
-}
-[id$=login]{
-    width:115px;
-    background: #599EF4;
-    border:solid #599EF4 1px;
-    color: white;
-}
-[id$=login]:hover,#login_button:hover{
-    background: rgba(68,87,247,0.9);
-    border:solid blue 1px;
-    color: white;
-}
-#button_regist{
-    width:60px;
-    margin-left: 10px;
-    border:solid gray 1px;
-    color: #000000;
-}
-#button_regist:hover{
-    background: rgba(254,254,254,0.7);
-    border:solid gray 1px;
-    color: #000000;
-}
+@import "common.css";
+
 article{
     width: 100%;
     height:530px;
@@ -72,21 +7,42 @@ article{
     float: left;
     margin: 1px;
 }
-footer{
-    width: 100%;
-    height: 150px;
-    background: #D9D8D7;
-    float:left;
 
+a{
+    text-decoration-line: none;
+    color: #000000;
 }
-[id^=about]{
+
+a::visited{
+    color: #4560FA;
+}
+
+#login_button{
+    width: 220px;
+    margin-left: 83px;
+    margin-top:10px;
+    float: left;
+    height:40px;
+    background: #007AFF;
+    border: solid #599EF4 1px;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+#login_button:hover{
+    background: rgba(68,87,247,0.9);
+    border:solid blue 1px;
+    color: white;
+}
+
+#about_pass{
     text-align: center;
-    margin-top:35px;
+    margin-top:25px;
     font-size:13px;
 }
-#about_us ul li.no_last::after{
-    content: " | ";
-}
+
 #login_container{
     width: 384px;
     height:342px;
@@ -94,41 +50,46 @@ footer{
     margin: 65px auto;
     box-shadow: 0 0 8px lightgray;
 }
-[id^=user]{
+
+#user_name, #user_pass{
     width: 300px;
     height: 40px;
     border:solid #D9D9D9 1px;
     margin-left: 40px;
     color: gray;
 }
-[id$=name]{
+
+#user_name{
     margin-top:50px;
 }
-[id$=pass]{
+
+#user_pass{
     margin-top:15px;
 }
+
 article #login_container label{
     font-size: 13px;
     color: darkblue;
 }
-[id^=pass]{
+
+#about_pass{
     margin-top: 20px;
+    color: blue;
 }
-[id=pass_remember]{
-    margin-left: 40px;
-}
-[id*=forget]{
+
+#forget_pass_span{
     margin-left: 180px;
+    color: blue;
 }
-#login_button{
-    width: 300px;
-    height:48px;
-    margin-left: 40px;
-    background: #007AFF;
-    border: solid #599EF4 1px;
-    font-size: 20px;
-    color: white;
+
+#normaluser{
+	margin-left: 40px;
 }
+
+#usergroup{
+	font-size:13px;
+}
+
 #gotoregist{
     width: 150px;
     height:20px;
@@ -137,25 +98,4 @@ article #login_container label{
     margin-left:218px;
     font-size: 14px;
     color: #007AFF;
-}
-#about_pass{
-    color: blue;
-}
-#forget_pass_span{
-    color: blue;
-}
-header nav ul li{
-    height: 38px;
-}
-header nav ul li:hover{
-    border-bottom: solid #4560FA 4px;
-}
-a::visited{
-    color: #4560FA;
-}
-[class^=no_]:hover{
-    color: blue;
-}
-[class^=top_nav]:hover{
-    color: #4560FA;
 }

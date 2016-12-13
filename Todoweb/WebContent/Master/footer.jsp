@@ -1,5 +1,8 @@
 <%@ page pageEncoding="UTF-8"%>
-<div id="about_us">
+
+<link rel="stylesheet" type="text/css" href="./css/footer.css" />
+
+<div class="about" id="about_us">
 	<ul>
 		<a href="about_us.html"><li class="no_last">关于我们</li></a>
 		<a href="email.html"><li class="no_last">联系我们</li></a>
@@ -8,4 +11,4 @@
 		<a href="update.html"><li class="no_">更新</li></a>
 	</ul>
 </div>
-<div id="about_team">©2016Todo开发小组</div>
+<div class="about" id="about_team">©2016Todo开发小组</div>

@@ -1,0 +1,13 @@
+#about_us ul li{
+	display: inline-block;
+    list-style: none;
+}
+
+a{
+    text-decoration-line: none;
+    color: #000000;
+}
+
+a::visited{
+    color: #4560FA;
+}
