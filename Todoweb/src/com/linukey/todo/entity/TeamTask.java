@@ -118,5 +118,7 @@ public class TeamTask {
 		this.isdelete = isdelete;
 		this.teamId = teamId;
 	}
+	
+	public TeamTask(){}
 
 }

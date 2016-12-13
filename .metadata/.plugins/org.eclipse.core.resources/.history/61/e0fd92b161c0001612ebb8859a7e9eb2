@@ -1,0 +1,24 @@
+package com.linukey.todo.dao;
+
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.linukey.todo.entity.User;
+import com.linukey.todo.util.HibernateSessionFactory;
+
+public class UserDao extends CommDao<User> {
+	public boolean checkinput(String username, String password){
+		if(username.isEmpty() || password.isEmpty()){
+			return false;
+		}else{
+			List<User> users = selectAll(User.class);
+			for(User user : users){
+				System.out.println(user.getUsername());
+			}
+		}
+		return true;
+	}
+}

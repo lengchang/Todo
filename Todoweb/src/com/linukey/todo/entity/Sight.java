@@ -16,7 +16,6 @@ public class Sight extends TaskClassify {
 		setSelfId(sightId);
 	}
 
-	public Sight() {
-	}
-
+	public Sight() {}
+	
 }

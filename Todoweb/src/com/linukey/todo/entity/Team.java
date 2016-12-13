@@ -21,6 +21,8 @@ public class Team {
 		this.leaderId = leaderId;
 		this.teamId = teamId;
 	}
+	
+	public Team(){}
 
 	public int getId() {
 		return id;

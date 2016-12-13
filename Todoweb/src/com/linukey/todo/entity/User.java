@@ -31,6 +31,8 @@ public class User {
 		this.userId = userId;
 	}
 	
+	public User(){}
+	
 	public int getId() {
 		return id;
 	}

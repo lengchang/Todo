@@ -17,6 +17,8 @@ public class UserTeam {
 		this.userId = userId;
 		this.teamId = teamId;
 	}
+	
+	public UserTeam(){}
 
 	public int getId() {
 		return id;

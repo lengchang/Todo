@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.opensymphony.xwork2.ActionSupport"/>
 <fullyQualifiedTypeName name="org.hibernate.Session"/>
-<fullyQualifiedTypeName name="com.linukey.todo.util.HibernateSessionFactory"/>
 <fullyQualifiedTypeName name="org.hibernate.Transaction"/>
-<fullyQualifiedTypeName name="com.linukey.todo.entity.User"/>
 <fullyQualifiedTypeName name="com.linukey.todo.entity.UserTeam"/>
+<fullyQualifiedTypeName name="com.linukey.todo.util.HibernateSessionFactory"/>
+<fullyQualifiedTypeName name="com.linukey.todo.entity.User"/>
+<fullyQualifiedTypeName name="org.hibernate.Query"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.UUID"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="com.linukey.todo.util.TodoHelper"/>
+<fullyQualifiedTypeName name="com.linukey.todo.dao.UserDao"/>
+<fullyQualifiedTypeName name="com.opensymphony.xwork2.interceptor.AbstractInterceptor"/>
+<fullyQualifiedTypeName name="com.opensymphony.xwork2.ActionInvocation"/>
+<fullyQualifiedTypeName name="com.opensymphony.xwork2.ActionContext"/>
+<fullyQualifiedTypeName name="com.opensymphony.xwork2.ActionSupport"/>
+<fullyQualifiedTypeName name="com.opensymphony.xwork2.Action"/>
 </qualifiedTypeNameHistroy>

@@ -153,9 +153,7 @@ public class SelfTask {
 		this.istmp = isTmp;
 	}
 
-	public SelfTask() {
-
-	}
+	public SelfTask() {}
 
 
 }

@@ -29,7 +29,6 @@ public class Goal extends TaskClassify {
 		setSelfId(goalId);
 	}
 
-	public Goal() {
-	}
+	public Goal() {}
 
 }

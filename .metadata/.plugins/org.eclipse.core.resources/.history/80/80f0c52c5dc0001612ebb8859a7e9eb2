@@ -1,0 +1,5 @@
+package com.linukey.todo.dao;
+
+public class UserDao {
+
+}

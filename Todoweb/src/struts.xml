@@ -9,8 +9,26 @@
 	<constant name="struts.devMode " value="true" />
 	
 	<package name="pg0" extends="struts-default">		
+	    <interceptors>
+	    	<interceptor name="checkUserPermission" class="com.linukey.todo.dao.CheckUserPermissionInterceptor"></interceptor>    
+	    </interceptors>
+	    
 		<action name="login" class="com.linukey.todo.action.Login" method="loginAction">
 			<result name="success">/result.jsp</result>
+			<result name="input">/login.jsp</result>
+		</action>
+		<action name="regist" class="com.linukey.todo.action.Register" method="registAction">
+		    <result name="success">/result.jsp</result>
+		    <result name="input">/register.jsp</result>
+		</action>
+		<action name="logout" class="com.linukey.todo.action.Login" method="logout">
+		    <result name="success">/index.jsp</result>
+		    <result name="input">/index.jsp</result>
+		</action>
+		<action name="acessUserinfo" class="com.linukey.todo.action.Login">
+		    <result name="success">/WEB-INF/normal/userinfo.jsp</result>
+		    <result name="login">/login.jsp</result>
+			<interceptor-ref name="checkUserPermission"></interceptor-ref>
 		</action>
 	</package>	
 </struts>    

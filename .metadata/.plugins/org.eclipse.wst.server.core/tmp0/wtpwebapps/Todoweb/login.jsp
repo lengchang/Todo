@@ -14,8 +14,9 @@
 	<article>
 		<div id="login_container">
 			<form action="login" method="post">
-				<input type="text" id="user_name" placeholder="用户名/邮箱"><br />
-				<input type="password" id="user_pass" placeholder="密码"><br />
+				<s:fielderror />
+				<input type="text" id="user_name" name="username" placeholder="用户名/邮箱" required><br />
+				<input type="password" id="user_pass" name="password" placeholder="密码" required ><br />
 				<div id="about_pass">
 					<span id="remember_pass_span"><input type="checkbox">记住我</span>
 					<a href="findpwd.html"><span id="forget_pass_span">忘记密码？</span></a><br/>

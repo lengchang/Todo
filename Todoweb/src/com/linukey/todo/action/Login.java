@@ -1,14 +1,63 @@
 package com.linukey.todo.action;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.linukey.todo.dao.UserDao;
 import com.linukey.todo.entity.*;
 import com.linukey.todo.util.HibernateSessionFactory;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class Login extends ActionSupport {
-	public String loginAction(){
+	private String username;
+	private String password;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * 登录
+	 * @return
+	 */
+	public String loginAction() {
+		if(!new UserDao().checkinput(username, password)){
+			addFieldError("username", "用户名或密码错误!");
+			return INPUT;
+		}
+		new UserDao().saveLoginInfo(username);
 		return SUCCESS;
+	}
+	
+	/**
+	 * 登出
+	 * @return
+	 */
+	public String logout(){
+		new UserDao().logout();
+		return SUCCESS;
+	}
+	
+
+	public void validateLoginAction(){
+		if(username.trim().isEmpty())
+			addFieldError("username", "用户名不能为空!");
+		else if(password.trim().isEmpty())
+			addFieldError("password", "密码不能为空!");
 	}
 }

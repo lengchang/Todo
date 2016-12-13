@@ -42,5 +42,5 @@ public class Project extends TaskClassify {
         setSelfId(projectId);
     }
 
-    public Project(){}
+    public Project(){ }
 }

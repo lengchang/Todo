@@ -34,7 +34,6 @@ public class HibernateSessionFactory {
 			sess = sessionFactory.openSession();//让工厂生产一个
 			threadLocal.set(sess);//加入线程本地变量 
 		}
-		System.out.println("SessionFactory 创建Session ,Session 的链接状态 ：" +sess.isConnected());
 		return sess;
 	}
 	/**

@@ -1,0 +1,10 @@
+package com.linukey.todo.dao;
+
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+
+public class CheckUserPermissionInterceptor extends AbstractInterceptor {
+	public String  intercept(ActionInvocation invocation) throws Exception{
+		
+	}
+}
