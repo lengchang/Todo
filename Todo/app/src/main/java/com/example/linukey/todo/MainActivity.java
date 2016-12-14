@@ -3,123 +3,78 @@ package com.example.linukey.todo;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements IMainContract.View {
 
     boolean homeSelect, selfSelect, teamSelect;
-
-    final int addSelfTask_ResultCode = 1;
+    HomePageFragment homePageFragment;
+    SelfTaskMenuFragment selfTaskMenuFragment;
+    TeamTaskMenuFragment teamTaskMenuFragment;
+    IMainContract.Presenter todoPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setView(R.id.menuPage, R.layout.home_page);
-        //initActionBar();
+        initFragment();
+        getFragmentManager().beginTransaction().add(R.id.menuFragment, homePageFragment).commit();
+
+        todoPresenter = new MainPresenter(this);
     }
 
-    public void initActionBar(){
-        android.app.ActionBar actionBar = getActionBar();
-
-//        actionBar.setDisplayUseLogoEnabled(false);
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        //android.app.ActionBar.Tab tab = actionBar.newTab();
-        //tab.setIcon(R.mipmap.ic_launcher).setText("haha");
-
-        //actionBar.addTab(tab);
-    }
-
-    public void onClick(View view){
-        Toast.makeText(this, "asdf", Toast.LENGTH_LONG).show();
+    private void initFragment(){
+        homePageFragment = new HomePageFragment();
+        selfTaskMenuFragment = new SelfTaskMenuFragment();
+        teamTaskMenuFragment = new TeamTaskMenuFragment();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
-        CreateMenu(menu);
+        todoPresenter.CreateMenu(menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        return MenuChoice(item);
-    }
-
-    private void CreateMenu(Menu menu){
-        MenuItem taskAdd = menu.add(0,0,0, "taskAdd");
-        taskAdd.setIcon(R.mipmap.add);
-        taskAdd.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
-        MenuItem setting = menu.add(0,1,1, "setting");
-        setting.setIcon(R.mipmap.setting);
-        setting.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-    }
-
-    private boolean MenuChoice(MenuItem item){
-        switch (item.getItemId()){
-            case 0:
-                addSelfTask();
-                return true;
-            case 1:
-                Toast.makeText(this, "setting", Toast.LENGTH_LONG).show();
-                return true;
-        }
-        return false;
-    }
-
-    private void addSelfTask(){
-        Intent addSelfTask = new Intent("com.linukey.Todo.AddSelfActivity");
-        startActivityForResult(addSelfTask, addSelfTask_ResultCode);
+    public void addSelfTask(Intent intent){
+        startActivity(intent);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK && requestCode == addSelfTask_ResultCode) {
-
-        }
+    public boolean onOptionsItemSelected(MenuItem item){
+        return todoPresenter.MenuChoice(item, this);
     }
 
     public void onClick_Home(View view){
         homeSelect = true;
 
-        setView(R.id.menuPage, R.layout.home_page);
+        getFragmentManager().beginTransaction().replace(R.id.menuFragment, homePageFragment).commit();
         changeIcon();
     }
 
     public void onClick_Self(View view){
         selfSelect = true;
 
-        setView(R.id.menuPage, R.layout.self_page);
+        getFragmentManager().beginTransaction().replace(R.id.menuFragment, selfTaskMenuFragment).commit();
         changeIcon();
     }
 
     public void onClick_Team(View view){
         teamSelect = true;
 
-        setView(R.id.menuPage, R.layout.team_page);
+        getFragmentManager().beginTransaction().replace(R.id.menuFragment, teamTaskMenuFragment).commit();
         changeIcon();
     }
 
-    private void setView(int parentId, int childId){
-        LinearLayout parent = (LinearLayout)findViewById(parentId);
-        parent.removeAllViews();
-        View child = LayoutInflater.from(this).inflate(childId, null);
-        parent.addView(child);
-    }
-
-    private void changeIcon(){
+    @Override
+    public void changeIcon(){
         Button btnHome = (Button)findViewById(R.id.btnHome);
         Button btnSelf = (Button)findViewById(R.id.btnSelf);
         Button btnTeam = (Button)findViewById(R.id.btnTeam);

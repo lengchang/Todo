@@ -1,0 +1,72 @@
+#top_logo{
+    margin-left: 10%;
+    float: left;
+    margin-top:10px;
+}
+
+#top_nav{
+    height:45px;
+    float: left;
+}
+
+#top_button{
+	height:45px;
+	float:right;
+	margin-right: 5%;
+    margin-top:15px;
+}
+
+#top_button button{
+    height: 38px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+nav ul li{
+    margin-left: 20px;
+    margin-top:7px;
+    font-size: 18px;
+    display: inline-block;
+    list-style: none;
+    height:38px;
+}
+
+nav ul li:hover{
+    border-bottom: solid #4560FA 4px;
+}
+
+
+#button_login {
+    width:115px;
+    background: #599EF4;
+    border:solid #599EF4 1px;
+    color: white;
+}
+
+#button_login:hover{
+    background: rgba(68,87,247,0.8);
+    border:solid blue 1px;
+    color: white;
+}
+
+#button_regist{
+    width:60px;
+    margin-left: 10px;
+    border:solid gray 1px;
+    color: #000000;
+}
+
+#button_regist:hover{
+    background: rgba(254,254,254,0.7);
+    border:solid gray 1px;
+    color: #000000;
+}
+
+a{
+    text-decoration-line: none;
+    color: #000000;
+}
+
+a::visited{
+    color: #4560FA;
+}

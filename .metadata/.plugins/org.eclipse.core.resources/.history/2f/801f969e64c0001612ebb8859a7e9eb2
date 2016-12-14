@@ -1,0 +1,16 @@
+package com.linukey.todo.action;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class Register extends ActionSupport {
+	
+	String username;
+	String password;
+	String repassword;
+	String email;
+	String phonenumber;
+	
+	public String registAction(){
+		return SUCCESS;
+	}
+}

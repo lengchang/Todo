@@ -1,0 +1,4 @@
+#about_us ul li{
+	display: inline-block;
+    list-style: none;
+}

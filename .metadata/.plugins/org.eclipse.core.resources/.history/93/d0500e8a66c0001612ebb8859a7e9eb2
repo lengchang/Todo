@@ -1,0 +1,37 @@
+package com.linukey.todo.dao;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.linukey.todo.entity.User;
+import com.linukey.todo.util.HibernateSessionFactory;
+import com.linukey.todo.util.TodoHelper;
+
+public class UserDao extends CommDao<User> {
+	public boolean checkinput(String username, String password){
+			List<User> users = selectAll(User.class);
+			for(User user : users){
+				if(user.getUsername().equals(username) && 
+						user.getPassword().equals(password))
+					return true;
+			}
+		return false;
+	}
+	
+	public boolean saveUser(String username, String password, String email, 
+			String repassword, String phonenumber){
+		List<User> users = selectAll(User.class);
+		for(User user : users){
+			if(user.getUsername().equals(username))
+				return false;
+		}
+		String userId = UUID.randomUUID().toString();
+		String usergroup = TodoHelper.UserGroup.get("normal");
+		User user = new User()
+		return false;
+	}
+}

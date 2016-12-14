@@ -1,0 +1,17 @@
+#top_nav{
+    height:45px;
+    float: left;
+}
+
+#top_button{
+	height:45px;
+	float:right;
+	margin-right: 5%;
+    margin-top:15px;
+}
+
+#top_button button{
+    height: 38px;
+    border-radius: 8px;
+    cursor: pointer;
+}

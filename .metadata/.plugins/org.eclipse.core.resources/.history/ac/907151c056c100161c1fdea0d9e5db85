@@ -1,0 +1,111 @@
+@import "common.css";
+
+article{
+    width: 100%;
+    height:530px;
+    background: #FEFEFE;
+    float: left;
+    margin: 1px;
+}
+
+article #regist_container label{
+    font-size: 13px;
+    color: darkblue;
+}
+
+li{
+    display: inline-block;
+    list-style: none;
+}
+
+a{
+    text-decoration-line: none;
+    color: #000000;
+}
+
+#login_button{
+    width: 300px;
+    margin-left: 60px;
+    margin-top:15px;
+    float: left;
+}
+
+#login_button:hover{
+    background: rgba(68,87,247,0.9);
+    border:solid blue 1px;
+    color: white;
+}
+
+#button_regist{
+    width:60px;
+    margin-left: 10px;
+    border:solid gray 1px;
+    color: #000000;
+}
+#button_regist:hover{
+    background: rgba(254,254,254,0.7);
+    border:solid gray 1px;
+    color: #000000;
+}
+
+[id^=about]{
+    text-align: center;
+    margin-top:35px;
+    font-size:13px;
+}
+#about_us ul li.no_last::after{
+    content: " | ";
+}
+#regist_container{
+    width: 384px;
+    height:500px;
+    border: solid lightgrey 1.5px;
+    margin: 15px auto;
+    box-shadow: 0 0 8px lightgray;
+}
+[id^=user]{
+    width: 300px;
+    height: 40px;
+    border:solid #D9D9D9 1px;
+    margin-left: 40px;
+    color: gray;
+}
+[id$=name]{
+    margin-top:50px;
+}
+[id*=pass],[id$=email],[id$=phone]{
+    margin-top:15px;
+}
+[id^=pass]{
+    margin-top: 20px;
+}
+[id*=forget]{
+    margin-left: 180px;
+}
+#regist_button{
+    width: 300px;
+    height:48px;
+    margin-left: 40px;
+    background: #007AFF;
+    border: solid #599EF4 1px;
+    font-size: 20px;
+    color: white;
+}
+#gotologin_{
+    width: 150px;
+    height:20px;
+    display: block;
+    margin-top:55px;
+    margin-left:225px;
+    font-size: 14px;
+    color: #007AFF;
+}
+#about_pass{
+    color: blue;
+    text-align: left;
+    padding-left: 38px;
+    margin-top: 20px;
+}
+#forget_pass_span{
+    color: blue;
+}

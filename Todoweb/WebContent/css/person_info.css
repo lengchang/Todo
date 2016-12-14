@@ -1,0 +1,24 @@
+#ul_index{
+    height:38px;
+    border-bottom: solid #4560FA 4px;
+}
+#article_container{
+    width: 1333px;;
+    height:600px;
+    float: left;
+    margin: 1px;
+    position: relative;
+    background: white;
+}
+#middle_container{
+    box-sizing: border-box;
+    padding-left: 140px;
+    width: 1000px;
+    height:600px;
+    position: absolute;
+    left: 166.5px;
+    margin-top: 5px;
+}
+#user_info_last a{
+    color: #4560FA;
+}

@@ -1,0 +1,26 @@
+#about_us ul li{
+	display: inline-block;
+    list-style: none;
+}
+
+a{
+    text-decoration-line: none;
+    color: #000000;
+}
+
+a::visited{
+    color: #4560FA;
+}
+
+
+.about{
+    text-align: center;
+    margin-top:35px;
+    font-size:13px;
+}
+#about_us ul li.no_last::after{
+    content: " | ";
+}
+.about ul a:hover{
+    color: blue;
+}

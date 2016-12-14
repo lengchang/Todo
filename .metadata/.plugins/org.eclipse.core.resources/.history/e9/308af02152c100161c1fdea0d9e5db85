@@ -1,0 +1,167 @@
+body{
+    background: #F6F6F6;
+}
+header{
+    width:100%;
+    height:65px;
+    border-top: solid lightgray 1px;
+    border-bottom: solid lightgray  1px;
+    background: #FEFEFE;
+}
+article{
+    width: 100%;;
+    float: left;
+    margin: 1px;
+    position: relative;
+}
+
+footer{
+    width: 100%;
+    height: 150px;
+    background: #D9D8D7;
+    float:left;
+    margin-top:2%;
+}
+
+#top_logo{
+    margin-left: 10%;
+    float: left;
+    margin-top:10px;
+}
+
+nav ul a:hover{
+    color: #4560FA;
+}
+
+a{
+    text-decoration-line: none;
+    color: #000000;
+}
+
+a::visited{
+    color: #4560FA;
+}
+
+#button_login {
+    width:115px;
+    background: #599EF4;
+    border:solid #599EF4 1px;
+    color: white;
+}
+
+#button_login:hover{
+    background: rgba(68,87,247,0.8);
+    border:solid blue 1px;
+    color: white;
+}
+
+#button_regist{
+    width:60px;
+    margin-left: 10px;
+    border:solid gray 1px;
+    color: #000000;
+}
+#button_regist:hover{
+    background: rgba(254,254,254,0.7);
+    border:solid gray 1px;
+    color: #000000;
+}
+.about{
+    text-align: center;
+    margin-top:35px;
+    font-size:13px;
+}
+#about_us ul li.no_last::after{
+    content: " | ";
+}
+.about ul a:hover{
+    color: blue;
+}
+#index_firstpage{
+    color: #4560FA;
+}
+
+#ul_index{
+    border-bottom: solid #4560FA 4px;
+}
+
+#radio_button{
+    width: 300px;
+    float: left;
+    position: absolute;
+    top:90%;
+    left: 48%;
+    z-index: 3;
+}
+
+#radio_button div{
+    display: inline-block;
+    background: white;
+    width:8px;
+    height:8px;
+    border-radius: 8px;
+}
+#radio_button div:hover{
+    background: #4560FA;
+}
+
+#img_show_container{
+    width: 90%;
+    height:530px;
+    overflow: hidden;
+    position:relative;
+    left:5%;
+    margin-top:2%;
+}
+
+#show_img{
+    position: relative;
+    width: 100%;
+    height: 530px;
+}
+
+#show_img [id$=img]{
+    position: absolute;
+    top:0px;
+    position: absolute;
+    width: 100%;
+    height: 530px;
+}
+
+#first_img{
+    left: 0%;
+}
+#second_img{
+    left: 100%;
+}
+#third_img{
+    left: 200%;
+}
+#forth_img{
+    left: 300%;
+}
+#fifth_img{
+    left: 400%;
+
+}
+#back_head{
+    position: absolute;
+    font-size: 40px;
+    color: blue;
+    top: 50%;
+    width:100%;
+}
+#head{
+    position: absolute;
+    left: 95%;
+}
+#back{
+	position: absolute;
+	right:95%;
+}
+#back,#head,#radio_button div{
+    cursor: pointer;
+}
+#back:hover,#head:hover{
+    opacity: 0.8;
+}

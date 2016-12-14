@@ -1,0 +1,32 @@
+package com.linukey.todo.action;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class Register extends ActionSupport {
+	
+	String username;
+	String password;
+	String repassword;
+	String email;
+	String phonenumber;
+	
+	public String registAction(){
+		return SUCCESS;
+	}
+	
+	@Override
+	public void validate(){
+		if(username.trim().isEmpty())
+			addFieldError("username", "用户名不能为空!");
+		else if(password.trim().isEmpty())
+			addFieldError("password", "密码不能为空!");
+		else if(repassword.trim().isEmpty())
+			addFieldError("repassword", "请再次输入密码!");
+		else if(!repassword.equals(password))
+			addFieldError("password", "两次输入密码不一致!");
+		else if(email.trim().isEmpty())
+			addFieldError("email", "请输入邮箱!");
+		else if(phonenumber.trim().isEmpty())
+			addFieldError("phonenumber", "请输入手机号码!");
+	}
+}

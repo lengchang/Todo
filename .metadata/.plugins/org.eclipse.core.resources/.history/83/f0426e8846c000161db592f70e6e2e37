@@ -1,0 +1,49 @@
+package com.linukey.todo.action;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.linukey.todo.entity.*;
+import com.linukey.todo.util.HibernateSessionFactory;
+import com.opensymphony.xwork2.ActionSupport;
+
+public class Login extends ActionSupport {
+	
+	@Override
+	public String execute(){
+		
+		Session sess = (Session)HibernateSessionFactory.getCurrentSession();
+		Transaction tx =sess.beginTransaction();
+		
+		User user = new User("haha", ".linukey.1", "410282618@qq.com", "18866348205", "root", "0");
+		UserTeam userteam = new UserTeam("123", "456");
+		SelfTask selftask = new SelfTask("数学考试", "12.28", "12", "23", "45", "asdf", "asdf", "asdf", "sadf",
+										"asdf", "adsf", "asdf");
+		TeamTask teamtask = new TeamTask("1", "2", "3", "4", "5", "6", "7", "8", "9");
+		Project project = new Project("1", "2", "3", "4", "5", "6");
+		Goal goal = new Goal("1", "2", "3", "4", "5");
+		Sight sight = new Sight("1", "2", "3", "4");
+		
+		Integer r=0;
+		try {
+		//	sess.save(user);
+		//	sess.save(userteam);
+		//	sess.save(selftask);
+		//	sess.save(teamtask);
+		//	sess.save(project);
+		//	sess.save(goal);
+			sess.save(sight);
+			tx.commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			if(tx!=null)tx.rollback();
+		}finally{
+			sess.clear();
+			sess.close();
+		}
+		
+		System.out.println(r);
+		  
+		return SUCCESS;
+	}
+}

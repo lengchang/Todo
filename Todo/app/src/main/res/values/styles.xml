@@ -18,4 +18,34 @@
         <item name="android:background">#4050DC</item>
     </style>
 
+    <style name="selfAndteamMenuBtn_style">
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:buttonStyle">?android:attr/borderlessButtonStyle</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">15dp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:background">@drawable/menuselector</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="mainActivityBtn_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#969696</item>
+        <item name="android:buttonStyle">?android:attr/borderlessButtonStyle</item>
+        <item name="android:background">#FCFCFC</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="selfTaskDialogTheme" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item><!--除去title-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@null</item><!--除去背景色-->
+    </style>
+
 </resources>

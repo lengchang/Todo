@@ -1,0 +1,57 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<HTML !DOCTYPE>
+<head>
+    <meta charset="utf-8">
+    <title>Todo|登录</title>
+    <link rel="stylesheet" type="text/css" href="./css/login.css"/>
+</head>
+<body>
+    <header>
+        <div id="top_logo">
+            <a href="#">
+            <img src="./img/logo.png">
+            </a>
+        </div>
+        <nav id="top_nav">
+            <ul>
+                <li id="index_firstpage"><a href="index.html" class="top_nav">首页</a></li>
+                <li><a href="self_mode_use.html" class="top_nav">个人模式</a></li>
+                <li><a href="team_mode_use.html" class="top_nav">团队模式</a></li>
+                <li><a href="help.html" class="top_nav">帮助</a></li>
+                <li><a href="download.html" class="top_nav">下载</a></li>
+            </ul>
+        </nav>
+        <div id="top_button">
+            <button id="button_login">登录到网页版</button>
+            <a href="regist.html"><button id="button_regist">注册</button></a>
+        </div>
+    </header>
+    <article>
+           <div id="login_container">
+               <form action="task.html" method="post">
+               <input type="text" id="user_name" placeholder="用户名/邮箱" ><br/>
+               <input type="password" id="user_pass" placeholder="密码"><br/>
+               <div id="about_pass">
+               <span id="remember_pass_span"><input type="checkbox" >记住我</span>
+               <a href="findpwd.html"><span id="forget_pass_span">忘记密码？</span></a>
+               </div>
+               <input type="button" value="登录" id="login_button"><br/>
+               </form>
+               <a href="regist.html" id="gotoregist">尚无账号？免费注册</a>
+           </div> 
+    </article>
+    <footer>
+        <div id="about_us">
+            <ul>
+                <a href="about_us.html"><li class="no_last">关于我们</li></a>
+                <a href="email.html"><li class="no_last">联系我们</li></a>
+                <a href="serve.html"><li class="no_last">服务条款</li></a>
+                <a href="serect.html"><li class="no_last">隐私协议</li></a>
+                <a href="update.html"><li class="no_">更新</li></a>
+            </ul>
+        </div>
+        <div id="about_team">©2016Todo开发小组</div>
+    </footer>
+</body>
+</HTML>
